@@ -32,11 +32,11 @@ var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 scene.add(plane);
 
 // create a cube
-var cubeGeometry = new THREE.BoxGeometry(4, 4, 10);
+var cubeGeometry = new THREE.BoxGeometry(5, 5, 5);
 var cubeMaterial = new THREE.MeshNormalMaterial();
 var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 // position the cube
-cube.position.set(0.0, 0.0, 5.0);
+cube.position.set(2, -3.0, 2.5);
 // add the cube to the scene
 scene.add(cube);
 
