@@ -3,8 +3,8 @@ var list = {
     Exercícios: {
       "Aula 01": {
         "Exercício 01": "works/aula01_ex01",
-        "Exercício 02": "works/aula02_ex02",
-        "Exercício 03": "works/aula03_ex03",
+        "Exercício 02": "works/aula01_ex02",
+        "Exercício 03": "works/aula01_ex03",
       },
     },
     Projects: {
