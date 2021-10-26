@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title></title>
-    <meta charset="utf-8" />
-    <script src="./../html/resources/list.js"></script>
-    <script src="./../html/resources/page.js"></script>
-    <link
-      type="text/css"
-      rel="stylesheet"
-      href="./../html/resources/page.css"
-    />
-  </head>
-  <body>
-    <h1>Exercício 03</h1>
-    <br />
-    <hr />
 
-    <p>
-      Crie mais dois arquivos para desenvolver uma cena composta por 9 cubos
-      criados <b>de forma iterativa</b> (com alguma estrutura de repetição).
-    </p>
+<head>
+  <title></title>
+  <meta charset="utf-8" />
+  <script src="/html/resources/list.js"></script>
+  <script src="/html/resources/page.js"></script>
+  <link type="text/css" rel="stylesheet" href="/html/resources/page.css" />
+</head>
 
-    <iframe
-      src="./aula01_ex03_scene.html"
-      title="Aula 01 Exercício 03"
-    ></iframe>
-    <a href="./aula01_ex03_scene.html" target="_blank">Open in a new tab</a>
-  </body>
+<body>
+  <h1>Aula 01 Exercício 03</h1>
+  <br />
+  <hr />
+
+  <p>
+    Crie mais dois arquivos para desenvolver uma cena composta por 9 cubos
+    criados <b>de forma iterativa</b> (com alguma estrutura de repetição).
+  </p>
+
+  <iframe src="./aula01_ex03_scene.html" title="Aula 01 Exercício 03"></iframe>
+  <a href="./aula01_ex03_scene.html" target="_blank">Open in a new tab</a>
+
+  <h2>Código</h2>
+  <iframe
+    src="https://carbon.now.sh/embed?bg=rgba%28255%2C255%2C255%2C0%29&t=nord&wt=none&l=javascript&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=15px&lh=142%25&si=false&es=4x&wm=false&code=var%2520cubeGeometry%2520%253D%2520new%2520THREE.BoxGeometry%284%252C%25204%252C%25204%29%250Avar%2520cubeMaterial%2520%253D%2520new%2520THREE.MeshNormalMaterial%28%29%250Avar%2520x%2520%253D%25207%250Avar%2520y%2520%253D%2520-7%250Avar%2520cubes%2520%253D%2520%255B%255D%250A%250Afor%2520%28let%2520i%2520%253D%25200%253B%2520i%2520%253C%25203%253B%2520i%252B%252B%29%2520%257B%250A%2520%2520for%2520%28let%2520j%2520%253D%25200%253B%2520j%2520%253C%25203%253B%2520j%252B%252B%29%2520%257B%250A%2520%2520%2520%2520cubes%255Bi%255D%2520%253D%2520new%2520THREE.Mesh%28cubeGeometry%252C%2520cubeMaterial%29%250A%2520%2520%2520%2520cubes%255Bi%255D.position.set%28x%252C%2520y%252C%25202.0%29%250A%2520%2520%2520%2520scene.add%28cubes%255Bi%255D%29%250A%2520%2520%2520%2520x%2520-%253D%25207%250A%2520%2520%257D%250A%2520%2520x%2520%253D%25207%250A%2520%2520y%2520%252B%253D%25207%250A%257D"
+    style="width: 728px; height: 501px; border:0; transform: scale(1); overflow:hidden;"
+    sandbox="allow-scripts allow-same-origin" scrolling="no">
+  </iframe>
+</body>
+
 </html>
