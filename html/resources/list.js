@@ -6,6 +6,10 @@ var list = {
         "Exercício 02": "works/aula01_ex02",
         "Exercício 03": "works/aula01_ex03",
       },
+      "Aula 02": {
+        "Exercício 01": "works/aula02_ex01",
+        "Exercício 02": "works/aula02_ex02",
+      },
     },
     Projects: {
       Basics: {
