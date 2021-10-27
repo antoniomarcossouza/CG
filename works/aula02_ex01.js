@@ -19,7 +19,7 @@ var trackballControls = new TrackballControls(camera, renderer.domElement);
 initDefaultBasicLight(scene);
 
 // Set angles of rotation
-var angle = [-1.57, 0]; // In degreesToRadians
+var angle = [-1.57, 0, 0]; // In degreesToRadians
 
 // Show world axes
 var axesHelper = new THREE.AxesHelper(12);

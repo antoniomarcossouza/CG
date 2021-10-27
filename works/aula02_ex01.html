@@ -4,9 +4,9 @@
 <head>
   <title></title>
   <meta charset="utf-8" />
-  <script src="/html/resources/list.js"></script>
-  <script src="/html/resources/page.js"></script>
-  <link type="text/css" rel="stylesheet" href="/html/resources/page.css" />
+  <script src="./../html/resources/list.js"></script>
+  <script src="./../html/resources/page.js"></script>
+  <link type="text/css" rel="stylesheet" href="./../html/resources/page.css" />
 </head>
 
 <body>
@@ -29,6 +29,19 @@
 
   <iframe src="./aula02_ex01_scene.html" title="Aula 02 Exercício 01"></iframe>
   <a href="./aula02_ex01_scene.html" target="_blank">Open in a new tab</a>
+
+  <h2>Código</h2>
+  <iframe
+    src="https://carbon.now.sh/embed?bg=rgba%28255%2C255%2C255%2C0%29&t=nord&wt=none&l=javascript&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=15px&lh=142%25&si=false&es=4x&wm=false&code=%252F%252F%2520Set%2520angles%2520of%2520rotation%250Avar%2520angle%2520%253D%2520%255B-1.57%252C%25200%252C%25200%255D%253B%2520%252F%252F%2520In%2520degreesToRadians%250A%250A%252F%252F%2520Show%2520world%2520axes%250Avar%2520axesHelper%2520%253D%2520new%2520THREE.AxesHelper%2812%29%253B%250Ascene.add%28axesHelper%29%253B%250A%250Avar%2520s1%2520%253D%2520createSphere%28%29%253B%250Ascene.add%28s1%29%253B%250A%250Avar%2520c1%2520%253D%2520createCylinder%28%29%253B%250As1.add%28c1%29%253B%250A%250Avar%2520s2%2520%253D%2520createSphere%28%29%253B%250Ac1.add%28s2%29%253B%250A%250Avar%2520c2%2520%253D%2520createCylinder%28%29%253B%250As2.add%28c2%29%253B%250A%250Avar%2520s3%2520%253D%2520createSphere%28%29%253B%250Ac2.add%28s3%29%253B%250A%250Avar%2520c3%2520%253D%2520createCylinder%28%29%253B%250As3.add%28c3%29%253B%250A%250Afunction%2520rotateCylinder%28%29%2520%257B%250A%2520%2520%252F%252F%2520More%2520info%253A%250A%2520%2520%252F%252F%2520https%253A%252F%252Fthreejs.org%252Fdocs%252F%2523manual%252Fen%252Fintroduction%252FMatrix-transformations%250A%2520%2520c1.matrixAutoUpdate%2520%253D%2520false%253B%250A%2520%2520s2.matrixAutoUpdate%2520%253D%2520false%253B%250A%2520%2520c2.matrixAutoUpdate%2520%253D%2520false%253B%250A%2520%2520s3.matrixAutoUpdate%2520%253D%2520false%253B%250A%2520%2520c3.matrixAutoUpdate%2520%253D%2520false%253B%250A%250A%2520%2520var%2520mat4%2520%253D%2520new%2520THREE.Matrix4%28%29%253B%250A%250A%2520%2520%252F%252F%2520resetting%2520matrices%250A%2520%2520c1.matrix.identity%28%29%253B%250A%2520%2520s2.matrix.identity%28%29%253B%250A%2520%2520c2.matrix.identity%28%29%253B%250A%2520%2520s3.matrix.identity%28%29%253B%250A%2520%2520c3.matrix.identity%28%29%253B%250A%250A%2520%2520%252F%252F%2520Will%2520execute%2520T1%2520and%2520then%2520R1%250A%2520%2520c1.matrix.multiply%28mat4.makeRotationZ%28angle%255B0%255D%29%29%253B%2520%252F%252F%2520R1%250A%2520%2520c1.matrix.multiply%28mat4.makeTranslation%280.0%252C%25201.0%252C%25200.0%29%29%253B%2520%252F%252F%2520T1%250A%250A%2520%2520%252F%252F%2520Just%2520need%2520to%2520translate%2520the%2520sphere%2520to%2520the%2520right%2520position%250A%2520%2520s2.matrix.multiply%28mat4.makeTranslation%280.0%252C%25201.0%252C%25200.0%29%29%253B%250A%250A%2520%2520%252F%252F%2520Will%2520execute%2520T2%2520and%2520then%2520R2%250A%2520%2520c2.matrix.multiply%28mat4.makeRotationZ%28angle%255B1%255D%29%29%253B%2520%252F%252F%2520R2%250A%2520%2520c2.matrix.multiply%28mat4.makeTranslation%280.0%252C%25201.0%252C%25200.0%29%29%253B%2520%252F%252F%2520T2%250A%250A%2520%2520%252F%252F%2520Just%2520need%2520to%2520translate%2520the%2520sphere%2520to%2520the%2520right%2520position%250A%2520%2520s3.matrix.multiply%28mat4.makeTranslation%280.0%252C%25201.0%252C%25200.0%29%29%253B%250A%250A%2520%2520%252F%252F%2520Will%2520execute%2520T3%2520and%2520then%2520R3%250A%2520%2520c3.matrix.multiply%28mat4.makeRotationZ%28angle%255B2%255D%29%29%253B%2520%252F%252F%2520R3%250A%2520%2520c3.matrix.multiply%28mat4.makeTranslation%280.0%252C%25201.0%252C%25200.0%29%29%253B%2520%252F%252F%2520T3%250A%257D"
+    style="width: 958px; height: 1467px; border:0; transform: scale(1); overflow:hidden;"
+    sandbox="allow-scripts allow-same-origin" scrolling="no">
+  </iframe>
+
+  <iframe
+    src="https://carbon.now.sh/embed?bg=rgba%28255%2C255%2C255%2C0%29&t=nord&wt=none&l=javascript&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=false&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=15px&lh=142%25&si=false&es=4x&wm=false&code=function%2520buildInterface%28%29%2520%257B%250A%2520%2520var%2520controls%2520%253D%2520new%2520function%2520%28%29%2520%257B%250A%2520%2520%2520%2520this.joint1%2520%253D%2520270%253B%250A%2520%2520%2520%2520this.joint2%2520%253D%25200%253B%250A%2520%2520%2520%2520this.joint3%2520%253D%25200%253B%250A%250A%2520%2520%2520%2520this.rotate%2520%253D%2520function%2520%28%29%2520%257B%250A%2520%2520%2520%2520%2520%2520angle%255B0%255D%2520%253D%2520degreesToRadians%28this.joint1%29%253B%250A%2520%2520%2520%2520%2520%2520angle%255B1%255D%2520%253D%2520degreesToRadians%28this.joint2%29%253B%250A%2520%2520%2520%2520%2520%2520angle%255B2%255D%2520%253D%2520degreesToRadians%28this.joint3%29%253B%250A%2520%2520%2520%2520%2520%2520rotateCylinder%28%29%253B%250A%2520%2520%2520%2520%257D%253B%250A%2520%2520%257D%253B%250A%250A%2520%2520%252F%252F%2520GUI%2520interface%250A%2520%2520var%2520gui%2520%253D%2520new%2520GUI%28%29%253B%250A%2520%2520gui.add%28controls%252C%2520%27joint1%27%252C%25200%252C%2520360%29%250A%2520%2520%2520%2520.onChange%28function%2520%28%29%2520%257B%2520controls.rotate%28%29%2520%257D%29%250A%2520%2520%2520%2520.name%28%2522First%2520Joint%2522%29%253B%250A%2520%2520gui.add%28controls%252C%2520%27joint2%27%252C%25200%252C%2520360%29%250A%2520%2520%2520%2520.onChange%28function%2520%28%29%2520%257B%2520controls.rotate%28%29%2520%257D%29%250A%2520%2520%2520%2520.name%28%2522Second%2520Joint%2522%29%253B%250A%2520%2520gui.add%28controls%252C%2520%27joint3%27%252C%25200%252C%2520360%29%250A%2520%2520%2520%2520.onChange%28function%2520%28%29%2520%257B%2520controls.rotate%28%29%2520%257D%29%250A%2520%2520%2520%2520.name%28%2522Third%2520Joint%2522%29%253B%250A%257D"
+    style="width: 958px; height: 732px; border:0; transform: scale(1); overflow:hidden;"
+    sandbox="allow-scripts allow-same-origin">
+  </iframe>
 </body>
 
 </html>
