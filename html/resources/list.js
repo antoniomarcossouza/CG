@@ -1,5 +1,5 @@
 var list = {
-  en: {
+  "en": {
     Exercícios: {
       "Aula 01": {
         "Exercício 01": "works/aula01_ex01",
@@ -18,48 +18,42 @@ var list = {
         "Exercício 02": "works/aula04_ex02",
       },
     },
-    Projects: {
-      Basics: {
+    "Projects": {
+      "Basics": {
         "Basic Scene": "html/basicSceneInfo",
         "Using the keyboard": "html/keyboardExampleInfo",
         "Geometric Transformations 1": "html/geometricTransformationInfo",
         "Geometric Transformations 2": "html/geometricTransformation2Info",
-        Projection: "html/projectionInfo",
+        "Projection": "html/projectionInfo",
         "Virtual Camera": "html/virtualCameraInfo",
       },
-      Animations: {
-        Basic: "html/animationInfo",
+      "Animations": {
+        "Basic": "html/animationInfo",
         "Using External Objects": "html/animationExternalObjectsInfo",
       },
-      Geometries: {
-        Basic: "html/geometriesBasicInfo",
-        Lathe: "html/geometriesLatheInfo",
-        Extrusion: "html/geometriesExtrusionInfo",
-        Convex: "html/geometriesConvexInfo",
+      "Geometries": {
+        "Basic": "html/geometriesBasicInfo",
+        "Lathe": "html/geometriesLatheInfo",
+        "Extrusion": "html/geometriesExtrusionInfo",
+        "Convex": "html/geometriesConvexInfo",
         "Loading External Files": "html/geometriesExternalObjectsInfo",
       },
-      Lighting: {
+      "Lighting": {
         "Types of lights": "html/lightingTypesInfo",
         "Types of materials": "html/lightingMaterialsInfo",
         "Spotlight in Details": "html/lightingSpotlightDetailsInfo",
       },
-      Textures: {
-        Basic: "html/textureBasicInfo",
+      "Textures": {
+        "Basic": "html/textureBasicInfo",
         "Main Options": "html/textureOptionsInfo",
         "Textured External Objects": "html/textureExternalObjectsInfo",
       },
-      Raytracing: {
+      "Raytracing": {
         "Example 1": "html/raytracingExample1Info",
         "Example 2": "html/raytracingExample2Info",
       },
     },
-    XR: {
-      "AR & VR with external libs": {
-        "VR - Primitives": "html/VR_BasicInfo",
-        "VR - Panorama": "html/VR_PanoramaInfo",
-        "VR - External Models": "html/VR_ExternalModelInfo",
-        "AR - Fiducial Marker": "html/AR_BasicInfo",
-      },
+    "XR": {
       "AR & VR with WebXR": {
         "VR - Panorama": "html/webxr_VR_PanoramaInfo",
         "VR - Teleport": "html/webxr_VR_TeleportInfo",
@@ -68,15 +62,24 @@ var list = {
         "VR - Labelling": "html/webxr_VR_LabellingInfo",
         "AR - Hit and Build": "html/webxr_AR_HitAndBuildInfo",
       },
+      "AR & VR with external libs": {
+        "VR - Primitives": "html/VR_BasicInfo",
+        "VR - Panorama": "html/VR_PanoramaInfo",
+        "VR - External Models": "html/VR_ExternalModelInfo",
+        "AR - Fiducial Marker": "html/AR_BasicInfo",
+      },
     },
     "Additional Examples": {
-      Misc: {
+      "Misc": {
         "Group Geometry": "html/exampleGroupInfo",
         "First Person": "html/exampleFirstPersonInfo",
         "Drag Control": "html/exampleDragControlInfo",
         "Fly Controls": "html/exampleFlyControlInfo",
         "Shadow Update": "html/exampleShadowUpdateInfo",
-        Audio: "html/exampleAudioInfo",
+        "Shadow Map Viewer": "html/exampleShadowMapViewerInfo",
+        "Shadow Map Types": "html/exampleShadowMapTypesInfo",
+        "Audio": "html/exampleAudioInfo",
+
       },
     },
   },
