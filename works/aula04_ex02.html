@@ -15,7 +15,13 @@
   <hr />
 
   <p>
-    TEXTOOO
+    <li>Crie um cenário como o da ilustração abaixo, composto por uma esfera de raio 1 e um plano 25 x 25.</li>
+    <li>Crie 3 sliders (X, Y e Z) com valores que permitam posicionar a esfera em qualquer posição acima do plano.
+      Considerando Y como sendo o "para cima" do plano, a esfera pode ser deslocada livremente em qualquer valor de Y
+      positivo, mas não deve possível deslocá-la abaixo nem "dentro" do plano.</li>
+    <li>Crie um botão "Mover" que, ao ser clicado, move a esfera até a posição selecionada.</li>
+    <li>Os valores entre a posição inicial e final devem ser interpolados de tal forma que o movimento da esfera seja
+      suave e linear.</li>
   </p>
 
   <iframe src="./aula04_ex02_scene.html" title="Aula 04 Exercício 02"></iframe>
@@ -23,8 +29,8 @@
 
   <h2>Código</h2>
   <iframe
-    src="https://carbon.now.sh/embed?bg=rgba%28255%2C255%2C255%2C0%29&t=nord&wt=none&l=javascript&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=15px&lh=142%25&si=false&es=4x&wm=false&code=var%2520cubeGeometry%2520%253D%2520new%2520THREE.BoxGeometry%284%252C%25204%252C%25204%29%253B%250Avar%2520cubeMaterial%2520%253D%2520new%2520THREE.MeshNormalMaterial%28%29%253B%250Avar%2520cube%2520%253D%2520new%2520THREE.Mesh%28cubeGeometry%252C%2520cubeMaterial%29%253B%250Acube.position.set%280.0%252C%25200.0%252C%25202.0%29%253B%250Ascene.add%28cube%29%253B%250A%250Avar%2520bigCubeGeometry%2520%253D%2520new%2520THREE.BoxGeometry%286%252C%25206%252C%25206%29%253B%250Avar%2520bigCube%2520%253D%2520new%2520THREE.Mesh%28bigCubeGeometry%252C%2520cubeMaterial%29%253B%250AbigCube.position.set%285.0%252C%25205.0%252C%25203.0%29%253B%250Ascene.add%28bigCube%29%253B%250A%250Avar%2520smallCubeGeometry%2520%253D%2520new%2520THREE.BoxGeometry%282%252C%25202%252C%25202%29%253B%250Avar%2520smallCube%2520%253D%2520new%2520THREE.Mesh%28smallCubeGeometry%252C%2520cubeMaterial%29%253B%250AsmallCube.position.set%28-3.0%252C%2520-3.0%252C%25201.0%29%253B%250Ascene.add%28smallCube%29%253B"
-    style="width: 728px; height: 501px; border:0; transform: scale(1); overflow:hidden;"
+    src="https://carbon.now.sh/embed?bg=rgba%28255%2C255%2C255%2C0%29&t=nord&wt=none&l=javascript&ds=false&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=56px&ph=56px&ln=false&fl=1&fm=Hack&fs=14px&lh=133%25&si=false&es=2x&wm=false&code=%252F%252F%2520AINDA%2520N%25C3%2583O%2520FIZ%252C%2520VAI%2520TER%2520C%25C3%2593DIGO%2520COMO%253F"
+    style="width: 470px; height: 204px; border:0; transform: scale(1); overflow:hidden;"
     sandbox="allow-scripts allow-same-origin" scrolling="no">
   </iframe>
 </body>

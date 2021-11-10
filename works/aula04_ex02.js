@@ -21,7 +21,7 @@ var axesHelper = new THREE.AxesHelper(12);
 scene.add(axesHelper);
 
 // create the ground plane
-var planeGeometry = new THREE.PlaneGeometry(20, 20);
+var planeGeometry = new THREE.PlaneGeometry(25, 25);
 planeGeometry.translate(0.0, 0.0, -0.02); // To avoid conflict with the axeshelper
 var planeMaterial = new THREE.MeshBasicMaterial({
   color: "rgba(150, 150, 150)",
@@ -31,24 +31,14 @@ var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 // add the plane to the scene
 scene.add(plane);
 
-// create a cube
-var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
-var cubeMaterial = new THREE.MeshNormalMaterial();
-var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-// position the cube
-cube.position.set(0.0, 0.0, 2.0);
-// add the cube to the scene
-scene.add(cube);
-
-// Use this to show information onscreen
-var controls = new InfoBox();
-controls.add("Basic Scene");
-controls.addParagraph();
-controls.add("Use mouse to interact:");
-controls.add("* Left button to rotate");
-controls.add("* Right button to translate (pan)");
-controls.add("* Scroll to zoom in/out.");
-controls.show();
+// create a sphere
+var sphereGeometry = new THREE.SphereGeometry(1, 64, 64);
+var sphereMaterial = new THREE.MeshNormalMaterial();
+var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+// position the sphere
+sphere.position.set(0.0, 0.0, 1.0);
+// add the sphere to the scene
+scene.add(sphere);
 
 // Listen window size changes
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
