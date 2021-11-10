@@ -10,6 +10,13 @@ var list = {
         "Exercício 01": "works/aula02_ex01",
         "Exercício 02": "works/aula02_ex02",
       },
+      "Aula 03": {
+        "Exercício 01": "works/aula03_ex01",
+      },
+      "Aula 04": {
+        "Exercício 01": "works/aula04_ex01",
+        "Exercício 02": "works/aula04_ex02",
+      },
     },
     Projects: {
       Basics: {
