@@ -1,5 +1,5 @@
 import * as THREE from '../build/three.module.js';
-import Stats from '../build/jsm/libs/stats.module.js';
+import { GUI } from '../build/jsm/libs/dat.gui.module.js';
 import { TrackballControls } from '../build/jsm/controls/TrackballControls.js';
 import {
   initRenderer,
@@ -7,8 +7,7 @@ import {
   InfoBox,
   onWindowResize
 } from "../libs/util/util.js";
-
-var stats = new Stats();          // To show FPS information
+// To show FPS information
 var scene = new THREE.Scene();    // Create main scene
 var renderer = initRenderer();    // View function in util/utils
 var camera = initCamera(new THREE.Vector3(0, -30, 15)); // Init camera in this position
@@ -28,25 +27,29 @@ var planeMaterial = new THREE.MeshBasicMaterial({
   side: THREE.DoubleSide,
 });
 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-// add the plane to the scene
 scene.add(plane);
 
-// create a sphere
+// ESFERA GRANDE
 var sphereGeometry = new THREE.SphereGeometry(1, 64, 64);
 var sphereMaterial = new THREE.MeshNormalMaterial();
 var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-// position the sphere
 sphere.position.set(0.0, 0.0, 1.0);
-// add the sphere to the scene
 scene.add(sphere);
+
+// ESFERA PEQUENA
+var smallSphereGeometry = new THREE.SphereGeometry(0.5, 64, 64);
+var smallSphereMaterial = new THREE.MeshBasicMaterial({ color: 0x40ffac });
+var smallSphere = new THREE.Mesh(smallSphereGeometry, smallSphereMaterial);
+smallSphere.position.set(0.0, 0.0, 1.0);
+scene.add(smallSphere);
+
+render()
 
 // Listen window size changes
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
 
-render();
 function render() {
-  stats.update(); // Update FPS
-  trackballControls.update(); // Enable mouse movements
+  trackballControls.update();
   requestAnimationFrame(render);
-  renderer.render(scene, camera) // Render scene
+  renderer.render(scene, camera);
 }
