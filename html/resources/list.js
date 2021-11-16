@@ -1,6 +1,11 @@
 var list = {
   "en": {
-    Exercícios: {
+    "Trabalhos": {
+      "Trabalho 01": {
+        "Trabalho 01": "works/trabalho01/trabalho01",
+      },
+    },
+    "Exercícios": {
       "Aula 01": {
         "Exercício 01": "works/aula01_ex01",
         "Exercício 02": "works/aula01_ex02",
