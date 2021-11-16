@@ -2,7 +2,7 @@ var list = {
   "en": {
     "Trabalhos": {
       "Trabalho 01": {
-        "Trabalho 01": "works/trabalho01/trabalho01",
+        "Trabalho 01": "works/trabalho01",
       },
     },
     "Exercícios": {
