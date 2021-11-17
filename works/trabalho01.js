@@ -14,13 +14,17 @@ var speed = 0;
 var maxSpeed = 2.5;
 var incrementSpeed = 0.024;
 
+var sensitivity = 15;
+
 var scene = new THREE.Scene();
 var stats = new Stats();
+
 var renderer = initRenderer();
 renderer.setClearColor("rgb(30, 30, 40)");
+
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.lookAt(0, 0, 0);
-camera.position.set(5, 15, 50);
+camera.position.set(0, 0, 0);
 camera.up.set(0, 1, 0);
 
 initDefaultBasicLight(scene);
@@ -66,6 +70,7 @@ var trackballControls = new TrackballControls(camera, renderer.domElement);
 // Start setting the group
 
 var group = new THREE.Group();
+var camera_look = new THREE.Group();
 
 // Set the parts of the pseudo-car
 var body = createCylinder(1.3, 2.75, 10.0, 20, 20, false);
@@ -108,6 +113,10 @@ scene.add(group);
 group.translateY(2.3);
 group.rotateY(degreesToRadians(-90));
 
+camera_look.translateY(2.3);
+camera_look.rotateY(degreesToRadians(-90));
+camera_look.translateZ(20);
+
 render();
 
 
@@ -140,7 +149,7 @@ function createPlane(x, z) {
 function keyboardUpdate() {
 
   keyboard.update();
-  var angle = degreesToRadians(2);
+  var rotateAngle = Math.PI / 2 * 0.0025 * sensitivity;
 
   if (keyboard.pressed("X")) {
     if (speed < maxSpeed) {
@@ -156,10 +165,12 @@ function keyboardUpdate() {
 
   if (speed != 0) {
     if (keyboard.pressed("left")) {
-      group.rotateY(angle)
+      group.rotateY(rotateAngle);
+      camera_look.rotateY(rotateAngle);
     };
     if (keyboard.pressed("right")) {
-      group.rotateY(-angle)
+      group.rotateY(-rotateAngle);
+      camera_look.rotateY(-rotateAngle);
     };
   }
 }
@@ -208,11 +219,29 @@ function movimentCar() {
   roda4.matrix.multiply(mat4.makeRotationZ(angle));*/
 }
 
+function moveCamera() {
+
+  var distance = 50;
+
+  camera_look.position.x  = group.position.x;
+  camera_look.position.y  = group.position.y;
+  camera_look.position.z  = group.position.z;
+
+  camera_look.translateZ(20);
+
+  camera.position.x = camera_look.position.x + distance;
+  camera.position.y = 35;
+  camera.position.z = camera_look.position.z + distance;
+
+  camera.lookAt(camera_look.position.x, camera_look.position.y, camera_look.position.z);
+}
+
 function render() {
   stats.update();
-  trackballControls.update();
+  //trackballControls.update();
   keyboardUpdate();
   movimentCar();
   requestAnimationFrame(render);
+  moveCamera();
   renderer.render(scene, camera);
 }
