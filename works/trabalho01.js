@@ -10,11 +10,18 @@ import {
   degreesToRadians
 } from "../libs/util/util.js";
 
-var speed = 0;
-var maxSpeed = 2.5;
-var incrementSpeed = 0.024;
+/* CONFIGURAÇÕES - INICIO */
 
-var sensitivity = 15;
+var inspecionar = false;
+
+var speed = 0;
+const maxSpeed = 2.5;
+const incrementSpeed = 0.024;
+
+const distance = 50;
+const sensitivity = 15;
+
+/* CONFIGURAÇÕES - FIM */
 
 var scene = new THREE.Scene();
 var stats = new Stats();
@@ -22,14 +29,25 @@ var stats = new Stats();
 var renderer = initRenderer();
 renderer.setClearColor("rgb(30, 30, 40)");
 
+/* CAMERA - INICIO */
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.lookAt(0, 0, 0);
-camera.position.set(0, 0, 0);
-camera.up.set(0, 1, 0);
+
+// Utilizado para visualizar a camera 20px na frente do carro
+var camera_look = new THREE.Group();
+camera_look.rotateY(degreesToRadians(-90));
+
+var trackballControls = new TrackballControls(camera, renderer.domElement);
 
 initDefaultBasicLight(scene);
 
+/* CAMERA - FIM */
+
+var keyboard = new KeyboardState();
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
+
+/* PISTA - INICIO */
+
+var track = new THREE.Group();
 
 var planeGeometry = new THREE.PlaneGeometry(300, 300);
 planeGeometry.translate(0.0, 100, -0.5);
@@ -39,8 +57,8 @@ var planeMaterial = new THREE.MeshBasicMaterial({
 });
 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 planeGeometry.rotateX(degreesToRadians(-90));
-scene.add(plane);
 
+track.add(plane);
 
 for (var i = 0; i < 20; i++) {
   for (var j = 0; j < 4; j++) {
@@ -60,19 +78,14 @@ for (var i = 0; i < 20; i++) {
   }
 }
 
-// To use the keyboard
-var keyboard = new KeyboardState();
+scene.add(track);
 
-// Enable mouse rotation, pan, zoom etc.
-var trackballControls = new TrackballControls(camera, renderer.domElement);
+/* PISTA - FIM */
 
-//-------------------------------------------------------------------
-// Start setting the group
+/* CARRO - INICIO */
 
-var group = new THREE.Group();
-var camera_look = new THREE.Group();
+var car = new THREE.Group();
 
-// Set the parts of the pseudo-car
 var body = createCylinder(1.3, 2.75, 10.0, 20, 20, false);
 body.rotateX(degreesToRadians(90));
 body.position.set(0.0, 0.5, 0.0)
@@ -97,25 +110,40 @@ roda3.position.set(3.5, -1.0, -4.0);
 var roda4 = createTorus(1.0, 0.3, 20, 20, Math.PI * 2);
 roda4.position.set(-3.5, -1.0, -4.0);
 
-// Add objects to the group
-group.add(body);
-group.add(eixo1);
-group.add(eixo2);
-group.add(roda1);
-group.add(roda2);
-group.add(roda3);
-group.add(roda4);
+car.add(body);
+car.add(eixo1);
+car.add(eixo2);
+car.add(roda1);
+car.add(roda2);
+car.add(roda3);
+car.add(roda4);
 
-// Add group to the scene
-scene.add(group);
+scene.add(car);
 
-// Move all to the start position
-group.translateY(2.3);
-group.rotateY(degreesToRadians(-90));
+car.translateY(2.3);
+car.rotateY(degreesToRadians(-90));
 
-camera_look.translateY(2.3);
-camera_look.rotateY(degreesToRadians(-90));
-camera_look.translateZ(20);
+/* CARRO - FIM */
+
+  // Mudar o modo da camera
+  document.addEventListener("keypress", function(e) {
+    if(e.keyCode  === 32) {
+      track.visible = inspecionar;
+      inspecionar == true ? inspecionar = false : inspecionar = true;
+
+      if (inspecionar == true) {
+
+        car.position.x = 0;
+        car.position.y = 2.3;
+        car.position.z = 0;
+      }
+
+      camera.up.set(0, 1, 0);
+
+    }
+  });
+
+
 
 render();
 
@@ -142,7 +170,7 @@ function createPlane(x, z) {
   var groundPlane = createGroundPlane(10, 10, 1, 1);
   groundPlane.rotateX(degreesToRadians(-90));
   groundPlane.position.set(x, 0.0, z)
-  scene.add(groundPlane);
+  track.add(groundPlane);
 }
 
 
@@ -165,16 +193,16 @@ function keyboardUpdate() {
 
   if (speed != 0) {
     if (keyboard.pressed("left")) {
-      group.rotateY(rotateAngle);
+      car.rotateY(rotateAngle);
       camera_look.rotateY(rotateAngle);
-    };
+    }
     if (keyboard.pressed("right")) {
-      group.rotateY(-rotateAngle);
+      car.rotateY(-rotateAngle);
       camera_look.rotateY(-rotateAngle);
-    };
+    }
   }
-}
 
+}
 function movimentCar() {
 
   // Para o carro em velocidades muito baixas
@@ -182,7 +210,7 @@ function movimentCar() {
     speed = 0;
   }
 
-  group.translateZ(speed);
+  car.translateZ(speed);
 
   keyboard.update();
   // Desacelera o carro se não precionar nenhum botão
@@ -221,27 +249,40 @@ function movimentCar() {
 
 function moveCamera() {
 
-  var distance = 50;
+  if (inspecionar == false) {
 
-  camera_look.position.x  = group.position.x;
-  camera_look.position.y  = group.position.y;
-  camera_look.position.z  = group.position.z;
+    camera_look.position.x  = car.position.x;
+    camera_look.position.y  = car.position.y;
+    camera_look.position.z  = car.position.z;
 
-  camera_look.translateZ(20);
+    camera_look.translateZ(20);
 
-  camera.position.x = camera_look.position.x + distance;
-  camera.position.y = 35;
-  camera.position.z = camera_look.position.z + distance;
+    camera.position.x = camera_look.position.x + distance;
+    camera.position.y = 35;
+    camera.position.z = camera_look.position.z + distance;
 
-  camera.lookAt(camera_look.position.x, camera_look.position.y, camera_look.position.z);
+    camera.lookAt(camera_look.position.x, camera_look.position.y, camera_look.position.z);
+  }
+
 }
 
 function render() {
   stats.update();
-  //trackballControls.update();
+
+  // Modo de inspeção
+  if (inspecionar == true) {
+    trackballControls.update();
+  }
+
+  // Faz a verificação do botões que estão sendo apertados
   keyboardUpdate();
+
+  // Movimenta o carro 
   movimentCar();
-  requestAnimationFrame(render);
+
+  // Faz a animação da camera
   moveCamera();
+
+  requestAnimationFrame(render);
   renderer.render(scene, camera);
 }
