@@ -28,6 +28,9 @@ const incrementSpeed = 0.012;
 const distance = 50;
 const sensitivity = 10;
 
+const track1 = 0;
+const track2 = 1000;
+
 /* CONFIGURAÇÕES - FIM */
 
 var scene = new THREE.Scene();
@@ -68,34 +71,81 @@ window.addEventListener(
 var trackArray = new Array();
 
 var track = new THREE.Group();
-var planeGeometry = new THREE.PlaneGeometry(300, 300);
-planeGeometry.translate(0.0, 100, -0.5);
+
 var planeMaterial = new THREE.MeshBasicMaterial({
   color: 'rgba(86, 125, 70)',
   side: THREE.DoubleSide,
 });
-var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-planeGeometry.rotateX(degreesToRadians(-90));
 
-track.add(plane);
+var planeGeometry1 = new THREE.PlaneGeometry(300, 300);
+planeGeometry1.translate(track1, track1 + 100, -0.5);
+var plane1 = new THREE.Mesh(planeGeometry1, planeMaterial);
+planeGeometry1.rotateX(degreesToRadians(-90));
 
+var planeGeometry2 = new THREE.PlaneGeometry(300, 300);
+planeGeometry2.translate(track2, -(track2 - 100), -0.5);
+var plane2 = new THREE.Mesh(planeGeometry2, planeMaterial);
+planeGeometry2.rotateX(degreesToRadians(-90));
+
+track.add(plane1);
+track.add(plane2);
+
+
+// Pista 1
 for (var i = 0; i < 20; i++) {
   for (var j = 0; j < 4; j++) {
-    createPlane(-90 + i * 10, -20 + j * 10);
+    createPlane(track1 + -90 + i * 10, track1 + -20 + j * 10);
   }
 
   for (var j = 0; j < 4; j++) {
-    createPlane(-90 + 10 * j, -i * 10);
+    createPlane(track1 + -90 + 10 * j, track1 + -i * 10);
   }
 
   for (var j = 0; j < 4; j++) {
-    createPlane(-90 + i * 10, -200 + 10 * j);
+    createPlane(track1 + -90 + i * 10, track1 + -200 + 10 * j);
   }
 
   for (var j = 0; j < 4; j++) {
-    createPlane(100 - 10 * j, -i * 10);
+    createPlane(track1 + 100 - 10 * j, track1 + -i * 10);
   }
 }
+
+// Pista 2
+for (var i = 0; i < 20; i++) {
+  for (var j = 0; j < 4; j++) {
+    createPlane(track2 + -90 + i * 10, track2 + -20 + j * 10);
+  }
+  for (var j = 0; j < 4; j++) {
+    createPlane(track2 + -90 + 10 * j, track2 + -i * 10);
+  }
+}
+for (var i = 0; i < 12; i++) {
+  for (var j = 0; j < 4; j++) {
+    createPlane(track2 + -90 + i * 10, track2 + -20 + j * 10);
+  }
+
+  for (var j = 0; j < 4; j++) {
+    createPlane(track2 + -90 + 10 * j, track2 + -i * 10);
+  }
+
+  for (var j = 0; j < 4; j++) {
+    createPlane(track2 + -90 + i * 10, track2 + -200 + 10 * j);
+  }
+
+  for (var j = 0; j < 4; j++) {
+    createPlane(track2 + 20 - 10 * j, track2 + -80 - i * 10);
+  }
+
+  for (var j = 0; j < 4; j++) {
+    createPlane(track2 + -10 + i * 10, track2 + -110 + 10 * j);
+  }
+
+  for (var j = 0; j < 4; j++) {
+    createPlane(track2 + 100 - 10 * j, track2 + -i * 10);
+  }
+
+}
+
 
 scene.add(track);
 
@@ -158,6 +208,23 @@ document.addEventListener('keypress', function (e) {
 
     camera.up.set(0, 1, 0);
   }
+
+  if (e.keyCode === 49) {
+    car.position.x = track1;
+    car.position.y = 2.3;
+    car.position.z = track1;
+
+    camera.up.set(0, 1, 0);
+  }
+
+  if (e.keyCode === 50) {
+    car.position.x = track2;
+    car.position.y = 2.3;
+    car.position.z = track2;
+
+    camera.up.set(0, 1, 0);
+  }
+
 });
 
 // Atualiza o timer
