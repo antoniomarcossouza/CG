@@ -65,8 +65,9 @@ window.addEventListener(
 
 /* PISTA - INICIO */
 
-var track = new THREE.Group();
+var trackArray = new Array();
 
+var track = new THREE.Group();
 var planeGeometry = new THREE.PlaneGeometry(300, 300);
 planeGeometry.translate(0.0, 100, -0.5);
 var planeMaterial = new THREE.MeshBasicMaterial({
@@ -164,7 +165,6 @@ timerUpdate();
 
 render();
 
-
 function timerUpdate() {
   var timer = new Date().getTime() - timerInicio;
 
@@ -232,6 +232,8 @@ function createPlane(x, z) {
   groundPlane.rotateX(degreesToRadians(-90));
   groundPlane.position.set(x, 0.0, z);
   track.add(groundPlane);
+
+  trackArray.push({ x: x, z: z });
 }
 
 function keyboardUpdate() {
@@ -280,7 +282,16 @@ function keyboardUpdate() {
     );
   }
 }
+
+
 function movimentCar() {
+
+  if (!(trackArray.some(e => ((e.x === Math.ceil(car.position.x / 10) * 10) && (e.z === Math.ceil(car.position.z / 10) * 10))))) {
+    if (speed > 1) {
+      speed = speed / 2;
+    }
+  }
+
   // Para o carro em velocidades muito baixas
   if (
     (speed < incrementSpeed && speed > 0) ||
