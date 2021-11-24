@@ -8,8 +8,8 @@ import {
   initDefaultBasicLight,
   createGroundPlane,
   onWindowResize,
-  degreesToRadians
-} from "../libs/util/util.js";
+  degreesToRadians,
+} from '../libs/util/util.js';
 
 /* TIMER - INICIO */
 var timerInicio = new Date().getTime();
@@ -22,11 +22,11 @@ timerVoltas[0] = new Date().getTime();
 var inspecionar = false;
 
 var speed = 0;
-const maxSpeed = 2.5;
-const incrementSpeed = 0.024;
+const maxSpeed = 2.2;
+const incrementSpeed = 0.012;
 
 const distance = 50;
-const sensitivity = 15;
+const sensitivity = 10;
 
 /* CONFIGURAÇÕES - FIM */
 
@@ -34,10 +34,15 @@ var scene = new THREE.Scene();
 var stats = new Stats();
 
 var renderer = initRenderer();
-renderer.setClearColor("rgb(30, 30, 40)");
+renderer.setClearColor('rgb(30, 30, 40)');
 
 /* CAMERA - INICIO */
-var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(
+  45,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 
 // Utilizado para visualizar a camera 20px na frente do carro
 var camera_look = new THREE.Group();
@@ -50,7 +55,13 @@ initDefaultBasicLight(scene);
 /* CAMERA - FIM */
 
 var keyboard = new KeyboardState();
-window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
+window.addEventListener(
+  'resize',
+  function () {
+    onWindowResize(camera, renderer);
+  },
+  false
+);
 
 /* PISTA - INICIO */
 
@@ -59,7 +70,7 @@ var track = new THREE.Group();
 var planeGeometry = new THREE.PlaneGeometry(300, 300);
 planeGeometry.translate(0.0, 100, -0.5);
 var planeMaterial = new THREE.MeshBasicMaterial({
-  color: "rgba(86, 125, 70)",
+  color: 'rgba(86, 125, 70)',
   side: THREE.DoubleSide,
 });
 var plane = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -69,7 +80,7 @@ track.add(plane);
 
 for (var i = 0; i < 20; i++) {
   for (var j = 0; j < 4; j++) {
-    createPlane(-90 + i * 10, -20 + (j * 10));
+    createPlane(-90 + i * 10, -20 + j * 10);
   }
 
   for (var j = 0; j < 4; j++) {
@@ -95,7 +106,7 @@ var car = new THREE.Group();
 
 var body = createCylinder(1.3, 2.75, 10.0, 20, 20, false);
 body.rotateX(degreesToRadians(90));
-body.position.set(0.0, 0.5, 0.0)
+body.position.set(0.0, 0.5, 0.0);
 
 var eixo1 = createCylinder(0.3, 0.3, 7.0, 10, 10, false);
 eixo1.rotateZ(degreesToRadians(90));
@@ -133,20 +144,18 @@ car.rotateY(degreesToRadians(-90));
 /* CARRO - FIM */
 
 // Mudar o modo da camera
-document.addEventListener("keypress", function (e) {
+document.addEventListener('keypress', function (e) {
   if (e.keyCode === 32) {
     track.visible = inspecionar;
-    inspecionar == true ? inspecionar = false : inspecionar = true;
+    inspecionar == true ? (inspecionar = false) : (inspecionar = true);
 
     if (inspecionar == true) {
-
       car.position.x = 0;
       car.position.y = 2.3;
       car.position.z = 0;
     }
 
     camera.up.set(0, 1, 0);
-
   }
 });
 
@@ -180,18 +189,38 @@ function timerUpdate() {
   }, 1000);
 }
 
-function createCylinder(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded) {
-  var geometry = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded);
+function createCylinder(
+  radiusTop,
+  radiusBottom,
+  height,
+  radialSegments,
+  heightSegments,
+  openEnded
+) {
+  var geometry = new THREE.CylinderGeometry(
+    radiusTop,
+    radiusBottom,
+    height,
+    radialSegments,
+    heightSegments,
+    openEnded
+  );
   var material;
-  material = new THREE.MeshPhongMaterial({ color: "rgb(255,255,50)" });
+  material = new THREE.MeshPhongMaterial({ color: 'rgb(255,255,50)' });
   var object = new THREE.Mesh(geometry, material);
   object.castShadow = true;
   return object;
 }
 
 function createTorus(radius, tube, radialSegments, tubularSegments, arc) {
-  var geometry = new THREE.TorusGeometry(radius, tube, radialSegments, tubularSegments, arc);
-  var material = new THREE.MeshPhongMaterial({ color: "rgb(0,0,0)" });
+  var geometry = new THREE.TorusGeometry(
+    radius,
+    tube,
+    radialSegments,
+    tubularSegments,
+    arc
+  );
+  var material = new THREE.MeshPhongMaterial({ color: 'rgb(0,0,0)' });
   var object = new THREE.Mesh(geometry, material);
   object.castShadow = true;
   object.rotateY(degreesToRadians(90));
@@ -201,44 +230,62 @@ function createTorus(radius, tube, radialSegments, tubularSegments, arc) {
 function createPlane(x, z) {
   var groundPlane = createGroundPlane(10, 10, 1, 1);
   groundPlane.rotateX(degreesToRadians(-90));
-  groundPlane.position.set(x, 0.0, z)
+  groundPlane.position.set(x, 0.0, z);
   track.add(groundPlane);
 }
 
-
 function keyboardUpdate() {
-
   keyboard.update();
-  var rotateAngle = Math.PI / 2 * 0.0025 * sensitivity;
+  var rotateAngle = (Math.PI / 2) * 0.0025 * sensitivity;
 
-  if (keyboard.pressed("X")) {
+  if (keyboard.pressed('X')) {
     if (speed < maxSpeed) {
       speed += incrementSpeed;
     }
   }
-  if (keyboard.pressed("down")) {
-
+  if (keyboard.pressed('down')) {
     if (speed > -maxSpeed) {
       speed -= incrementSpeed;
     }
   }
 
   if (speed != 0) {
-    if (keyboard.pressed("left")) {
+    if (keyboard.pressed('left')) {
       car.rotateY(rotateAngle);
       camera_look.rotateY(rotateAngle);
-    }
-    if (keyboard.pressed("right")) {
+    } else if (keyboard.pressed('right')) {
       car.rotateY(-rotateAngle);
       camera_look.rotateY(-rotateAngle);
     }
   }
 
+  if (keyboard.pressed('left')) {
+    if (roda1.rotation._y > 0.9) {
+      roda1.rotateY(rotateAngle / 2);
+      roda2.rotateY(rotateAngle / 2);
+    }
+  } else if (keyboard.pressed('right')) {
+    if (roda1.rotation._y > 0.9) {
+      roda1.rotateY(-rotateAngle / 2);
+      roda2.rotateY(-rotateAngle / 2);
+    }
+  }
+
+  if (!keyboard.pressed('right') && !keyboard.pressed('left')) {
+    roda1.setRotationFromEuler(
+      new THREE.Euler(roda1.rotation._x, 1.57, roda1.rotation._z, 'XYZ')
+    );
+    roda2.setRotationFromEuler(
+      new THREE.Euler(roda1.rotation._x, 1.57, roda2.rotation._z, 'XYZ')
+    );
+  }
 }
 function movimentCar() {
-
   // Para o carro em velocidades muito baixas
-  if ((speed < incrementSpeed && speed > 0) || speed > incrementSpeed && speed < 0) {
+  if (
+    (speed < incrementSpeed && speed > 0) ||
+    (speed > incrementSpeed && speed < 0)
+  ) {
     speed = 0;
   }
 
@@ -246,7 +293,7 @@ function movimentCar() {
 
   keyboard.update();
   // Desacelera o carro se não precionar nenhum botão
-  if (!(keyboard.pressed("X") || keyboard.pressed("down"))) {
+  if (!(keyboard.pressed('X') || keyboard.pressed('down'))) {
     if (speed != 0 && speed > 0) {
       speed -= incrementSpeed;
     }
@@ -256,33 +303,18 @@ function movimentCar() {
   }
 
   // Desacelera mais o carro caso aperte o botão oposto
-  if (speed < 0 && keyboard.pressed("X")) {
+  if (speed < 0 && keyboard.pressed('X')) {
     speed += incrementSpeed * 2;
   }
 
-  if (speed > 0 && keyboard.pressed("down")) {
+  if (speed > 0 && keyboard.pressed('down')) {
     speed -= incrementSpeed * 2;
   }
 
-  /*roda1.matrixAutoUpdate = false;
-  roda2.matrixAutoUpdate = false;
-  roda3.matrixAutoUpdate = false;
-  roda4.matrixAutoUpdate = false;
-  var mat4 = new THREE.Matrix4();
-  roda1.matrix.identity();
-  roda2.matrix.identity();
-  roda3.matrix.identity();
-  roda4.matrix.identity();
-  roda1.matrix.multiply(mat4.makeRotationZ(angle));
-  roda2.matrix.multiply(mat4.makeRotationZ(angle));
-  roda3.matrix.multiply(mat4.makeRotationZ(angle));
-  roda4.matrix.multiply(mat4.makeRotationZ(angle));*/
 }
 
 function moveCamera() {
-
   if (inspecionar == false) {
-
     camera_look.position.x = car.position.x;
     camera_look.position.y = car.position.y;
     camera_look.position.z = car.position.z;
@@ -293,9 +325,12 @@ function moveCamera() {
     camera.position.y = 35;
     camera.position.z = camera_look.position.z + distance;
 
-    camera.lookAt(camera_look.position.x, camera_look.position.y, camera_look.position.z);
+    camera.lookAt(
+      camera_look.position.x,
+      camera_look.position.y,
+      camera_look.position.z
+    );
   }
-
 }
 
 function render() {
@@ -309,7 +344,7 @@ function render() {
   // Faz a verificação do botões que estão sendo apertados
   keyboardUpdate();
 
-  // Movimenta o carro 
+  // Movimenta o carro
   movimentCar();
 
   // Faz a animação da camera
