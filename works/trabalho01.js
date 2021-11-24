@@ -4,11 +4,18 @@ import { TrackballControls } from '../build/jsm/controls/TrackballControls.js';
 import KeyboardState from '../libs/util/KeyboardState.js';
 import {
   initRenderer,
+  InfoBox,
   initDefaultBasicLight,
   createGroundPlane,
   onWindowResize,
   degreesToRadians
 } from "../libs/util/util.js";
+
+/* TIMER - INICIO */
+var timerInicio = new Date().getTime();
+var timerVoltas = [];
+timerVoltas[0] = new Date().getTime();
+/* TIMER - FIM */
 
 /* CONFIGURAÇÕES - INICIO */
 
@@ -125,28 +132,53 @@ car.rotateY(degreesToRadians(-90));
 
 /* CARRO - FIM */
 
-  // Mudar o modo da camera
-  document.addEventListener("keypress", function(e) {
-    if(e.keyCode  === 32) {
-      track.visible = inspecionar;
-      inspecionar == true ? inspecionar = false : inspecionar = true;
+// Mudar o modo da camera
+document.addEventListener("keypress", function (e) {
+  if (e.keyCode === 32) {
+    track.visible = inspecionar;
+    inspecionar == true ? inspecionar = false : inspecionar = true;
 
-      if (inspecionar == true) {
+    if (inspecionar == true) {
 
-        car.position.x = 0;
-        car.position.y = 2.3;
-        car.position.z = 0;
-      }
-
-      camera.up.set(0, 1, 0);
-
+      car.position.x = 0;
+      car.position.y = 2.3;
+      car.position.z = 0;
     }
-  });
 
+    camera.up.set(0, 1, 0);
 
+  }
+});
+
+// Atualiza o timer
+timerUpdate();
 
 render();
 
+
+function timerUpdate() {
+  var timer = new Date().getTime() - timerInicio;
+
+  var minutes = Math.floor((timer % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((timer % (1000 * 60)) / 1000);
+
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  if (document.getElementById("InfoxBox") == null) {
+    information = new InfoBox();
+    information.infoBox.style.backgroundColor = "rgba(0, 0, 0, 0.65)";
+    information.infoBox.style.color = "rgb(242, 242, 242)";
+    information.show();
+  }
+
+  var information = document.getElementById("InfoxBox");
+  information.innerHTML = "Volta (?/?)<br><br>Tempo da volta: " + minutes + ":" + seconds + "<br>Tempo total: " + minutes + ":" + seconds
+
+  setTimeout(function () {
+    timerUpdate();
+  }, 1000);
+}
 
 function createCylinder(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded) {
   var geometry = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded);
@@ -251,9 +283,9 @@ function moveCamera() {
 
   if (inspecionar == false) {
 
-    camera_look.position.x  = car.position.x;
-    camera_look.position.y  = car.position.y;
-    camera_look.position.z  = car.position.z;
+    camera_look.position.x = car.position.x;
+    camera_look.position.y = car.position.y;
+    camera_look.position.z = car.position.z;
 
     camera_look.translateZ(20);
 
