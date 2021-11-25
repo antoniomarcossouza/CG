@@ -12,9 +12,9 @@ import {
 } from '../libs/util/util.js';
 
 /* TIMER - INICIO */
-var timerInicio = new Date().getTime();
+var lap = 0;
 var timerVoltas = [];
-timerVoltas[0] = new Date().getTime();
+var canFinish = true;
 /* TIMER - FIM */
 
 /* CONFIGURAÇÕES - INICIO */
@@ -69,6 +69,7 @@ window.addEventListener(
 /* PISTA - INICIO */
 
 var trackArray = new Array();
+var finishLineArray = new Array();
 
 var track = new THREE.Group();
 
@@ -92,6 +93,9 @@ track.add(plane2);
 
 
 // Pista 1
+for (var i = 0; i < 4; i++) {
+  createFinishLine(-10, - 20 + track1 + i * 10, i);
+}
 for (var i = 0; i < 20; i++) {
   for (var j = 0; j < 4; j++) {
     createPlane(track1 + -90 + i * 10, track1 + -20 + j * 10);
@@ -111,6 +115,9 @@ for (var i = 0; i < 20; i++) {
 }
 
 // Pista 2
+for (var i = 0; i < 4; i++) {
+  createFinishLine(track2 - 10, - 20 + track2 + i * 10, i);
+}
 for (var i = 0; i < 20; i++) {
   for (var j = 0; j < 4; j++) {
     createPlane(track2 + -90 + i * 10, track2 + -20 + j * 10);
@@ -152,93 +159,93 @@ scene.add(track);
 
 /* CARRO - INICIO */
 
-var carro = new THREE.Group();
+var car = new THREE.Group();
 
 var corpo = createBox(5.5, 13, 3, 'rgb(22, 148, 186)');
 corpo.rotateX(degreesToRadians(90));
 corpo.position.set(0.0, 1, 0.0);
-carro.add(corpo);
+car.add(corpo);
 
 var corpo2 = createBox(5.5, 5, 3, 'rgb(22, 148, 186)');
 corpo2.rotateX(degreesToRadians(90));
 corpo2.position.set(0.0, 4, 0.0);
-carro.add(corpo2);
+car.add(corpo2);
 
 var janela1 = createBox(5, 5.1, 2.5, 'rgb(41, 43, 43)');
 janela1.rotateX(degreesToRadians(90));
 janela1.position.set(0.0, 4, 0.0);
-carro.add(janela1);
+car.add(janela1);
 
 var janela2 = createBox(5.6, 4.5, 2.5, 'rgb(41, 43, 43)');
 janela2.rotateX(degreesToRadians(90));
 janela2.position.set(0.0, 4, 0.0);
-carro.add(janela2);
+car.add(janela2);
 
 var divisor_janela = createBox(5.7, 0.30, 2.5, 'rgb(22, 148, 186)');
 divisor_janela.rotateX(degreesToRadians(90));
 divisor_janela.position.set(0.0, 4, -0.5);
-carro.add(divisor_janela);
+car.add(divisor_janela);
 
 var para_choque1 = createBox(6.25, 0.5, 0.5, 'rgb(168, 173, 173)');
 para_choque1.rotateX(degreesToRadians(90));
 para_choque1.position.set(0.0, -0.25, 6.5);
-carro.add(para_choque1);
+car.add(para_choque1);
 
 var para_choque2 = createBox(6.25, 0.5, 0.5, 'rgb(168, 173, 173)');
 para_choque2.rotateX(degreesToRadians(90));
 para_choque2.position.set(0.0, -0.25, -6.5);
-carro.add(para_choque2);
+car.add(para_choque2);
 
 var farol_frente1 = createBox(1, 0.5, 0.5, 'rgb(255,255,50)');
 farol_frente1.rotateX(degreesToRadians(90));
 farol_frente1.position.set(2.0, 1.75, 6.5);
-carro.add(farol_frente1);
+car.add(farol_frente1);
 
 var farol_frente2 = createBox(1, 0.5, 0.5, 'rgb(255,255,50)');
 farol_frente2.rotateX(degreesToRadians(90));
 farol_frente2.position.set(-2.0, 1.75, 6.5);
-carro.add(farol_frente2);
+car.add(farol_frente2);
 
 var farol_tras1 = createBox(1, 0.5, 0.5, 'rgb(196, 35, 35)');
 farol_tras1.rotateX(degreesToRadians(90));
 farol_tras1.position.set(2.0, 1.75, -6.5);
-carro.add(farol_tras1);
+car.add(farol_tras1);
 
 var farol_tras2 = createBox(1, 0.5, 0.5, 'rgb(196, 35, 35)');
 farol_tras2.rotateX(degreesToRadians(90));
 farol_tras2.position.set(-2.0, 1.75, -6.5);
-carro.add(farol_tras2);
+car.add(farol_tras2);
 
 var eixo1 = createCylinder(0.3, 0.3, 7.0, 10, 10, false, 'rgb(132, 142, 156)');
 eixo1.rotateZ(degreesToRadians(90));
 eixo1.position.set(0.0, -1.0, 4.0);
-carro.add(eixo1);
+car.add(eixo1);
 
 var eixo2 = createCylinder(0.3, 0.3, 7.0, 10, 10, false, 'rgb(132, 142, 156)');
 eixo2.rotateZ(degreesToRadians(90));
 eixo2.position.set(0.0, -1.0, -4.0);
-carro.add(eixo2);
+car.add(eixo2);
 
 var roda1 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2);
 roda1.position.set(3.5, -1.0, 4.0);
-carro.add(roda1);
+car.add(roda1);
 
 var roda2 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2);
 roda2.position.set(-3.5, -1.0, 4.0);
-carro.add(roda2);
+car.add(roda2);
 
 var roda3 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2);
 roda3.position.set(3.5, -1.0, -4.0);
-carro.add(roda3);
+car.add(roda3);
 
 var roda4 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2);
 roda4.position.set(-3.5, -1.0, -4.0);
-carro.add(roda4);
+car.add(roda4);
 
-scene.add(carro);
+scene.add(car);
 
-carro.translateY(2.2);
-carro.rotateY(degreesToRadians(-90));
+car.translateY(2.2);
+car.rotateY(degreesToRadians(-90));
 
 /* CARRO - FIM */
 
@@ -248,29 +255,15 @@ document.addEventListener('keypress', function (e) {
     track.visible = inspecionar;
     inspecionar == true ? (inspecionar = false) : (inspecionar = true);
 
-    if (inspecionar == true) {
-      carro.position.x = 0;
-      carro.position.y = 2.3;
-      carro.position.z = 0;
-    }
-
-    camera.up.set(0, 1, 0);
+    resetCar(track1, track1);
   }
 
   if (e.keyCode === 49) {
-    carro.position.x = track1;
-    carro.position.y = 2.3;
-    carro.position.z = track1;
-
-    camera.up.set(0, 1, 0);
+    resetCar(track1, track1);
   }
 
   if (e.keyCode === 50) {
-    carro.position.x = track2;
-    carro.position.y = 2.3;
-    carro.position.z = track2;
-
-    camera.up.set(0, 1, 0);
+    resetCar(track2, track2);
   }
 
 });
@@ -280,25 +273,50 @@ timerUpdate();
 
 render();
 
+function resetCar(x, y) {
+  car.position.x = x;
+  car.position.y = 2.3;
+  car.position.z = y;
+
+  camera.up.set(0, 1, 0);
+  speed = 0;
+  canFinish = true;
+  lap = 0;
+}
+
 function timerUpdate() {
-  var timer = new Date().getTime() - timerInicio;
+  if (lap > 0) {
 
-  var minutes = Math.floor((timer % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((timer % (1000 * 60)) / 1000);
+    var seconds = timerVoltas[lap] % 60;
+    var minutes = (timerVoltas[lap] - seconds) / 60;
 
-  minutes = minutes < 10 ? "0" + minutes : minutes;
-  seconds = seconds < 10 ? "0" + seconds : seconds;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
 
-  if (document.getElementById("InfoxBox") == null) {
-    information = new InfoBox();
-    information.infoBox.style.backgroundColor = "rgba(0, 0, 0, 0.65)";
-    information.infoBox.style.color = "rgb(242, 242, 242)";
-    information.show();
+    var total = 0;
+    for (var i = 1; i <= lap; i++) {
+      total += timerVoltas[i];
+    }
+
+    var secondsTotal = total % 60;
+    var minutesTotal = (total - secondsTotal) / 60;
+
+    minutesTotal = minutesTotal < 10 ? "0" + minutesTotal : minutesTotal;
+    secondsTotal = secondsTotal < 10 ? "0" + secondsTotal : secondsTotal;
+
+    if (document.getElementById("InfoxBox") == null) {
+      information = new InfoBox();
+      information.infoBox.style.backgroundColor = "rgba(0, 0, 0, 0.65)";
+      information.infoBox.style.color = "rgb(242, 242, 242)";
+      information.show();
+    }
+
+    var information = document.getElementById("InfoxBox");
+    information.innerHTML = "Volta (" + lap + "/4)<br><br>Tempo da volta: " + minutes + ":" + seconds + "<br>Tempo total: " + minutesTotal + ":" + secondsTotal
+
+    timerVoltas[lap]++;
+
   }
-
-  var information = document.getElementById("InfoxBox");
-  information.innerHTML = "Volta (?/?)<br><br>Tempo da volta: " + minutes + ":" + seconds + "<br>Tempo total: " + minutes + ":" + seconds
-
   setTimeout(function () {
     timerUpdate();
   }, 1000);
@@ -369,6 +387,16 @@ function createPlane(x, z) {
   trackArray.push({ x: x, z: z });
 }
 
+function createFinishLine(x, z, i) {
+  var color = i % 2 == 0 ? "rgb(255,255,255)" : "rgb(0,0,0)";
+  var groundPlane = createGroundPlane(5, 10, 1, 1, color);
+  groundPlane.rotateX(degreesToRadians(-90));
+  groundPlane.position.set(x, 0.1, z);
+  track.add(groundPlane);
+
+  finishLineArray.push({ x: x, z: z });
+}
+
 function keyboardUpdate() {
   keyboard.update();
   var rotateAngle = (Math.PI / 2) * 0.0025 * sensitivity;
@@ -386,10 +414,10 @@ function keyboardUpdate() {
 
   if (speed != 0) {
     if (keyboard.pressed('left')) {
-      carro.rotateY(rotateAngle);
+      car.rotateY(rotateAngle);
       camera_look.rotateY(rotateAngle);
     } else if (keyboard.pressed('right')) {
-      carro.rotateY(-rotateAngle);
+      car.rotateY(-rotateAngle);
       camera_look.rotateY(-rotateAngle);
     }
   }
@@ -419,10 +447,27 @@ function keyboardUpdate() {
 
 function movimentCar() {
 
-  if (!(trackArray.some(e => ((e.x === Math.ceil(carro.position.x / 10) * 10) && (e.z === Math.ceil(carro.position.z / 10) * 10))))) {
+  if (inspecionar == true) {
+    speed = 0;
+  }
+  // Verifica se o carro ta dentro da pista
+  if (!(trackArray.some(e => ((e.x === Math.ceil(car.position.x / 10) * 10) && (e.z === Math.ceil(car.position.z / 10) * 10))))) {
     if (speed > 1) {
       speed = speed / 2;
     }
+  }
+
+  // Verifica se o carro passou na linha de chegada
+  if (finishLineArray.some(e => ((e.x === Math.ceil(car.position.x / 10) * 10) && (e.z === Math.ceil(car.position.z / 10) * 10)))) {
+    if (canFinish == true) {
+      lap++;
+      timerVoltas[lap] = 0;
+      canFinish = false;
+    }
+  }
+
+  if (canFinish == false && (Math.abs(car.position.z) > track1 + 150 && Math.abs(car.position.z) < track1 + 250) || Math.abs(car.position.z) < track2 - 150 && Math.abs(car.position.z) > track2 - 250) {
+    canFinish = true;
   }
 
   // Para o carro em velocidades muito baixas
@@ -433,7 +478,7 @@ function movimentCar() {
     speed = 0;
   }
 
-  carro.translateZ(speed);
+  car.translateZ(speed);
 
   keyboard.update();
   // Desacelera o carro se não precionar nenhum botão
@@ -459,9 +504,9 @@ function movimentCar() {
 
 function moveCamera() {
   if (inspecionar == false) {
-    camera_look.position.x = carro.position.x;
-    camera_look.position.y = carro.position.y;
-    camera_look.position.z = carro.position.z;
+    camera_look.position.x = car.position.x;
+    camera_look.position.y = car.position.y;
+    camera_look.position.z = car.position.z;
 
     camera_look.translateZ(20);
 
