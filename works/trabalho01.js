@@ -14,15 +14,17 @@ import {
 /* TIMER - INICIO */
 var lap = 0;
 var timerVoltas = [];
-var canFinish = true;
+var canFinish = 2;
+var totalLap = 4;
 /* TIMER - FIM */
 
 /* CONFIGURAÇÕES - INICIO */
 
 var inspecionar = false;
+var finalizou = false;
 
 var speed = 0;
-const maxSpeed = 2.2;
+const maxSpeed = 2.6;
 const incrementSpeed = 0.02;
 
 const distance = 50;
@@ -279,31 +281,15 @@ function resetCar(x, y) {
   car.position.z = y;
 
   camera.up.set(0, 1, 0);
+
   speed = 0;
-  canFinish = true;
+  canFinish = 2;
   lap = 0;
 }
 
 function timerUpdate() {
-  if (lap > 0) {
 
-    var seconds = timerVoltas[lap] % 60;
-    var minutes = (timerVoltas[lap] - seconds) / 60;
-
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-
-    var total = 0;
-    for (var i = 1; i <= lap; i++) {
-      total += timerVoltas[i];
-    }
-
-    var secondsTotal = total % 60;
-    var minutesTotal = (total - secondsTotal) / 60;
-
-    minutesTotal = minutesTotal < 10 ? "0" + minutesTotal : minutesTotal;
-    secondsTotal = secondsTotal < 10 ? "0" + secondsTotal : secondsTotal;
-
+  if (finalizou == false) {
     if (document.getElementById("InfoxBox") == null) {
       information = new InfoBox();
       information.infoBox.style.backgroundColor = "rgba(0, 0, 0, 0.65)";
@@ -312,14 +298,37 @@ function timerUpdate() {
     }
 
     var information = document.getElementById("InfoxBox");
-    information.innerHTML = "Volta (" + lap + "/4)<br><br>Tempo da volta: " + minutes + ":" + seconds + "<br>Tempo total: " + minutesTotal + ":" + secondsTotal
 
-    timerVoltas[lap]++;
+    if (lap > 0) {
 
+      var seconds = timerVoltas[lap] % 60;
+      var minutes = (timerVoltas[lap] - seconds) / 60;
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      var total = 0;
+      for (var i = 1; i <= lap; i++) {
+        total += timerVoltas[i];
+      }
+
+      var secondsTotal = total % 60;
+      var minutesTotal = (total - secondsTotal) / 60;
+
+      minutesTotal = minutesTotal < 10 ? "0" + minutesTotal : minutesTotal;
+      secondsTotal = secondsTotal < 10 ? "0" + secondsTotal : secondsTotal;
+
+      information.innerHTML = "Volta (" + lap + "/" + totalLap + ")<br><br>Tempo da volta: " + minutes + ":" + seconds + "<br>Tempo total: " + minutesTotal + ":" + secondsTotal + "<br><br>Velocidade: " + Math.round(speed * 10) + " KM/h";
+
+      timerVoltas[lap]++;
+
+    } else {
+      information.innerHTML = "";
+    }
+    setTimeout(function () {
+      timerUpdate();
+    }, 1000);
   }
-  setTimeout(function () {
-    timerUpdate();
-  }, 1000);
 }
 
 function createBox(
@@ -450,24 +459,77 @@ function movimentCar() {
   if (inspecionar == true) {
     speed = 0;
   }
+
   // Verifica se o carro ta dentro da pista
   if (!(trackArray.some(e => ((e.x === Math.ceil(car.position.x / 10) * 10) && (e.z === Math.ceil(car.position.z / 10) * 10))))) {
-    if (speed > 1) {
-      speed = speed / 2;
+    if (speed > maxSpeed / 2) {
+      speed -= (1.4 * incrementSpeed);
     }
   }
 
   // Verifica se o carro passou na linha de chegada
   if (finishLineArray.some(e => ((e.x === Math.ceil(car.position.x / 10) * 10) && (e.z === Math.ceil(car.position.z / 10) * 10)))) {
-    if (canFinish == true) {
+    if (canFinish == 2) {
+
+      if (lap == totalLap) {
+        track.visible = true;
+
+        var information = document.getElementById("InfoxBox");
+
+        var total = 0;
+        var texto = "";
+
+        for (var i = 1; i <= lap; i++) {
+          var seconds = timerVoltas[i] % 60;
+          var minutes = (timerVoltas[i] - seconds) / 60;
+
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          total += timerVoltas[i];
+
+          texto += "<br>Volta " + i + " - " + minutes + ":" + seconds;
+        }
+
+        var secondsTotal = total % 60;
+        var minutesTotal = (total - secondsTotal) / 60;
+
+        minutesTotal = minutesTotal < 10 ? "0" + minutesTotal : minutesTotal;
+        secondsTotal = secondsTotal < 10 ? "0" + secondsTotal : secondsTotal;
+
+        information.style.backgroundColor = "rgba(128, 128, 128, 0.7)";
+        information.style.color = "rgb(0, 0, 0)";
+        information.style.bottom = '0';
+        information.style.textAlign = 'center';
+        information.style.width = '100%';
+        information.style.height = '100%';
+        information.style.color = '#FFF';
+        information.style.fontSize = '42px';
+
+        information.innerHTML = "<div id='texto'> <h1>Parábens, você concluiu a corrida</h1> <h2>" + texto + "</h2> <br> <h3>Tempo total: " + minutesTotal + ":" + secondsTotal + "</h3> </div>";
+
+        var texto = document.getElementById("texto");
+        information.style.marginTop = '30%';
+
+        //resetCar(track1, track1);
+        finalizou = true;
+
+      }
+
       lap++;
       timerVoltas[lap] = 0;
-      canFinish = false;
+      canFinish = 0;
+
     }
   }
 
-  if (canFinish == false && (Math.abs(car.position.z) > track1 + 150 && Math.abs(car.position.z) < track1 + 250) || Math.abs(car.position.z) < track2 - 150 && Math.abs(car.position.z) > track2 - 250) {
-    canFinish = true;
+  // Verifica se o carro deu a volta na pista (Passou em cima)
+  if (canFinish == 0 && (Math.abs(car.position.z) > track1 + 150 && Math.abs(car.position.z) < track1 + 250) || Math.abs(car.position.z) < track2 - 150 && Math.abs(car.position.z) > track2 - 250) {
+    canFinish = 1;
+  }
+  // Verifica se o carro deu a volta na pista (Passou do lado direito)
+  if (canFinish == 1 && (car.position.x > -track1 + 60 && car.position.x < -track1 + 120) || car.position.x > track2 + 60 &&car.position.z < track2 + 120) {
+    canFinish = 2;
   }
 
   // Para o carro em velocidades muito baixas
