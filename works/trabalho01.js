@@ -280,6 +280,9 @@ function resetCar(x, y) {
   car.position.y = 2.3;
   car.position.z = y;
 
+  car.rotation.y = -Math.PI / 2;
+  camera_look.rotation.y = -Math.PI / 2;
+
   camera.up.set(0, 1, 0);
 
   speed = 0;
@@ -324,7 +327,7 @@ function timerUpdate() {
       minutesTotal = minutesTotal < 10 ? "0" + minutesTotal : minutesTotal;
       secondsTotal = secondsTotal < 10 ? "0" + secondsTotal : secondsTotal;
 
-      information.innerHTML = "Volta (" + lap + "/" + totalLap + ")<br><br>Tempo da volta: " + minutes + ":" + seconds + "<br>Tempo total: " + minutesTotal + ":" + secondsTotal + "<br><br>Velocidade: " + Math.round(speed * 10) + " KM/h";
+      information.innerHTML = "Volta (" + lap + "/" + totalLap + ")<br><br>Tempo da volta: " + minutes + ":" + seconds + "<br>Tempo total: " + minutesTotal + ":" + secondsTotal + "<br><br>Velocidade: " + Math.abs(Math.round(speed * 10)) + " KM/h";
 
       timerVoltas[lap]++;
 
@@ -572,6 +575,7 @@ function movimentCar() {
 }
 
 function moveCamera() {
+
   if (inspecionar == false) {
     camera_look.position.x = car.position.x;
     camera_look.position.y = car.position.y;
