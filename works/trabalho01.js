@@ -290,7 +290,7 @@ function resetCar(x, y) {
   lap = 0;
 
   finalizou = false;
- }
+}
 
 function timerUpdate() {
 
@@ -421,6 +421,7 @@ function keyboardUpdate() {
   keyboard.update();
   var rotateAngle = (Math.PI / 2) * 0.0025 * sensitivity;
 
+  // Acrecenta velocidade ao carro
   if (keyboard.pressed('X') || keyboard.pressed('up')) {
     if (speed < maxSpeed) {
       speed += incrementSpeed;
@@ -432,6 +433,7 @@ function keyboardUpdate() {
     }
   }
 
+  // Faz o carro virar
   if (speed != 0) {
     if (keyboard.pressed('left')) {
       car.rotateY(rotateAngle);
@@ -442,18 +444,34 @@ function keyboardUpdate() {
     }
   }
 
-  if (keyboard.pressed('left')) {
-    if (roda1.rotation._y > 0.9) {
-      roda1.rotateY(rotateAngle / 2);
-      roda2.rotateY(rotateAngle / 2);
+  // Movimentação das rodas
+  if (speed >= 0) {
+    if (keyboard.pressed('left')) {
+      if (roda1.rotation._y > 0.9) {
+        roda1.rotateY(rotateAngle / 2);
+        roda2.rotateY(rotateAngle / 2);
+      }
+    } else if (keyboard.pressed('right')) {
+      if (roda1.rotation._y > 0.9) {
+        roda1.rotateY(-rotateAngle / 2);
+        roda2.rotateY(-rotateAngle / 2);
+      }
     }
-  } else if (keyboard.pressed('right')) {
-    if (roda1.rotation._y > 0.9) {
-      roda1.rotateY(-rotateAngle / 2);
-      roda2.rotateY(-rotateAngle / 2);
+  } else {
+    if (keyboard.pressed('left')) {
+      if (roda1.rotation._y > 0.9) {
+        roda1.rotateY(-rotateAngle / 2);
+        roda2.rotateY(-rotateAngle / 2);
+      }
+    } else if (keyboard.pressed('right')) {
+      if (roda1.rotation._y > 0.9) {
+        roda1.rotateY(rotateAngle / 2);
+        roda2.rotateY(rotateAngle / 2);
+      }
     }
   }
 
+  // Faz as rodas ficarem retas novamentas
   if (!keyboard.pressed('right') && !keyboard.pressed('left')) {
     roda1.setRotationFromEuler(
       new THREE.Euler(roda1.rotation._x, 1.57, roda1.rotation._z, 'XYZ')
@@ -509,7 +527,7 @@ function movimentCar() {
         secondsTotal = secondsTotal < 10 ? "0" + secondsTotal : secondsTotal;
 
         information.innerHTML = "<div id='fim'> <h1>Parábens, você concluiu a corrida</h1> <h2>" + texto + "</h2> <br> <h3>Tempo total: " + minutesTotal + ":" + secondsTotal + "</h3> </div>";
-        
+
         information.style.width = '100%';
         information.style.height = '100%';
 
