@@ -285,7 +285,9 @@ function resetCar(x, y) {
   speed = 0;
   canFinish = 2;
   lap = 0;
-}
+
+  finalizou = false;
+ }
 
 function timerUpdate() {
 
@@ -300,6 +302,10 @@ function timerUpdate() {
     var information = document.getElementById("InfoxBox");
 
     if (lap > 0) {
+
+      information.style.width = '180px';
+      information.style.height = '110px';
+      information.style.display = 'block';
 
       var seconds = timerVoltas[lap] % 60;
       var minutes = (timerVoltas[lap] - seconds) / 60;
@@ -324,11 +330,13 @@ function timerUpdate() {
 
     } else {
       information.innerHTML = "";
+
+      information.style.display = 'none';
     }
-    setTimeout(function () {
-      timerUpdate();
-    }, 1000);
   }
+  setTimeout(function () {
+    timerUpdate();
+  }, 1000);
 }
 
 function createBox(
@@ -456,14 +464,14 @@ function keyboardUpdate() {
 
 function movimentCar() {
 
-  if (inspecionar == true) {
+  if (inspecionar == true || finalizou == true) {
     speed = 0;
   }
 
   // Verifica se o carro ta dentro da pista
   if (!(trackArray.some(e => ((e.x === Math.ceil(car.position.x / 10) * 10) && (e.z === Math.ceil(car.position.z / 10) * 10))))) {
     if (speed > maxSpeed / 2) {
-      speed -= (1.4 * incrementSpeed);
+      speed -= (2.4 * incrementSpeed);
     }
   }
 
@@ -497,19 +505,18 @@ function movimentCar() {
         minutesTotal = minutesTotal < 10 ? "0" + minutesTotal : minutesTotal;
         secondsTotal = secondsTotal < 10 ? "0" + secondsTotal : secondsTotal;
 
-        information.style.backgroundColor = "rgba(128, 128, 128, 0.7)";
-        information.style.color = "rgb(0, 0, 0)";
-        information.style.bottom = '0';
-        information.style.textAlign = 'center';
+        information.innerHTML = "<div id='fim'> <h1>Parábens, você concluiu a corrida</h1> <h2>" + texto + "</h2> <br> <h3>Tempo total: " + minutesTotal + ":" + secondsTotal + "</h3> </div>";
+        
         information.style.width = '100%';
         information.style.height = '100%';
-        information.style.color = '#FFF';
-        information.style.fontSize = '42px';
 
-        information.innerHTML = "<div id='texto'> <h1>Parábens, você concluiu a corrida</h1> <h2>" + texto + "</h2> <br> <h3>Tempo total: " + minutesTotal + ":" + secondsTotal + "</h3> </div>";
+        var fim = document.getElementById("fim");
 
-        var texto = document.getElementById("texto");
-        information.style.marginTop = '30%';
+        fim.style.color = "rgb(0, 0, 0)";
+        fim.style.bottom = '0';
+        fim.style.textAlign = 'center';
+        fim.style.color = '#FFF';
+        fim.style.fontSize = '42px';
 
         //resetCar(track1, track1);
         finalizou = true;
@@ -528,7 +535,7 @@ function movimentCar() {
     canFinish = 1;
   }
   // Verifica se o carro deu a volta na pista (Passou do lado direito)
-  if (canFinish == 1 && (car.position.x > -track1 + 60 && car.position.x < -track1 + 120) || car.position.x > track2 + 60 &&car.position.z < track2 + 120) {
+  if (canFinish == 1 && (car.position.x > -track1 + 60 && car.position.x < -track1 + 120) || car.position.x > track2 + 60 && car.position.z < track2 + 120) {
     canFinish = 2;
   }
 
