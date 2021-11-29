@@ -491,8 +491,11 @@ function movimentCar() {
 
   // Verifica se o carro ta dentro da pista
   if (!(trackArray.some(e => ((e.x === Math.ceil(car.position.x / 10) * 10) && (e.z === Math.ceil(car.position.z / 10) * 10))))) {
-    if (speed > maxSpeed / 2) {
+    if (speed > 0 && speed > maxSpeed / 2) {
       speed -= (2.4 * incrementSpeed);
+    } 
+    if (speed < 0 && speed < -(maxSpeed / 2)) {
+      speed += (2.4 * incrementSpeed);
     }
   }
 
