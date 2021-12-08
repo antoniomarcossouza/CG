@@ -23,7 +23,7 @@ var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHei
 camera.lookAt(0, 0, 0);
 camera.position.set(2.18, 1.62, 3.31);
 camera.up.set(0, 1, 0);
-var objColor = "rgb(255,20,20)";
+var objColor = "rgb(240, 240, 240)";
 var objShininess = 200;
 
 // To use the keyboard
@@ -50,13 +50,22 @@ showInformation();
 var infoBox = new SecondaryBox("");
 
 // Teapot
-var geometry = new TeapotGeometry(0.5);
-var material = new THREE.MeshPhongMaterial({ color: objColor, shininess: "200" });
-material.side = THREE.DoubleSide;
-var obj = new THREE.Mesh(geometry, material);
+var teapotGeometry = new TeapotGeometry(0.5);
+var teapotMaterial = new THREE.MeshPhongMaterial({ color: objColor, shininess: "200" });
+teapotMaterial.side = THREE.DoubleSide;
+var obj = new THREE.Mesh(teapotGeometry, teapotMaterial);
 obj.castShadow = true;
 obj.position.set(0.0, 0.5, 0.0);
 scene.add(obj);
+
+//Torus
+const torusGeometry = new THREE.TorusGeometry(1, 0.05, 16, 100);
+const torusMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+torus.lookAt(0, 1, 0);
+torus.position.set(0, 1.30, 0);
+scene.add(torus);
+
 
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
@@ -160,7 +169,6 @@ function buildInterface() {
   // Interface
   var controls = new function () {
     this.viewAxes = false;
-    this.color = objColor;
     this.shininess = objShininess;
     this.lightIntensity = lightIntensity;
     this.lightType = 'Spot'
@@ -171,9 +179,6 @@ function buildInterface() {
     };
     this.onEnableAmbientLight = function () {
       ambientLight.visible = this.ambientLight;
-    };
-    this.updateColor = function () {
-      material.color.set(this.color);
     };
     this.onUpdateShininess = function () {
       material.shininess = this.shininess;
@@ -202,9 +207,6 @@ function buildInterface() {
   };
 
   var gui = new GUI();
-  gui.addColor(controls, 'color')
-    .name("Obj Color")
-    .onChange(function (e) { controls.updateColor() });
   gui.add(controls, 'shininess', 0, 1000)
     .name("Obj Shininess")
     .onChange(function (e) { controls.onUpdateShininess() });
@@ -251,11 +253,12 @@ function keyboardUpdate() {
 }
 
 function showInformation() {
-  // Use this to show information onscreen
   var controls = new InfoBox();
-  controls.add("Lighting - Types of Lights");
+  controls.add("Controles:");
   controls.addParagraph();
-  controls.add("Use the WASD-QE keys to move the light");
+  controls.add("Pressione R, G, B para ligar/desligar as luzes vermelha, verde e azul, respectivamente");
+  controls.infoBox.style.backgroundColor = "rgba(0, 0, 0, 0.65)";
+  controls.infoBox.style.color = "rgb(242, 242, 242)";
   controls.show();
 }
 
