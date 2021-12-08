@@ -22,6 +22,9 @@ var list = {
         "Exercício 01": "works/aula04_ex01",
         "Exercício 02": "works/aula04_ex02",
       },
+      "Aula 05": {
+        "Exercício 01": "works/aula05_ex01",
+      },
     },
     "Projects": {
       "Basics": {
