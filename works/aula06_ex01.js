@@ -94,45 +94,13 @@ base[0].add(tronco);
 tronco.add(motor);
 motor.add(motor2);
 
-// Set angles of rotation
-var speed = 2.5;
-var animationOn = true; // control if animation is on or of
-
-function rotateBlades() {
-  if (animationOn) {
-    motor2.rotation.y += degreesToRadians(speed);
-  }
-}
-
-function buildInterface() {
-  var controls = new function () {
-    this.onChangeAnimation = function () {
-      animationOn = !animationOn;
-    };
-    this.speed = 2;
-
-    this.changeSpeed = function () {
-      speed = this.speed;
-    };
-  };
-
-  // GUI interface
-  var gui = new GUI();
-  gui.add(controls, 'onChangeAnimation', true).name("Animation On/Off");
-  gui.add(controls, 'speed', 1, 30)
-    .onChange(function (e) { controls.changeSpeed() })
-    .name("Change Speed");
-}
-
 // Listen window size changes
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
-buildInterface();
 render();
 
 function render() {
   stats.update(); // Update FPS
   trackballControls.update(); // Enable mouse movements
   requestAnimationFrame(render);
-  rotateBlades();
   renderer.render(scene, camera) // Render scene
 }
