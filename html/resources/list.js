@@ -22,6 +22,13 @@ var list = {
         "Exercício 01": "works/aula04_ex01",
         "Exercício 02": "works/aula04_ex02",
       },
+      "Aula 05": {
+        "Exercício 01": "works/aula05_ex01",
+      },
+      "Aula 06": {
+        "Exercício 01": "works/aula06_ex01",
+        "Exercício 02": "works/aula06_ex02",
+      },
     },
     "Projects": {
       "Basics": {
@@ -36,17 +43,22 @@ var list = {
         "Basic": "html/animationInfo",
         "Using External Objects": "html/animationExternalObjectsInfo",
       },
+      "Lighting": {
+        "Types of lights": "html/lightingTypesInfo",
+        "Types of materials": "html/lightingMaterialsInfo",
+        "Spotlight in Details": "html/lightingSpotlightDetailsInfo",
+      },
+      "Shadows": {
+        "Shadow Map Types": "html/shadowMapTypesInfo",
+        "Shadow Map Viewer": "html/shadowMapViewerInfo",
+        "Shadow Update": "html/shadowUpdateInfo",
+      },
       "Geometries": {
         "Basic": "html/geometriesBasicInfo",
         "Lathe": "html/geometriesLatheInfo",
         "Extrusion": "html/geometriesExtrusionInfo",
         "Convex": "html/geometriesConvexInfo",
         "Loading External Files": "html/geometriesExternalObjectsInfo",
-      },
-      "Lighting": {
-        "Types of lights": "html/lightingTypesInfo",
-        "Types of materials": "html/lightingMaterialsInfo",
-        "Spotlight in Details": "html/lightingSpotlightDetailsInfo",
       },
       "Textures": {
         "Basic": "html/textureBasicInfo",
@@ -75,16 +87,17 @@ var list = {
       },
     },
     "Additional Examples": {
+      "Physics": {
+        "Ammo - Vehicle": "html/ammoVehicleInfo",
+        "Ammo - Breakable Objects": "html/ammoBreakableObjectsInfo",
+      },
       "Misc": {
         "Group Geometry": "html/exampleGroupInfo",
         "First Person": "html/exampleFirstPersonInfo",
         "Drag Control": "html/exampleDragControlInfo",
         "Fly Controls": "html/exampleFlyControlInfo",
-        "Shadow Update": "html/exampleShadowUpdateInfo",
-        "Shadow Map Viewer": "html/exampleShadowMapViewerInfo",
-        "Shadow Map Types": "html/exampleShadowMapTypesInfo",
+        "Joystick Elements": "html/exampleJoystickInfo",
         "Audio": "html/exampleAudioInfo",
-
       },
     },
   },
