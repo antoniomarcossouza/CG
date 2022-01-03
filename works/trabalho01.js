@@ -5,7 +5,6 @@ import KeyboardState from '../libs/util/KeyboardState.js';
 import {
   initRenderer,
   InfoBox,
-  initDefaultBasicLight,
   createGroundPlane,
   onWindowResize,
   degreesToRadians,
@@ -24,14 +23,16 @@ var inspecionar = false;
 var finalizou = false;
 
 var speed = 0;
-const maxSpeed = 2.6;
-const incrementSpeed = 0.02;
+const maxSpeed = 8.0;
+const incrementSpeed = 0.5;
 
 const distance = 50;
 const sensitivity = 10;
 
 const track1 = 0;
 const track2 = 1000;
+const track3 = 2000;
+const track4 = 3000;
 
 /* CONFIGURAÇÕES - FIM */
 
@@ -53,11 +54,33 @@ var camera = new THREE.PerspectiveCamera(
 var camera_look = new THREE.Group();
 camera_look.rotateY(degreesToRadians(-90));
 
+var spotLight = new THREE.SpotLight(0xffffff);
+spotLight.castShadow = true;
+spotLight.angle = 60;
+spotLight.penumbra = 0.2;
+spotLight.decay = 0.4;
+spotLight.shadowMapSize = 1024;
+spotLight.distance = 0;
+scene.add(spotLight)
+
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 
-initDefaultBasicLight(scene);
-
 /* CAMERA - FIM */
+
+/* MINIMAPA - INICIO */
+const altura_minimap = 600;
+const lookAtVec = new THREE.Vector3(0.0, 0.0, -180.0);
+const camPosition = new THREE.Vector3(0.0, altura_minimap, -180.0);
+const upVec = new THREE.Vector3(0.0, 1.0, 0.0);
+const vcWidth = 200;
+const vcHeidth = 200;
+
+var virtualCamera = new THREE.PerspectiveCamera(45, vcWidth / vcHeidth, 1.0, altura_minimap + 2);
+virtualCamera.position.copy(camPosition);
+virtualCamera.up.copy(upVec);
+virtualCamera.lookAt(lookAtVec);
+
+/* MINIMAPA - FIM */
 
 var keyboard = new KeyboardState();
 window.addEventListener(
@@ -80,13 +103,13 @@ var planeMaterial = new THREE.MeshBasicMaterial({
   side: THREE.DoubleSide,
 });
 
-var planeGeometry1 = new THREE.PlaneGeometry(300, 300);
-planeGeometry1.translate(track1, track1 + 100, -0.5);
+var planeGeometry1 = new THREE.PlaneGeometry(1000, 1000);
+planeGeometry1.translate(track1, track1 + 190, -0.5);
 var plane1 = new THREE.Mesh(planeGeometry1, planeMaterial);
 planeGeometry1.rotateX(degreesToRadians(-90));
 
-var planeGeometry2 = new THREE.PlaneGeometry(300, 300);
-planeGeometry2.translate(track2, -(track2 - 100), -0.5);
+var planeGeometry2 = new THREE.PlaneGeometry(1000, 1000);
+planeGeometry2.translate(track2, -(track2 - 190), -0.5);
 var plane2 = new THREE.Mesh(planeGeometry2, planeMaterial);
 planeGeometry2.rotateX(degreesToRadians(-90));
 
@@ -95,67 +118,89 @@ track.add(plane2);
 
 
 // Pista 1
-for (var i = 0; i < 4; i++) {
+for (var i = 0; i < 6; i++) {
   createFinishLine(-10, - 20 + track1 + i * 10, i);
 }
-for (var i = 0; i < 20; i++) {
-  for (var j = 0; j < 4; j++) {
-    createPlane(track1 + -90 + i * 10, track1 + -20 + j * 10);
+for (var i = 0; i < 40; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track1 + -200 + i * 10, track1 + -20 + j * 10);
   }
 
-  for (var j = 0; j < 4; j++) {
-    createPlane(track1 + -90 + 10 * j, track1 + -i * 10);
+  for (var j = 0; j < 6; j++) {
+    createStreet(track1 + -200 + 10 * j, track1 + -i * 10);
   }
 
-  for (var j = 0; j < 4; j++) {
-    createPlane(track1 + -90 + i * 10, track1 + -200 + 10 * j);
+  for (var j = 0; j < 6; j++) {
+    createStreet(track1 + -200 + i * 10, track1 + -400 + 10 * j);
   }
 
-  for (var j = 0; j < 4; j++) {
-    createPlane(track1 + 100 - 10 * j, track1 + -i * 10);
+  for (var j = 0; j < 6; j++) {
+    createStreet(track1 + 190 - 10 * j, track1 + -i * 10);
   }
 }
 
 // Pista 2
-for (var i = 0; i < 4; i++) {
+for (var i = 0; i < 6; i++) {
   createFinishLine(track2 - 10, - 20 + track2 + i * 10, i);
 }
-for (var i = 0; i < 20; i++) {
-  for (var j = 0; j < 4; j++) {
-    createPlane(track2 + -90 + i * 10, track2 + -20 + j * 10);
+for (var i = 0; i < 40; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track2 + -200 + i * 10, track2 + -20 + j * 10);
   }
-  for (var j = 0; j < 4; j++) {
-    createPlane(track2 + -90 + 10 * j, track2 + -i * 10);
+  for (var j = 0; j < 6; j++) {
+    createStreet(track2 + -200 + 10 * j, track2 + -i * 10);
   }
 }
-for (var i = 0; i < 12; i++) {
-  for (var j = 0; j < 4; j++) {
-    createPlane(track2 + -90 + i * 10, track2 + -20 + j * 10);
+for (var i = 0; i < 24; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track2 + -200 + i * 10, track2 + -400 + j * 10);
   }
 
-  for (var j = 0; j < 4; j++) {
-    createPlane(track2 + -90 + 10 * j, track2 + -i * 10);
+  for (var j = 0; j < 6; j++) {
+    createStreet(track2 + -20 + 10 * j, track2 + -i * 10 - 160);
   }
 
-  for (var j = 0; j < 4; j++) {
-    createPlane(track2 + -90 + i * 10, track2 + -200 + 10 * j);
+  for (var j = 0; j < 6; j++) {
+    createStreet(track2 + -20 + i * 10, track2 + -200 + 10 * j);
   }
 
-  for (var j = 0; j < 4; j++) {
-    createPlane(track2 + 20 - 10 * j, track2 + -80 - i * 10);
-  }
-
-  for (var j = 0; j < 4; j++) {
-    createPlane(track2 + -10 + i * 10, track2 + -110 + 10 * j);
-  }
-
-  for (var j = 0; j < 4; j++) {
-    createPlane(track2 + 100 - 10 * j, track2 + -i * 10);
+  for (var j = 0; j < 6; j++) {
+    createStreet(track2 + 210 - 10 * j, track2 + 30 - i * 10);
   }
 
 }
 
 scene.add(track);
+
+/* ELEVAÇÕES - INICIO */
+
+var trackElevationArray = new Array();
+
+var elevacao1 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao1.rotateX(degreesToRadians(-70));
+elevacao1.rotateZ(degreesToRadians(90));
+elevacao1.position.set(-175.0, 2, -180.0);
+track.add(elevacao1);
+trackElevationArray.push(elevacao1);
+
+var elevacao2 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao2.rotateX(degreesToRadians(90));
+elevacao2.rotateY(degreesToRadians(20));
+elevacao2.position.set(0.0, 2, -375.0);
+track.add(elevacao2);
+trackElevationArray.push(elevacao2);
+
+var elevacao3 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao3.rotateX(degreesToRadians(70));
+elevacao3.rotateZ(degreesToRadians(90));
+elevacao3.position.set(165.0, 2, -180.0);
+track.add(elevacao3);
+trackElevationArray.push(elevacao3);
+
+
+
+/* ELEVAÇÕES - FIM */
+
 
 /* PISTA - FIM */
 
@@ -268,6 +313,14 @@ document.addEventListener('keypress', function (e) {
     resetCar(track2, track2);
   }
 
+  if (e.keyCode === 51) {
+    resetCar(track3, track3);
+  }
+
+  if (e.keyCode === 52) {
+    resetCar(track4, track4);
+  }
+
 });
 
 // Atualiza o timer
@@ -290,6 +343,9 @@ function resetCar(x, y) {
   lap = 0;
 
   finalizou = false;
+
+  virtualCamera.position.x = x;
+  virtualCamera.position.z = y - 180;
 }
 
 function timerUpdate() {
@@ -398,7 +454,7 @@ function createTorus(radius, tube, radialSegments, tubularSegments, arc) {
   return object;
 }
 
-function createPlane(x, z) {
+function createStreet(x, z) {
   var groundPlane = createGroundPlane(10, 10, 1, 1);
   groundPlane.rotateX(degreesToRadians(-90));
   groundPlane.position.set(x, 0.0, z);
@@ -419,7 +475,8 @@ function createFinishLine(x, z, i) {
 
 function keyboardUpdate() {
   keyboard.update();
-  var rotateAngle = (Math.PI / 2) * 0.0025 * sensitivity;
+  var rotateAngle = (Math.PI / 2) * (speed / 2 * 0.0024) * sensitivity;
+  var rotateAngleRoda = (Math.PI / 2) * 0.0024 * sensitivity;
 
   // Acrecenta velocidade ao carro
   if (keyboard.pressed('X') || keyboard.pressed('up')) {
@@ -448,25 +505,25 @@ function keyboardUpdate() {
   if (speed >= 0) {
     if (keyboard.pressed('left')) {
       if (roda1.rotation._y > 0.9) {
-        roda1.rotateY(rotateAngle / 2);
-        roda2.rotateY(rotateAngle / 2);
+        roda1.rotateY(rotateAngleRoda / 2);
+        roda2.rotateY(rotateAngleRoda / 2);
       }
     } else if (keyboard.pressed('right')) {
       if (roda1.rotation._y > 0.9) {
-        roda1.rotateY(-rotateAngle / 2);
-        roda2.rotateY(-rotateAngle / 2);
+        roda1.rotateY(-rotateAngleRoda / 2);
+        roda2.rotateY(-rotateAngleRoda / 2);
       }
     }
   } else {
     if (keyboard.pressed('left')) {
       if (roda1.rotation._y > 0.9) {
-        roda1.rotateY(-rotateAngle / 2);
-        roda2.rotateY(-rotateAngle / 2);
+        roda1.rotateY(-rotateAngleRoda / 2);
+        roda2.rotateY(-rotateAngleRoda / 2);
       }
     } else if (keyboard.pressed('right')) {
       if (roda1.rotation._y > 0.9) {
-        roda1.rotateY(rotateAngle / 2);
-        roda2.rotateY(rotateAngle / 2);
+        roda1.rotateY(rotateAngleRoda / 2);
+        roda2.rotateY(rotateAngleRoda / 2);
       }
     }
   }
@@ -482,6 +539,21 @@ function keyboardUpdate() {
   }
 }
 
+function detectCollisionCubes(object1, object2) {
+  object1.geometry.computeBoundingBox(); //not needed if its already calculated
+  object2.geometry.computeBoundingBox();
+  object1.updateMatrixWorld();
+  object2.updateMatrixWorld();
+
+  var box1 = object1.geometry.boundingBox.clone();
+  box1.applyMatrix4(object1.matrixWorld);
+
+  var box2 = object2.geometry.boundingBox.clone();
+  box2.applyMatrix4(object2.matrixWorld);
+
+  return box1.intersectsBox(box2);
+}
+
 
 function movimentCar() {
 
@@ -493,7 +565,7 @@ function movimentCar() {
   if (!(trackArray.some(e => ((e.x === Math.ceil(car.position.x / 10) * 10) && (e.z === Math.ceil(car.position.z / 10) * 10))))) {
     if (speed > 0 && speed > maxSpeed / 2) {
       speed -= (2.4 * incrementSpeed);
-    } 
+    }
     if (speed < 0 && speed < -(maxSpeed / 2)) {
       speed += (2.4 * incrementSpeed);
     }
@@ -552,14 +624,15 @@ function movimentCar() {
       canFinish = 0;
 
     }
+
   }
 
   // Verifica se o carro deu a volta na pista (Passou em cima)
-  if (canFinish == 0 && (Math.abs(car.position.z) > track1 + 150 && Math.abs(car.position.z) < track1 + 250) || Math.abs(car.position.z) < track2 - 150 && Math.abs(car.position.z) > track2 - 250) {
+  if (canFinish == 0 && (Math.abs(car.position.z) > track1 + 340 && Math.abs(car.position.z) < track1 + 400) || Math.abs(car.position.z) < track2 - 340 && Math.abs(car.position.z) > track2 - 400) {
     canFinish = 1;
   }
   // Verifica se o carro deu a volta na pista (Passou do lado direito)
-  if (canFinish == 1 && (car.position.x > -track1 + 60 && car.position.x < -track1 + 120) || car.position.x > track2 + 60 && car.position.z < track2 + 120) {
+  if (canFinish == 1 && (car.position.x > -track1 + 150 && car.position.x < -track1 + 200) || car.position.x > track2 + 150 && car.position.z < track2 + 200) {
     canFinish = 2;
   }
 
@@ -570,8 +643,6 @@ function movimentCar() {
   ) {
     speed = 0;
   }
-
-  car.translateZ(speed);
 
   keyboard.update();
   // Desacelera o carro se não precionar nenhum botão
@@ -593,10 +664,41 @@ function movimentCar() {
     speed -= incrementSpeed * 2;
   }
 
+  car.translateZ(speed);
+
+  var rotateAngle = (Math.PI / 2) * 0.0035 * sensitivity;
+  var rampa = false;
+
+  trackElevationArray.forEach(function (te) {
+
+    if (detectCollisionCubes(roda1, te)) {
+      car.rotateX(-rotateAngle);
+      rampa = true;
+    }
+
+  });
+
+
+  if (rampa == false) {
+
+    if (car.position.y <= 2.3 && car.position.y != 2.2) {
+      console.log(car.position.y);
+      car.position.y = 2.2;
+
+      car.setRotationFromEuler(
+        new THREE.Euler(car.rotation._x, 1.57, car.rotation._z, 'XYZ')
+      );
+
+    }
+
+    if (car.position.y > 3) {
+      car.rotateX(rotateAngle);
+    }
+  }
+
 }
 
 function moveCamera() {
-
   if (inspecionar == false) {
     camera_look.position.x = car.position.x;
     camera_look.position.y = car.position.y;
@@ -613,7 +715,33 @@ function moveCamera() {
       camera_look.position.y,
       camera_look.position.z
     );
+
+
+    spotLight.position.set(camera_look.position.x + distance, 50, camera_look.position.z)
+    spotLight.target.position.set(car.position.x, car.position.y, car.position.zF);
+
+
   }
+}
+
+function controlledRender() {
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+
+  // Set main viewport
+  renderer.setViewport(0, 0, width, height);
+  renderer.setScissorTest(false);
+  renderer.setClearColor("rgb(80, 70, 170)");
+  renderer.clear();
+  renderer.render(scene, camera);
+
+  // Set virtual camera viewport 
+  renderer.setViewport(0, height - vcHeidth, vcWidth, vcHeidth);
+  renderer.setScissor(0, height - vcHeidth, vcWidth, vcHeidth);
+  renderer.setScissorTest(true);
+  renderer.setClearColor("rgb(60, 50, 150)");
+  renderer.clear();
+  renderer.render(scene, virtualCamera);
 }
 
 function render() {
@@ -634,5 +762,6 @@ function render() {
   moveCamera();
 
   requestAnimationFrame(render);
-  renderer.render(scene, camera);
+
+  controlledRender();
 }
