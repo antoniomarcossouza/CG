@@ -23,7 +23,7 @@ var inspecionar = false;
 var finalizou = false;
 
 var speed = 0;
-const maxSpeed = 8.0;
+const maxSpeed = 3.4;
 const incrementSpeed = 0.5;
 
 const distance = 50;
@@ -177,7 +177,7 @@ scene.add(track);
 var trackElevationArray = new Array();
 
 var elevacao1 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
-elevacao1.rotateX(degreesToRadians(-70));
+elevacao1.rotateX(degreesToRadians(-65));
 elevacao1.rotateZ(degreesToRadians(90));
 elevacao1.position.set(-175.0, 2, -180.0);
 track.add(elevacao1);
@@ -185,13 +185,13 @@ trackElevationArray.push(elevacao1);
 
 var elevacao2 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
 elevacao2.rotateX(degreesToRadians(90));
-elevacao2.rotateY(degreesToRadians(20));
+elevacao2.rotateY(degreesToRadians(25));
 elevacao2.position.set(0.0, 2, -375.0);
 track.add(elevacao2);
 trackElevationArray.push(elevacao2);
 
 var elevacao3 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
-elevacao3.rotateX(degreesToRadians(70));
+elevacao3.rotateX(degreesToRadians(65));
 elevacao3.rotateZ(degreesToRadians(90));
 elevacao3.position.set(165.0, 2, -180.0);
 track.add(elevacao3);
@@ -666,33 +666,32 @@ function movimentCar() {
 
   car.translateZ(speed);
 
-  var rotateAngle = (Math.PI / 2) * 0.0035 * sensitivity;
-  var rampa = false;
+  if (speed > 0) {
+    var rotateAngle = Math.PI / 2 * (0.022 * speed);
+    var rampa = false;
 
-  trackElevationArray.forEach(function (te) {
+    trackElevationArray.forEach(function (te) {
 
-    if (detectCollisionCubes(roda1, te)) {
-      car.rotateX(-rotateAngle);
-      rampa = true;
-    }
+      if (detectCollisionCubes(roda1, te)) {
+        car.rotateX(-rotateAngle);
+        rampa = true;
+      }
 
-  });
+    });
 
 
-  if (rampa == false) {
+    if (rampa == false) {
 
-    if (car.position.y <= 2.3 && car.position.y != 2.2) {
-      console.log(car.position.y);
-      car.position.y = 2.2;
+      /*if (car.position.y <= 2.2 && car.position.y != 2.2) {
+        car.setRotationFromEuler(
+          new THREE.Euler(car.rotation._x, 1.57, car.rotation._z, 'XYZ')
+        );
+  
+      }*/
 
-      car.setRotationFromEuler(
-        new THREE.Euler(car.rotation._x, 1.57, car.rotation._z, 'XYZ')
-      );
-
-    }
-
-    if (car.position.y > 3) {
-      car.rotateX(rotateAngle);
+      if (car.position.y > 3) {
+        car.rotateX(rotateAngle);
+      }
     }
   }
 
