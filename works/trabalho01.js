@@ -645,53 +645,58 @@ function movimentCar() {
   }
 
   keyboard.update();
-  // Desacelera o carro se não precionar nenhum botão
-  if (!(keyboard.pressed('X') || keyboard.pressed('down') || keyboard.pressed('X') || keyboard.pressed('up'))) {
-    if (speed != 0 && speed > 0) {
-      speed -= incrementSpeed;
-    }
-    if (speed != 0 && speed < 0) {
-      speed += incrementSpeed;
-    }
-  }
 
-  // Desacelera mais o carro caso aperte o botão oposto
-  if (speed < 0 && keyboard.pressed('X')) {
-    speed += incrementSpeed * 2;
-  }
+  if (car.position.y - 2.2 <= 0.3) {
+    // Desacelera o carro se não precionar nenhum botão
+    if (!(keyboard.pressed('X') || keyboard.pressed('down') || keyboard.pressed('X') || keyboard.pressed('up'))) {
+      if (speed != 0 && speed > 0) {
+        speed -= incrementSpeed;
+      }
+      if (speed != 0 && speed < 0) {
+        speed += incrementSpeed;
+      }
+    }
 
-  if (speed > 0 && keyboard.pressed('down')) {
-    speed -= incrementSpeed * 2;
+    // Desacelera mais o carro caso aperte o botão oposto
+    if (speed < 0 && keyboard.pressed('X')) {
+      speed += incrementSpeed * 2;
+    }
+
+    if (speed > 0 && keyboard.pressed('down')) {
+      speed -= incrementSpeed * 2;
+    }
   }
 
   car.translateZ(speed);
 
-  if (speed > 0) {
+  if (speed != 0) {
     var rotateAngle = Math.PI / 2 * (0.022 * speed);
     var rampa = false;
 
     trackElevationArray.forEach(function (te) {
 
       if (detectCollisionCubes(roda1, te)) {
+
         car.rotateX(-rotateAngle);
         rampa = true;
+
       }
 
     });
+  }
 
+  if (rampa == false) {
 
-    if (rampa == false) {
+    if (car.position.y <= 2.2 && car.position.y != 2.2) {
+      car.setRotationFromEuler(
+        new THREE.Euler(camera_look.rotation._x, camera_look.rotation._y, camera_look.rotation._z, 'XYZ')
+      );
+      car.position.y = 2.3;
 
-      /*if (car.position.y <= 2.2 && car.position.y != 2.2) {
-        car.setRotationFromEuler(
-          new THREE.Euler(car.rotation._x, 1.57, car.rotation._z, 'XYZ')
-        );
-  
-      }*/
+    }
 
-      if (car.position.y > 3) {
-        car.rotateX(rotateAngle);
-      }
+    if (car.position.y > 3) {
+      car.rotateX(rotateAngle);
     }
   }
 
