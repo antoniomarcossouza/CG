@@ -176,12 +176,21 @@ scene.add(track);
 
 var trackElevationArray = new Array();
 
+
+/* Pista 1 - INICIO */
 var elevacao1 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
 elevacao1.rotateX(degreesToRadians(-65));
 elevacao1.rotateZ(degreesToRadians(90));
 elevacao1.position.set(-175.0, 2, -180.0);
 track.add(elevacao1);
 trackElevationArray.push(elevacao1);
+
+var elevacao12 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao12.rotateX(degreesToRadians(65));
+elevacao12.rotateZ(degreesToRadians(90));
+elevacao12.position.set(-175.0, 2, -198.0);
+track.add(elevacao12);
+trackElevationArray.push(elevacao12);
 
 var elevacao2 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
 elevacao2.rotateX(degreesToRadians(90));
@@ -190,12 +199,27 @@ elevacao2.position.set(0.0, 2, -375.0);
 track.add(elevacao2);
 trackElevationArray.push(elevacao2);
 
+var elevacao22 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao22.rotateX(degreesToRadians(-90));
+elevacao22.rotateY(degreesToRadians(25));
+elevacao22.position.set(18.0, 2, -375.0);
+track.add(elevacao22);
+trackElevationArray.push(elevacao22);
+
 var elevacao3 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
-elevacao3.rotateX(degreesToRadians(65));
+elevacao3.rotateX(degreesToRadians(-65));
 elevacao3.rotateZ(degreesToRadians(90));
 elevacao3.position.set(165.0, 2, -180.0);
 track.add(elevacao3);
 trackElevationArray.push(elevacao3);
+
+var elevacao32 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao32.rotateX(degreesToRadians(65));
+elevacao32.rotateZ(degreesToRadians(90));
+elevacao32.position.set(165.0, 2, -198.0);
+track.add(elevacao32);
+trackElevationArray.push(elevacao32);
+/* Pista 1 - FIM */
 
 
 
@@ -484,9 +508,13 @@ function keyboardUpdate() {
       speed += incrementSpeed;
     }
   }
-  if (keyboard.pressed('down') || keyboard.pressed('Z')) {
-    if (speed > -maxSpeed) {
-      speed -= incrementSpeed;
+
+  // Verifica se o carro está no ar para não frear
+  if (car.position.y - 2.2 <= 0.3) {
+    if (keyboard.pressed('down') || keyboard.pressed('Z')) {
+      if (speed > -maxSpeed) {
+        speed -= incrementSpeed;
+      }
     }
   }
 
@@ -583,6 +611,7 @@ function movimentCar() {
         var total = 0;
         var texto = "";
 
+        var melhor = timerVoltas[0];
         for (var i = 1; i <= lap; i++) {
           var seconds = timerVoltas[i] % 60;
           var minutes = (timerVoltas[i] - seconds) / 60;
@@ -593,7 +622,19 @@ function movimentCar() {
           total += timerVoltas[i];
 
           texto += "<br>Volta " + i + " - " + minutes + ":" + seconds;
+
+          if (melhor > timerVoltas[i]) {
+            melhor = timerVoltas[i];
+          }
         }
+
+        var seconds = melhor % 60;
+        var minutes = (melhor - seconds) / 60;
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        texto += "<br>Melhor Volta: " + minutes + ":" + seconds;
 
         var secondsTotal = total % 60;
         var minutesTotal = (total - secondsTotal) / 60;
@@ -646,6 +687,7 @@ function movimentCar() {
 
   keyboard.update();
 
+  // Verifica se o carro está no ar para não frear
   if (car.position.y - 2.2 <= 0.3) {
     // Desacelera o carro se não precionar nenhum botão
     if (!(keyboard.pressed('X') || keyboard.pressed('down') || keyboard.pressed('X') || keyboard.pressed('up'))) {
@@ -669,25 +711,33 @@ function movimentCar() {
 
   car.translateZ(speed);
 
-  if (speed != 0) {
-    var rotateAngle = Math.PI / 2 * (0.022 * speed);
-    var rampa = false;
+  var rampa = false;
+  var rotateAngle = Math.PI / 2 * (0.022 * speed);
 
-    trackElevationArray.forEach(function (te) {
+  trackElevationArray.forEach(function (te) {
 
-      if (detectCollisionCubes(roda1, te)) {
-
-        car.rotateX(-rotateAngle);
+    if (speed > 0) {
+      if (detectCollisionCubes(roda1, te) || detectCollisionCubes(roda2, te)) {
         rampa = true;
-
       }
+    }
+    if (speed < 0) {
+      if (detectCollisionCubes(roda3, te) || detectCollisionCubes(roda4, te)) {
+        rampa = true;
+      }
+    }
 
-    });
-  }
+  });
 
-  if (rampa == false) {
+  if (rampa == true) {
 
-    if (car.position.y <= 2.2 && car.position.y != 2.2) {
+    car.rotateX(-rotateAngle);
+    car.position.y += 0.25;
+    rampa = true;
+
+  } else {
+
+    if (car.position.y < 2.2) {
       car.setRotationFromEuler(
         new THREE.Euler(camera_look.rotation._x, camera_look.rotation._y, camera_look.rotation._z, 'XYZ')
       );
@@ -722,7 +772,7 @@ function moveCamera() {
 
 
     spotLight.position.set(camera_look.position.x + distance, 50, camera_look.position.z)
-    spotLight.target.position.set(car.position.x, car.position.y, car.position.zF);
+    spotLight.target.position.set(car.position.x, car.position.y, car.position.z);
 
 
   }
