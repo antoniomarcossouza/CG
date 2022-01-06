@@ -4,6 +4,9 @@ var list = {
       "Trabalho 01": {
         "Trabalho 01": "works/trabalho01",
       },
+      "Trabalho 02": {
+        "Trabalho 02": "works/trabalho02",
+      },
     },
     "Exercícios": {
       "Aula 01": {
