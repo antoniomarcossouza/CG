@@ -24,7 +24,7 @@ var finalizou = false;
 
 var speed = 0;
 const maxSpeed = 3.4;
-const incrementSpeed = 0.5;
+const incrementSpeed = 0.08;
 
 const distance = 50;
 const sensitivity = 10;
@@ -542,7 +542,7 @@ function keyboardUpdate() {
   }
 
   // Faz o carro virar
-  if (speed != 0) {
+  if (speed != 0 || inspecionar == true) {
     if (keyboard.pressed('left')) {
       car.rotateY(rotateAngle);
       camera_look.rotateY(rotateAngle);
