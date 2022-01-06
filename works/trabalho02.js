@@ -289,60 +289,25 @@ trackElevationArray.push(elevacao62);
 
 var car = new THREE.Group();
 
-var corpo = createBox(5.5, 13, 3, 'rgb(22, 148, 186)');
+var corpo = createBox(5.5, 13, 3, 'rgb(168, 173, 173)');
 corpo.rotateX(degreesToRadians(90));
 corpo.position.set(0.0, 1, 0.0);
 car.add(corpo);
 
-var corpo2 = createBox(5.5, 5, 3, 'rgb(22, 148, 186)');
-corpo2.rotateX(degreesToRadians(90));
-corpo2.position.set(0.0, 4, 0.0);
-car.add(corpo2);
+var para_choque_frontal = createBox(6.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+para_choque_frontal.rotateX(degreesToRadians(90));
+para_choque_frontal.position.set(0.0, -0.25, 6.5);
+car.add(para_choque_frontal);
 
-var janela1 = createBox(5, 5.1, 2.5, 'rgb(41, 43, 43)');
-janela1.rotateX(degreesToRadians(90));
-janela1.position.set(0.0, 4, 0.0);
-car.add(janela1);
+var para_choque_traseiro = createBox(6.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+para_choque_traseiro.rotateX(degreesToRadians(90));
+para_choque_traseiro.position.set(0.0, -0.25, -6.5);
+car.add(para_choque_traseiro);
 
-var janela2 = createBox(5.6, 4.5, 2.5, 'rgb(41, 43, 43)');
-janela2.rotateX(degreesToRadians(90));
-janela2.position.set(0.0, 4, 0.0);
-car.add(janela2);
-
-var divisor_janela = createBox(5.7, 0.30, 2.5, 'rgb(22, 148, 186)');
-divisor_janela.rotateX(degreesToRadians(90));
-divisor_janela.position.set(0.0, 4, -0.5);
-car.add(divisor_janela);
-
-var para_choque1 = createBox(6.25, 0.5, 0.5, 'rgb(168, 173, 173)');
-para_choque1.rotateX(degreesToRadians(90));
-para_choque1.position.set(0.0, -0.25, 6.5);
-car.add(para_choque1);
-
-var para_choque2 = createBox(6.25, 0.5, 0.5, 'rgb(168, 173, 173)');
-para_choque2.rotateX(degreesToRadians(90));
-para_choque2.position.set(0.0, -0.25, -6.5);
-car.add(para_choque2);
-
-var farol_frente1 = createBox(1, 0.5, 0.5, 'rgb(255,255,50)');
-farol_frente1.rotateX(degreesToRadians(90));
-farol_frente1.position.set(2.0, 1.75, 6.5);
-car.add(farol_frente1);
-
-var farol_frente2 = createBox(1, 0.5, 0.5, 'rgb(255,255,50)');
-farol_frente2.rotateX(degreesToRadians(90));
-farol_frente2.position.set(-2.0, 1.75, 6.5);
-car.add(farol_frente2);
-
-var farol_tras1 = createBox(1, 0.5, 0.5, 'rgb(196, 35, 35)');
-farol_tras1.rotateX(degreesToRadians(90));
-farol_tras1.position.set(2.0, 1.75, -6.5);
-car.add(farol_tras1);
-
-var farol_tras2 = createBox(1, 0.5, 0.5, 'rgb(196, 35, 35)');
-farol_tras2.rotateX(degreesToRadians(90));
-farol_tras2.position.set(-2.0, 1.75, -6.5);
-car.add(farol_tras2);
+var farol_frente = createBox(5, 0.5, 0.15, 'rgb(247, 247, 247)');
+farol_frente.rotateX(degreesToRadians(90));
+farol_frente.position.set(0.0, 2, 6.5);
+car.add(farol_frente);
 
 var eixo1 = createCylinder(0.3, 0.3, 7.0, 10, 10, false, 'rgb(132, 142, 156)');
 eixo1.rotateZ(degreesToRadians(90));
