@@ -58,7 +58,7 @@ camera_look.rotateY(degreesToRadians(-90));
 pointLight.castShadow = true;
 scene.add( pointLight );*/
 
-scene.add( new THREE.AmbientLight( 0xffffff, 0.2 ) );
+scene.add(new THREE.AmbientLight(0xffffff, 0.2));
 
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 
@@ -287,56 +287,11 @@ trackElevationArray.push(elevacao62);
 
 /* CARRO - INICIO */
 
+var roda1, roda2, roda3, roda4;
+var calota1, calota2, calota3, calota4;
 var car = new THREE.Group();
-
-var corpo = createBox(5.5, 13, 3, 'rgb(168, 173, 173)');
-corpo.rotateX(degreesToRadians(90));
-corpo.position.set(0.0, 1, 0.0);
-car.add(corpo);
-
-var para_choque_frontal = createBox(6.25, 0.5, 0.5, 'rgb(30, 30, 31)');
-para_choque_frontal.rotateX(degreesToRadians(90));
-para_choque_frontal.position.set(0.0, -0.25, 6.5);
-car.add(para_choque_frontal);
-
-var para_choque_traseiro = createBox(6.25, 0.5, 0.5, 'rgb(30, 30, 31)');
-para_choque_traseiro.rotateX(degreesToRadians(90));
-para_choque_traseiro.position.set(0.0, -0.25, -6.5);
-car.add(para_choque_traseiro);
-
-var farol_frente = createBox(5, 0.5, 0.15, 'rgb(247, 247, 247)');
-farol_frente.rotateX(degreesToRadians(90));
-farol_frente.position.set(0.0, 2, 6.5);
-car.add(farol_frente);
-
-var eixo1 = createCylinder(0.3, 0.3, 7.0, 10, 10, false, 'rgb(132, 142, 156)');
-eixo1.rotateZ(degreesToRadians(90));
-eixo1.position.set(0.0, -1.0, 4.0);
-car.add(eixo1);
-
-var eixo2 = createCylinder(0.3, 0.3, 7.0, 10, 10, false, 'rgb(132, 142, 156)');
-eixo2.rotateZ(degreesToRadians(90));
-eixo2.position.set(0.0, -1.0, -4.0);
-car.add(eixo2);
-
-var roda1 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2);
-roda1.position.set(3.5, -1.0, 4.0);
-car.add(roda1);
-
-var roda2 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2);
-roda2.position.set(-3.5, -1.0, 4.0);
-car.add(roda2);
-
-var roda3 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2);
-roda3.position.set(3.5, -1.0, -4.0);
-car.add(roda3);
-
-var roda4 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2);
-roda4.position.set(-3.5, -1.0, -4.0);
-car.add(roda4);
-
+car = createCar();
 scene.add(car);
-
 car.translateY(2.2);
 car.rotateY(degreesToRadians(-90));
 
@@ -444,6 +399,235 @@ function timerUpdate() {
   }, 1000);
 }
 
+function createCar() {
+  var car = new THREE.Group();
+
+  /* Corpo do Carro */
+  var corpo = createBox(5.5, 12.57, 3, 'rgb(168, 173, 173)');
+  corpo.rotateX(degreesToRadians(90));
+  corpo.position.set(0.0, 1, 0.0);
+  car.add(corpo);
+
+  var corpo2 = createBox(5.5, 6.5, 2, 'rgb(168, 173, 173)');
+  corpo2.rotateX(degreesToRadians(-75));
+  corpo2.position.set(0.0, 2.35, 2.9);
+  car.add(corpo2);
+
+  var corpo3 = createBox(5.5, 6.5, 2, 'rgb(168, 173, 173)');
+  corpo3.rotateX(degreesToRadians(75));
+  corpo3.position.set(0.0, 2.35, -2.9);
+  car.add(corpo3);
+
+  /* Janelas */
+  var janela_frontal = createBox(5, 4.5, 2, 'rgb(28, 28, 28)');
+  janela_frontal.rotateX(degreesToRadians(-75));
+  janela_frontal.position.set(0.0, 2.4, 2.9);
+  car.add(janela_frontal);
+
+  var janela_traseira = createBox(3.5, 4.5, 2, 'rgb(28, 28, 28)');
+  janela_traseira.rotateX(degreesToRadians(75));
+  janela_traseira.position.set(0.0, 2.4, -2.9);
+  car.add(janela_traseira);
+
+  /* Maçanetas */
+
+  var macaneta_esquerda = createBox(0.6, 0.3, 0.5, 'rgb(64, 68, 74)');
+  macaneta_esquerda.rotateY(degreesToRadians(90));
+  macaneta_esquerda.position.set(2.6, 1.9, 0.5);
+  car.add(macaneta_esquerda);
+
+  var macaneta_direita = createBox(0.6, 0.3, 0.5, 'rgb(64, 68, 74)');
+  macaneta_direita.rotateY(degreesToRadians(90));
+  macaneta_direita.position.set(-2.6, 1.9, 0.5);
+  car.add(macaneta_direita);
+
+  /* Para-choques */
+  var para_choque_frontal = createBox(6.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_frontal.rotateX(degreesToRadians(90));
+  para_choque_frontal.position.set(0.0, -0.25, 6.5);
+  car.add(para_choque_frontal);
+
+  var para_choque_lateral_esquerdo1 = createBox(5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_lateral_esquerdo1.rotateY(degreesToRadians(90));
+  para_choque_lateral_esquerdo1.position.set(3, -0.25, 0);
+  car.add(para_choque_lateral_esquerdo1);
+
+  var para_choque_lateral_esquerdo2 = createBox(1.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_lateral_esquerdo2.rotateY(degreesToRadians(90));
+  para_choque_lateral_esquerdo2.position.set(3, -0.25, 6.125);
+  car.add(para_choque_lateral_esquerdo2);
+
+  var para_choque_lateral_esquerdo3 = createBox(1.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_lateral_esquerdo3.rotateY(degreesToRadians(90));
+  para_choque_lateral_esquerdo3.position.set(3, -0.25, -6.125);
+  car.add(para_choque_lateral_esquerdo3);
+
+  var para_choque_roda_traseira_esquerda1 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_traseira_esquerda1.rotateY(degreesToRadians(90));
+  para_choque_roda_traseira_esquerda1.rotateZ(degreesToRadians(-45));
+  para_choque_roda_traseira_esquerda1.position.set(3, 0.21, -5.15);
+  car.add(para_choque_roda_traseira_esquerda1);
+
+  var para_choque_roda_traseira_esquerda2 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_traseira_esquerda2.rotateY(degreesToRadians(90));
+  para_choque_roda_traseira_esquerda2.rotateZ(degreesToRadians(45));
+  para_choque_roda_traseira_esquerda2.position.set(3, 0.21, -2.85);
+  car.add(para_choque_roda_traseira_esquerda2);
+
+  var para_choque_roda_traseira_esquerda3 = createBox(1.6, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_traseira_esquerda3.rotateY(degreesToRadians(90));
+  para_choque_roda_traseira_esquerda3.position.set(3, 0.67, -4);
+  car.add(para_choque_roda_traseira_esquerda3);
+
+  var para_choque_roda_dianteira_esquerda1 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_dianteira_esquerda1.rotateY(degreesToRadians(90));
+  para_choque_roda_dianteira_esquerda1.rotateZ(degreesToRadians(-45));
+  para_choque_roda_dianteira_esquerda1.position.set(3, 0.21, 2.85);
+  car.add(para_choque_roda_dianteira_esquerda1);
+
+  var para_choque_roda_dianteira_esquerda2 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_dianteira_esquerda2.rotateY(degreesToRadians(90));
+  para_choque_roda_dianteira_esquerda2.rotateZ(degreesToRadians(45));
+  para_choque_roda_dianteira_esquerda2.position.set(3, 0.21, 5.15);
+  car.add(para_choque_roda_dianteira_esquerda2);
+
+  var para_choque_roda_dianteira_esquerda3 = createBox(1.6, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_dianteira_esquerda3.rotateY(degreesToRadians(90));
+  para_choque_roda_dianteira_esquerda3.position.set(3, 0.67, 4);
+  car.add(para_choque_roda_dianteira_esquerda3);
+
+  var para_choque_lateral_direito1 = createBox(5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_lateral_direito1.rotateY(degreesToRadians(90));
+  para_choque_lateral_direito1.position.set(-3, -0.25, 0);
+  car.add(para_choque_lateral_direito1);
+
+  var para_choque_lateral_direito2 = createBox(1.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_lateral_direito2.rotateY(degreesToRadians(90));
+  para_choque_lateral_direito2.position.set(-3, -0.25, 6.125);
+  car.add(para_choque_lateral_direito2);
+
+  var para_choque_lateral_direito3 = createBox(1.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_lateral_direito3.rotateY(degreesToRadians(90));
+  para_choque_lateral_direito3.position.set(-3, -0.25, -6.125);
+  car.add(para_choque_lateral_direito3);
+
+  var para_choque_roda_traseira_direita1 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_traseira_direita1.rotateY(degreesToRadians(90));
+  para_choque_roda_traseira_direita1.rotateZ(degreesToRadians(-45));
+  para_choque_roda_traseira_direita1.position.set(-3, 0.21, -5.15);
+  car.add(para_choque_roda_traseira_direita1);
+
+  var para_choque_roda_traseira_direita2 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_traseira_direita2.rotateY(degreesToRadians(90));
+  para_choque_roda_traseira_direita2.rotateZ(degreesToRadians(45));
+  para_choque_roda_traseira_direita2.position.set(-3, 0.21, -2.85);
+  car.add(para_choque_roda_traseira_direita2);
+
+  var para_choque_roda_traseira_direita3 = createBox(1.6, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_traseira_direita3.rotateY(degreesToRadians(90));
+  para_choque_roda_traseira_direita3.position.set(-3, 0.67, -4);
+  car.add(para_choque_roda_traseira_direita3);
+
+  var para_choque_roda_dianteira_direita1 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_dianteira_direita1.rotateY(degreesToRadians(90));
+  para_choque_roda_dianteira_direita1.rotateZ(degreesToRadians(-45));
+  para_choque_roda_dianteira_direita1.position.set(-3, 0.21, 2.85);
+  car.add(para_choque_roda_dianteira_direita1);
+
+  var para_choque_roda_dianteira_direita2 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_dianteira_direita2.rotateY(degreesToRadians(90));
+  para_choque_roda_dianteira_direita2.rotateZ(degreesToRadians(45));
+  para_choque_roda_dianteira_direita2.position.set(-3, 0.21, 5.15);
+  car.add(para_choque_roda_dianteira_direita2);
+
+  var para_choque_roda_dianteira_direita3 = createBox(1.6, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_roda_dianteira_direita3.rotateY(degreesToRadians(90));
+  para_choque_roda_dianteira_direita3.position.set(-3, 0.67, 4);
+  car.add(para_choque_roda_dianteira_direita3);
+
+  var para_choque_traseiro = createBox(6.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+  para_choque_traseiro.rotateX(degreesToRadians(90));
+  para_choque_traseiro.position.set(0.0, -0.25, -6.5);
+  car.add(para_choque_traseiro);
+
+  /* Faróis */
+
+  var farol_frontal = createBox(5, 0.5, 0.15, 'rgb(255, 255, 255)');
+  farol_frontal.rotateX(degreesToRadians(90));
+  farol_frontal.position.set(0.0, 2.25, 6.125);
+  car.add(farol_frontal);
+
+  var farol_traseiro1 = createBox(1, 0.5, 0.25, 'rgb(196, 35, 35)');
+  farol_traseiro1.rotateX(degreesToRadians(90));
+  farol_traseiro1.position.set(2.0, 2, -6.125);
+  car.add(farol_traseiro1);
+
+  var farol_traseiro2 = createBox(1, 0.5, 0.25, 'rgb(196, 35, 35)');
+  farol_traseiro2.rotateX(degreesToRadians(90));
+  farol_traseiro2.position.set(-2.0, 2, -6.125);
+  car.add(farol_traseiro2);
+
+  /*
+  const farol_frontal_light = new THREE.PointLight(0xffffff, 0.3, 20);
+  farol_frontal_light.position.set(0.0, 2.25, 8);
+ 
+  const farol_frontal_light2 = new THREE.PointLight(0xffffff, 0.3, 20);
+  farol_frontal_light2.position.set(1, 2.25, 8);
+ 
+  const farol_frontal_light3 = new THREE.PointLight(0xffffff, 0.3, 20);
+  farol_frontal_light3.position.set(-1, 2.25, 8);
+ 
+  const farol_traseiro_light = new THREE.PointLight(0xff0000, 0.5, 15);
+  farol_traseiro_light.position.set(0, 2, -8);
+*/
+
+  /* Eixos */
+  var eixo1 = createCylinder(0.3, 0.3, 7.0, 10, 10, false, 'rgb(132, 142, 156)');
+  eixo1.rotateZ(degreesToRadians(90));
+  eixo1.position.set(0.0, -1.0, 4.0);
+  car.add(eixo1);
+
+  var eixo2 = createCylinder(0.3, 0.3, 7.0, 10, 10, false, 'rgb(132, 142, 156)');
+  eixo2.rotateZ(degreesToRadians(90));
+  eixo2.position.set(0.0, -1.0, -4.0);
+  car.add(eixo2);
+
+  /* Rodas */
+  roda1 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2, 'rgb(30, 30, 31)');
+  roda1.position.set(3.25, -1.0, 4.0);
+  car.add(roda1);
+
+  calota1 = createTorus(0.9, 0.35, 20, 20, Math.PI * 15, 'rgb(93, 101, 112)');
+  calota1.position.set(3.2, -1.0, 4.0);
+  car.add(calota1);
+
+  roda2 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2, 'rgb(30, 30, 31)');
+  roda2.position.set(-3.25, -1.0, 4.0);
+  car.add(roda2);
+
+  calota2 = createTorus(0.9, 0.35, 20, 20, Math.PI * 15, 'rgb(93, 101, 112)');
+  calota2.position.set(-3.2, -1.0, 4.0);
+  car.add(calota2);
+
+  roda3 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2, 'rgb(30, 30, 31)');
+  roda3.position.set(3.25, -1.0, -4.0);
+  car.add(roda3);
+
+  calota3 = createTorus(0.9, 0.35, 20, 20, Math.PI * 15, 'rgb(93, 101, 112)');
+  calota3.position.set(3.2, -1.0, -4.0);
+  car.add(calota3);
+
+  roda4 = createTorus(1.0, 0.35, 20, 20, Math.PI * 2, 'rgb(30, 30, 31)');
+  roda4.position.set(-3.25, -1.0, -4.0);
+  car.add(roda4);
+
+  calota4 = createTorus(0.9, 0.35, 20, 20, Math.PI * 15, 'rgb(93, 101, 112)');
+  calota4.position.set(-3.2, -1.0, -4.0);
+  car.add(calota4);
+
+  return car;
+}
+
 function createBox(
   width,
   height,
@@ -485,7 +669,7 @@ function createCylinder(
   return object;
 }
 
-function createTorus(radius, tube, radialSegments, tubularSegments, arc) {
+function createTorus(radius, tube, radialSegments, tubularSegments, arc, color) {
   var geometry = new THREE.TorusGeometry(
     radius,
     tube,
@@ -493,7 +677,7 @@ function createTorus(radius, tube, radialSegments, tubularSegments, arc) {
     tubularSegments,
     arc
   );
-  var material = new THREE.MeshPhongMaterial({ color: 'rgb(30, 30, 31)' });
+  var material = new THREE.MeshPhongMaterial({ color: color });
   var object = new THREE.Mesh(geometry, material);
   object.castShadow = true;
   object.rotateY(degreesToRadians(90));
@@ -558,11 +742,15 @@ function keyboardUpdate() {
       if (roda1.rotation._y > 0.9) {
         roda1.rotateY(rotateAngleRoda / 2);
         roda2.rotateY(rotateAngleRoda / 2);
+        calota1.rotateY(rotateAngleRoda / 2);
+        calota2.rotateY(rotateAngleRoda / 2);
       }
     } else if (keyboard.pressed('right')) {
       if (roda1.rotation._y > 0.9) {
         roda1.rotateY(-rotateAngleRoda / 2);
         roda2.rotateY(-rotateAngleRoda / 2);
+        calota1.rotateY(-rotateAngleRoda / 2);
+        calota2.rotateY(-rotateAngleRoda / 2);
       }
     }
   } else {
@@ -570,11 +758,15 @@ function keyboardUpdate() {
       if (roda1.rotation._y > 0.9) {
         roda1.rotateY(-rotateAngleRoda / 2);
         roda2.rotateY(-rotateAngleRoda / 2);
+        calota1.rotateY(-rotateAngleRoda / 2);
+        calota2.rotateY(-rotateAngleRoda / 2);
       }
     } else if (keyboard.pressed('right')) {
       if (roda1.rotation._y > 0.9) {
         roda1.rotateY(rotateAngleRoda / 2);
         roda2.rotateY(rotateAngleRoda / 2);
+        calota1.rotateY(rotateAngleRoda / 2);
+        calota2.rotateY(rotateAngleRoda / 2);
       }
     }
   }
@@ -585,7 +777,13 @@ function keyboardUpdate() {
       new THREE.Euler(roda1.rotation._x, 1.57, roda1.rotation._z, 'XYZ')
     );
     roda2.setRotationFromEuler(
-      new THREE.Euler(roda1.rotation._x, 1.57, roda2.rotation._z, 'XYZ')
+      new THREE.Euler(roda2.rotation._x, 1.57, roda2.rotation._z, 'XYZ')
+    );
+    calota1.setRotationFromEuler(
+      new THREE.Euler(calota1.rotation._x, 1.57, calota1.rotation._z, 'XYZ')
+    );
+    calota2.setRotationFromEuler(
+      new THREE.Euler(calota2.rotation._x, 1.57, calota2.rotation._z, 'XYZ')
     );
   }
 }
