@@ -72,7 +72,12 @@ const upVec = new THREE.Vector3(0.0, 1.0, 0.0);
 const vcWidth = 200;
 const vcHeidth = 200;
 
-var virtualCamera = new THREE.PerspectiveCamera(45, vcWidth / vcHeidth, 1.0, altura_minimap + 2);
+var virtualCamera = new THREE.PerspectiveCamera(
+  45,
+  vcWidth / vcHeidth,
+  1.0,
+  altura_minimap + 2
+);
 virtualCamera.position.copy(camPosition);
 virtualCamera.up.copy(upVec);
 virtualCamera.lookAt(lookAtVec);
@@ -125,10 +130,9 @@ track.add(plane2);
 track.add(plane3);
 track.add(plane4);
 
-
 // Pista 1
 for (var i = 0; i < 6; i++) {
-  createFinishLine(-10, - 20 + track1 + i * 10, i);
+  createFinishLine(-10, -20 + track1 + i * 10, i);
 }
 for (var i = 0; i < 40; i++) {
   for (var j = 0; j < 6; j++) {
@@ -150,8 +154,9 @@ for (var i = 0; i < 40; i++) {
 
 // Pista 2
 for (var i = 0; i < 6; i++) {
-  createFinishLine(track2 - 10, - 20 + track2 + i * 10, i);
+  createFinishLine(track2 - 10, -20 + track2 + i * 10, i);
 }
+
 for (var i = 0; i < 40; i++) {
   for (var j = 0; j < 6; j++) {
     createStreet(track2 + -200 + i * 10, track2 + -20 + j * 10);
@@ -160,6 +165,7 @@ for (var i = 0; i < 40; i++) {
     createStreet(track2 + -200 + 10 * j, track2 + -i * 10);
   }
 }
+
 for (var i = 0; i < 24; i++) {
   for (var j = 0; j < 6; j++) {
     createStreet(track2 + -200 + i * 10, track2 + -400 + j * 10);
@@ -176,7 +182,100 @@ for (var i = 0; i < 24; i++) {
   for (var j = 0; j < 6; j++) {
     createStreet(track2 + 210 - 10 * j, track2 + 30 - i * 10);
   }
+}
 
+// Pista 3
+for (var i = 0; i < 6; i++) {
+  createFinishLine(track3 - 10, -20 + track3 + i * 10, i);
+}
+
+for (var i = 0; i < 40; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track3 + -200 + i * 6, track3 + -20 + j * 10);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track3 + -200 + 10 * j, track3 + -i * 10);
+  }
+}
+
+for (var i = 0; i < 30; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track3 + 100 + 10 * j, track3 + -i * 10 - 100);
+  }
+}
+
+for (var i = 0; i < 15; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track3 + i * 8 + 37, track3 + -20 + j * 10 - 80);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track3 + -20 + j * 10 + 57, track3 + -i * 5 + 30);
+  }
+}
+
+for (var i = 0; i < 20; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track3 + -i * 10 - 10, track3 + -200 + j * 10);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track3 + -i * 10 - 10, track3 + -400 + j * 10);
+  }
+}
+
+for (var i = 0; i < 25; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track3 + -60 + j * 10, track3 + -i * 10 - 150);
+  }
+}
+
+for (var i = 0; i < 30; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track3 + -i * 10 + 150, track3 + -400 + j * 10);
+  }
+}
+
+// Pista 4
+for (var i = 0; i < 6; i++) {
+  createFinishLine(track4 - 25, -20 + track4 + i * 10, i);
+}
+
+for (var i = 0; i < 40; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 + -200 + i * 6, track4 + -20 + j * 10);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 + -200 + 10 * j, track4 + -i * 4);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 + -200 + i * 4, track4 + j * 10 - 157);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 + 10 * j - 16, track4 + -i * 4);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 + i * 4, track4 + j * 10 - 157);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 - 15 + 10 * j, track4 + -i * 4 - 150);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 + i * 5 + 40, track4 + j * 10 - 306);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 + i * 3 + 110, track4 + j * 10 - 422);
+  }
+}
+
+for (var i = 0; i < 30; i++) {
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 120);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 306);
+  }
+  for (var j = 0; j < 6; j++) {
+    createStreet(track4 - 15 + 10 * j + 200, track4 + -i * 4 - 306);
+  }
 }
 
 scene.add(track);
@@ -184,7 +283,6 @@ scene.add(track);
 /* ELEVAÇÕES - INICIO */
 
 var trackElevationArray = new Array();
-
 
 /* Pista 1 - INICIO */
 
@@ -231,7 +329,6 @@ track.add(elevacao32);
 trackElevationArray.push(elevacao32);
 /* Pista 1 - FIM */
 
-
 /* Pista 2 - INICIO */
 
 var elevacao4 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
@@ -262,7 +359,6 @@ elevacao52.position.set(track2 - 87.5, 3, track2 + -375.0);
 track.add(elevacao52);
 trackElevationArray.push(elevacao52);
 
-
 var elevacao6 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
 elevacao6.rotateX(degreesToRadians(-65));
 elevacao6.rotateZ(degreesToRadians(90));
@@ -278,10 +374,24 @@ track.add(elevacao62);
 trackElevationArray.push(elevacao62);
 /* Pista 2 - FIM */
 
+/* Pista 3 - INICIO */
+var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao31.rotateX(degreesToRadians(-65));
+elevacao31.rotateZ(degreesToRadians(90));
+elevacao31.position.set(track4 + 130, 3, track4 + -240.0);
+track.add(elevacao31);
+trackElevationArray.push(elevacao31);
+
+var elevacao32 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao32.rotateX(degreesToRadians(90));
+elevacao32.rotateY(degreesToRadians(25));
+elevacao32.position.set(track4 + -40, 3, track4 + -135.0);
+track.add(elevacao32);
+trackElevationArray.push(elevacao32);
+
+/* Pista 3 - FIM */
 
 /* ELEVAÇÕES - FIM */
-
-
 
 /* PISTA - FIM */
 
@@ -321,7 +431,6 @@ document.addEventListener('keypress', function (e) {
   if (e.keyCode === 52) {
     resetCar(track4, track4);
   }
-
 });
 
 // Atualiza o timer
@@ -350,19 +459,17 @@ function resetCar(x, y) {
 }
 
 function timerUpdate() {
-
   if (finalizou == false) {
-    if (document.getElementById("InfoxBox") == null) {
+    if (document.getElementById('InfoxBox') == null) {
       information = new InfoBox();
-      information.infoBox.style.backgroundColor = "rgba(0, 0, 0, 0.65)";
-      information.infoBox.style.color = "rgb(242, 242, 242)";
+      information.infoBox.style.backgroundColor = 'rgba(0, 0, 0, 0.65)';
+      information.infoBox.style.color = 'rgb(242, 242, 242)';
       information.show();
     }
 
-    var information = document.getElementById("InfoxBox");
+    var information = document.getElementById('InfoxBox');
 
     if (lap > 0) {
-
       information.style.width = '180px';
       information.style.height = '110px';
       information.style.display = 'block';
@@ -370,8 +477,8 @@ function timerUpdate() {
       var seconds = timerVoltas[lap] % 60;
       var minutes = (timerVoltas[lap] - seconds) / 60;
 
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
 
       var total = 0;
       for (var i = 1; i <= lap; i++) {
@@ -381,15 +488,29 @@ function timerUpdate() {
       var secondsTotal = total % 60;
       var minutesTotal = (total - secondsTotal) / 60;
 
-      minutesTotal = minutesTotal < 10 ? "0" + minutesTotal : minutesTotal;
-      secondsTotal = secondsTotal < 10 ? "0" + secondsTotal : secondsTotal;
+      minutesTotal = minutesTotal < 10 ? '0' + minutesTotal : minutesTotal;
+      secondsTotal = secondsTotal < 10 ? '0' + secondsTotal : secondsTotal;
 
-      information.innerHTML = "Volta (" + lap + "/" + totalLap + ")<br><br>Tempo da volta: " + minutes + ":" + seconds + "<br>Tempo total: " + minutesTotal + ":" + secondsTotal + "<br><br>Velocidade: " + Math.abs(Math.round(speed * 10)) + " KM/h";
+      information.innerHTML =
+        'Volta (' +
+        lap +
+        '/' +
+        totalLap +
+        ')<br><br>Tempo da volta: ' +
+        minutes +
+        ':' +
+        seconds +
+        '<br>Tempo total: ' +
+        minutesTotal +
+        ':' +
+        secondsTotal +
+        '<br><br>Velocidade: ' +
+        Math.abs(Math.round(speed * 10)) +
+        ' KM/h';
 
       timerVoltas[lap]++;
-
     } else {
-      information.innerHTML = "";
+      information.innerHTML = '';
 
       information.style.display = 'none';
     }
@@ -452,46 +573,86 @@ function createCar() {
   para_choque_lateral_esquerdo1.position.set(3, -0.25, 0);
   car.add(para_choque_lateral_esquerdo1);
 
-  var para_choque_lateral_esquerdo2 = createBox(1.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_lateral_esquerdo2 = createBox(
+    1.25,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_lateral_esquerdo2.rotateY(degreesToRadians(90));
   para_choque_lateral_esquerdo2.position.set(3, -0.25, 6.125);
   car.add(para_choque_lateral_esquerdo2);
 
-  var para_choque_lateral_esquerdo3 = createBox(1.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_lateral_esquerdo3 = createBox(
+    1.25,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_lateral_esquerdo3.rotateY(degreesToRadians(90));
   para_choque_lateral_esquerdo3.position.set(3, -0.25, -6.125);
   car.add(para_choque_lateral_esquerdo3);
 
-  var para_choque_roda_traseira_esquerda1 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_traseira_esquerda1 = createBox(
+    1.5,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_traseira_esquerda1.rotateY(degreesToRadians(90));
   para_choque_roda_traseira_esquerda1.rotateZ(degreesToRadians(-45));
   para_choque_roda_traseira_esquerda1.position.set(3, 0.21, -5.15);
   car.add(para_choque_roda_traseira_esquerda1);
 
-  var para_choque_roda_traseira_esquerda2 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_traseira_esquerda2 = createBox(
+    1.5,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_traseira_esquerda2.rotateY(degreesToRadians(90));
   para_choque_roda_traseira_esquerda2.rotateZ(degreesToRadians(45));
   para_choque_roda_traseira_esquerda2.position.set(3, 0.21, -2.85);
   car.add(para_choque_roda_traseira_esquerda2);
 
-  var para_choque_roda_traseira_esquerda3 = createBox(1.6, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_traseira_esquerda3 = createBox(
+    1.6,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_traseira_esquerda3.rotateY(degreesToRadians(90));
   para_choque_roda_traseira_esquerda3.position.set(3, 0.67, -4);
   car.add(para_choque_roda_traseira_esquerda3);
 
-  var para_choque_roda_dianteira_esquerda1 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_dianteira_esquerda1 = createBox(
+    1.5,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_dianteira_esquerda1.rotateY(degreesToRadians(90));
   para_choque_roda_dianteira_esquerda1.rotateZ(degreesToRadians(-45));
   para_choque_roda_dianteira_esquerda1.position.set(3, 0.21, 2.85);
   car.add(para_choque_roda_dianteira_esquerda1);
 
-  var para_choque_roda_dianteira_esquerda2 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_dianteira_esquerda2 = createBox(
+    1.5,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_dianteira_esquerda2.rotateY(degreesToRadians(90));
   para_choque_roda_dianteira_esquerda2.rotateZ(degreesToRadians(45));
   para_choque_roda_dianteira_esquerda2.position.set(3, 0.21, 5.15);
   car.add(para_choque_roda_dianteira_esquerda2);
 
-  var para_choque_roda_dianteira_esquerda3 = createBox(1.6, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_dianteira_esquerda3 = createBox(
+    1.6,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_dianteira_esquerda3.rotateY(degreesToRadians(90));
   para_choque_roda_dianteira_esquerda3.position.set(3, 0.67, 4);
   car.add(para_choque_roda_dianteira_esquerda3);
@@ -501,46 +662,86 @@ function createCar() {
   para_choque_lateral_direito1.position.set(-3, -0.25, 0);
   car.add(para_choque_lateral_direito1);
 
-  var para_choque_lateral_direito2 = createBox(1.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_lateral_direito2 = createBox(
+    1.25,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_lateral_direito2.rotateY(degreesToRadians(90));
   para_choque_lateral_direito2.position.set(-3, -0.25, 6.125);
   car.add(para_choque_lateral_direito2);
 
-  var para_choque_lateral_direito3 = createBox(1.25, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_lateral_direito3 = createBox(
+    1.25,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_lateral_direito3.rotateY(degreesToRadians(90));
   para_choque_lateral_direito3.position.set(-3, -0.25, -6.125);
   car.add(para_choque_lateral_direito3);
 
-  var para_choque_roda_traseira_direita1 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_traseira_direita1 = createBox(
+    1.5,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_traseira_direita1.rotateY(degreesToRadians(90));
   para_choque_roda_traseira_direita1.rotateZ(degreesToRadians(-45));
   para_choque_roda_traseira_direita1.position.set(-3, 0.21, -5.15);
   car.add(para_choque_roda_traseira_direita1);
 
-  var para_choque_roda_traseira_direita2 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_traseira_direita2 = createBox(
+    1.5,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_traseira_direita2.rotateY(degreesToRadians(90));
   para_choque_roda_traseira_direita2.rotateZ(degreesToRadians(45));
   para_choque_roda_traseira_direita2.position.set(-3, 0.21, -2.85);
   car.add(para_choque_roda_traseira_direita2);
 
-  var para_choque_roda_traseira_direita3 = createBox(1.6, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_traseira_direita3 = createBox(
+    1.6,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_traseira_direita3.rotateY(degreesToRadians(90));
   para_choque_roda_traseira_direita3.position.set(-3, 0.67, -4);
   car.add(para_choque_roda_traseira_direita3);
 
-  var para_choque_roda_dianteira_direita1 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_dianteira_direita1 = createBox(
+    1.5,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_dianteira_direita1.rotateY(degreesToRadians(90));
   para_choque_roda_dianteira_direita1.rotateZ(degreesToRadians(-45));
   para_choque_roda_dianteira_direita1.position.set(-3, 0.21, 2.85);
   car.add(para_choque_roda_dianteira_direita1);
 
-  var para_choque_roda_dianteira_direita2 = createBox(1.5, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_dianteira_direita2 = createBox(
+    1.5,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_dianteira_direita2.rotateY(degreesToRadians(90));
   para_choque_roda_dianteira_direita2.rotateZ(degreesToRadians(45));
   para_choque_roda_dianteira_direita2.position.set(-3, 0.21, 5.15);
   car.add(para_choque_roda_dianteira_direita2);
 
-  var para_choque_roda_dianteira_direita3 = createBox(1.6, 0.5, 0.5, 'rgb(30, 30, 31)');
+  var para_choque_roda_dianteira_direita3 = createBox(
+    1.6,
+    0.5,
+    0.5,
+    'rgb(30, 30, 31)'
+  );
   para_choque_roda_dianteira_direita3.rotateY(degreesToRadians(90));
   para_choque_roda_dianteira_direita3.position.set(-3, 0.67, 4);
   car.add(para_choque_roda_dianteira_direita3);
@@ -582,12 +783,28 @@ function createCar() {
 */
 
   /* Eixos */
-  var eixo1 = createCylinder(0.3, 0.3, 7.0, 10, 10, false, 'rgb(132, 142, 156)');
+  var eixo1 = createCylinder(
+    0.3,
+    0.3,
+    7.0,
+    10,
+    10,
+    false,
+    'rgb(132, 142, 156)'
+  );
   eixo1.rotateZ(degreesToRadians(90));
   eixo1.position.set(0.0, -1.0, 4.0);
   car.add(eixo1);
 
-  var eixo2 = createCylinder(0.3, 0.3, 7.0, 10, 10, false, 'rgb(132, 142, 156)');
+  var eixo2 = createCylinder(
+    0.3,
+    0.3,
+    7.0,
+    10,
+    10,
+    false,
+    'rgb(132, 142, 156)'
+  );
   eixo2.rotateZ(degreesToRadians(90));
   eixo2.position.set(0.0, -1.0, -4.0);
   car.add(eixo2);
@@ -628,17 +845,8 @@ function createCar() {
   return car;
 }
 
-function createBox(
-  width,
-  height,
-  depth,
-  color
-) {
-  var geometry = new THREE.BoxGeometry(
-    width,
-    height,
-    depth,
-  );
+function createBox(width, height, depth, color) {
+  var geometry = new THREE.BoxGeometry(width, height, depth);
   var material = new THREE.MeshPhongMaterial({ color: color });
   var object = new THREE.Mesh(geometry, material);
   object.castShadow = true;
@@ -669,7 +877,14 @@ function createCylinder(
   return object;
 }
 
-function createTorus(radius, tube, radialSegments, tubularSegments, arc, color) {
+function createTorus(
+  radius,
+  tube,
+  radialSegments,
+  tubularSegments,
+  arc,
+  color
+) {
   var geometry = new THREE.TorusGeometry(
     radius,
     tube,
@@ -685,7 +900,6 @@ function createTorus(radius, tube, radialSegments, tubularSegments, arc, color) 
 }
 
 function createStreet(x, z) {
-
   var pista = createBox(10, 10, 0.1, 'rgb(150, 150, 150)');
   pista.rotateX(degreesToRadians(-90));
   pista.position.set(x, 0, z);
@@ -695,7 +909,7 @@ function createStreet(x, z) {
 }
 
 function createFinishLine(x, z, i) {
-  var color = i % 2 == 0 ? "rgb(255,255,255)" : "rgb(0,0,0)";
+  var color = i % 2 == 0 ? 'rgb(255,255,255)' : 'rgb(0,0,0)';
   var groundPlane = createGroundPlane(5, 10, 1, 1, color);
   groundPlane.rotateX(degreesToRadians(-90));
   groundPlane.position.set(x, 0.1, z);
@@ -706,7 +920,7 @@ function createFinishLine(x, z, i) {
 
 function keyboardUpdate() {
   keyboard.update();
-  var rotateAngle = (Math.PI / 2) * (speed / 2 * 0.0024) * sensitivity;
+  var rotateAngle = (Math.PI / 2) * ((speed / 2) * 0.0024) * sensitivity;
   var rotateAngleRoda = (Math.PI / 2) * 0.0024 * sensitivity;
 
   // Acrecenta velocidade ao carro
@@ -803,46 +1017,55 @@ function detectCollisionCubes(object1, object2) {
   return box1.intersectsBox(box2);
 }
 
-
 function movimentCar() {
-
   if (inspecionar == true || finalizou == true) {
     speed = 0;
   }
 
   // Verifica se o carro ta dentro da pista
-  if (!(trackArray.some(e => ((e.x === Math.ceil(car.position.x / 10) * 10) && (e.z === Math.ceil(car.position.z / 10) * 10))))) {
+  if (
+    !trackArray.some(
+      (e) =>
+        e.x === Math.ceil(car.position.x / 10) * 10 &&
+        e.z === Math.ceil(car.position.z / 10) * 10
+    )
+  ) {
     if (speed > 0 && speed > maxSpeed / 2) {
-      speed -= (2.4 * incrementSpeed);
+      speed -= 2.4 * incrementSpeed;
     }
     if (speed < 0 && speed < -(maxSpeed / 2)) {
-      speed += (2.4 * incrementSpeed);
+      speed += 2.4 * incrementSpeed;
     }
   }
 
   // Verifica se o carro passou na linha de chegada
-  if (finishLineArray.some(e => ((e.x === Math.ceil(car.position.x / 10) * 10) && (e.z === Math.ceil(car.position.z / 10) * 10)))) {
+  if (
+    finishLineArray.some(
+      (e) =>
+        e.x === Math.ceil(car.position.x / 10) * 10 &&
+        e.z === Math.ceil(car.position.z / 10) * 10
+    )
+  ) {
     if (canFinish == 2) {
-
       if (lap == totalLap) {
         track.visible = true;
 
-        var information = document.getElementById("InfoxBox");
+        var information = document.getElementById('InfoxBox');
 
         var total = 0;
-        var texto = "";
+        var texto = '';
 
         var melhor = timerVoltas[0];
         for (var i = 1; i <= lap; i++) {
           var seconds = timerVoltas[i] % 60;
           var minutes = (timerVoltas[i] - seconds) / 60;
 
-          minutes = minutes < 10 ? "0" + minutes : minutes;
-          seconds = seconds < 10 ? "0" + seconds : seconds;
+          minutes = minutes < 10 ? '0' + minutes : minutes;
+          seconds = seconds < 10 ? '0' + seconds : seconds;
 
           total += timerVoltas[i];
 
-          texto += "<br>Volta " + i + " - " + minutes + ":" + seconds;
+          texto += '<br>Volta ' + i + ' - ' + minutes + ':' + seconds;
 
           if (melhor > timerVoltas[i]) {
             melhor = timerVoltas[i];
@@ -852,25 +1075,32 @@ function movimentCar() {
         var seconds = melhor % 60;
         var minutes = (melhor - seconds) / 60;
 
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
 
-        texto += "<br>Melhor Volta: " + minutes + ":" + seconds;
+        texto += '<br>Melhor Volta: ' + minutes + ':' + seconds;
 
         var secondsTotal = total % 60;
         var minutesTotal = (total - secondsTotal) / 60;
 
-        minutesTotal = minutesTotal < 10 ? "0" + minutesTotal : minutesTotal;
-        secondsTotal = secondsTotal < 10 ? "0" + secondsTotal : secondsTotal;
+        minutesTotal = minutesTotal < 10 ? '0' + minutesTotal : minutesTotal;
+        secondsTotal = secondsTotal < 10 ? '0' + secondsTotal : secondsTotal;
 
-        information.innerHTML = "<div id='fim'> <h1>Parábens, você concluiu a corrida</h1> <h2>" + texto + "</h2> <br> <h3>Tempo total: " + minutesTotal + ":" + secondsTotal + "</h3> </div>";
+        information.innerHTML =
+          "<div id='fim'> <h1>Parábens, você concluiu a corrida</h1> <h2>" +
+          texto +
+          '</h2> <br> <h3>Tempo total: ' +
+          minutesTotal +
+          ':' +
+          secondsTotal +
+          '</h3> </div>';
 
         information.style.width = '100%';
         information.style.height = '100%';
 
-        var fim = document.getElementById("fim");
+        var fim = document.getElementById('fim');
 
-        fim.style.color = "rgb(0, 0, 0)";
+        fim.style.color = 'rgb(0, 0, 0)';
         fim.style.bottom = '0';
         fim.style.textAlign = 'center';
         fim.style.color = '#FFF';
@@ -878,23 +1108,31 @@ function movimentCar() {
 
         //resetCar(track1, track1);
         finalizou = true;
-
       }
 
       lap++;
       timerVoltas[lap] = 0;
       canFinish = 0;
-
     }
-
   }
 
   // Verifica se o carro deu a volta na pista (Passou em cima)
-  if (canFinish == 0 && (Math.abs(car.position.z) > track1 + 340 && Math.abs(car.position.z) < track1 + 400) || Math.abs(car.position.z) < track2 - 340 && Math.abs(car.position.z) > track2 - 400) {
+  if (
+    (canFinish == 0 &&
+      Math.abs(car.position.z) > track1 + 340 &&
+      Math.abs(car.position.z) < track1 + 400) ||
+    (Math.abs(car.position.z) < track2 - 340 &&
+      Math.abs(car.position.z) > track2 - 400)
+  ) {
     canFinish = 1;
   }
   // Verifica se o carro deu a volta na pista (Passou do lado direito)
-  if (canFinish == 1 && (car.position.x > -track1 + 150 && car.position.x < -track1 + 200) || car.position.x > track2 + 150 && car.position.z < track2 + 200) {
+  if (
+    (canFinish == 1 &&
+      car.position.x > -track1 + 150 &&
+      car.position.x < -track1 + 200) ||
+    (car.position.x > track2 + 150 && car.position.z < track2 + 200)
+  ) {
     canFinish = 2;
   }
 
@@ -911,7 +1149,14 @@ function movimentCar() {
   // Verifica se o carro está no ar para não frear
   if (car.position.y - 2.2 <= 0.3) {
     // Desacelera o carro se não precionar nenhum botão
-    if (!(keyboard.pressed('X') || keyboard.pressed('down') || keyboard.pressed('X') || keyboard.pressed('up'))) {
+    if (
+      !(
+        keyboard.pressed('X') ||
+        keyboard.pressed('down') ||
+        keyboard.pressed('X') ||
+        keyboard.pressed('up')
+      )
+    ) {
       if (speed != 0 && speed > 0) {
         speed -= incrementSpeed;
       }
@@ -933,10 +1178,9 @@ function movimentCar() {
   car.translateZ(speed);
 
   var rampa = false;
-  var rotateAngle = Math.PI / 2 * (0.022 * speed);
+  var rotateAngle = (Math.PI / 2) * (0.022 * speed);
 
   trackElevationArray.forEach(function (te) {
-
     if (speed > 0) {
       if (detectCollisionCubes(roda1, te) || detectCollisionCubes(roda2, te)) {
         rampa = true;
@@ -947,30 +1191,29 @@ function movimentCar() {
         rampa = true;
       }
     }
-
   });
 
   if (rampa == true) {
-
     car.rotateX(-rotateAngle);
     car.position.y += 0.25;
     rampa = true;
-
   } else {
-
     if (car.position.y < 2.2) {
       car.setRotationFromEuler(
-        new THREE.Euler(camera_look.rotation._x, camera_look.rotation._y, camera_look.rotation._z, 'XYZ')
+        new THREE.Euler(
+          camera_look.rotation._x,
+          camera_look.rotation._y,
+          camera_look.rotation._z,
+          'XYZ'
+        )
       );
       car.position.y = 2.3;
-
     }
 
     if (car.position.y > 3) {
       car.rotateX(rotateAngle);
     }
   }
-
 }
 
 function moveCamera() {
@@ -991,10 +1234,7 @@ function moveCamera() {
       camera_look.position.z
     );
 
-
     //pointLight.position.set(camera.position.x, 20, camera.position.z)
-
-
   }
 }
 
@@ -1005,15 +1245,15 @@ function controlledRender() {
   // Set main viewport
   renderer.setViewport(0, 0, width, height);
   renderer.setScissorTest(false);
-  renderer.setClearColor("rgb(80, 70, 170)");
+  renderer.setClearColor('rgb(80, 70, 170)');
   renderer.clear();
   renderer.render(scene, camera);
 
-  // Set virtual camera viewport 
+  // Set virtual camera viewport
   renderer.setViewport(0, height - vcHeidth, vcWidth, vcHeidth);
   renderer.setScissor(0, height - vcHeidth, vcWidth, vcHeidth);
   renderer.setScissorTest(true);
-  renderer.setClearColor("rgb(60, 50, 150)");
+  renderer.setClearColor('rgb(60, 50, 150)');
   renderer.clear();
   renderer.render(scene, virtualCamera);
 }
