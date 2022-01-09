@@ -54,11 +54,8 @@ var camera = new THREE.PerspectiveCamera(
 var camera_look = new THREE.Group();
 camera_look.rotateY(degreesToRadians(-90));
 
-/*const pointLight = new THREE.PointLight( 0xffffff, , 200 );
-pointLight.castShadow = true;
-scene.add( pointLight );*/
-
-scene.add(new THREE.AmbientLight(0xffffff, 0.2));
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.4);
+scene.add(directionalLight);
 
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 
@@ -378,18 +375,74 @@ trackElevationArray.push(elevacao62);
 var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
 elevacao31.rotateX(degreesToRadians(-65));
 elevacao31.rotateZ(degreesToRadians(90));
-elevacao31.position.set(track4 + 130, 3, track4 + -240.0);
+elevacao31.position.set(track3 + -175, 3, track3 + -100.0);
+track.add(elevacao31);
+trackElevationArray.push(elevacao31);
+var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao31.rotateX(degreesToRadians(65));
+elevacao31.rotateZ(degreesToRadians(90));
+elevacao31.position.set(track3 + -175, 3, track3 + -117.0);
+track.add(elevacao31);
+trackElevationArray.push(elevacao31);
+
+var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao31.rotateX(degreesToRadians(-65));
+elevacao31.rotateZ(degreesToRadians(90));
+elevacao31.position.set(track3 + 124, 3, track3 + -130.0);
+track.add(elevacao31);
+trackElevationArray.push(elevacao31);
+var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao31.rotateX(degreesToRadians(65));
+elevacao31.rotateZ(degreesToRadians(90));
+elevacao31.position.set(track3 + 124, 3, track3 + -147.0);
 track.add(elevacao31);
 trackElevationArray.push(elevacao31);
 
 var elevacao32 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
 elevacao32.rotateX(degreesToRadians(90));
 elevacao32.rotateY(degreesToRadians(25));
-elevacao32.position.set(track4 + -40, 3, track4 + -135.0);
+elevacao32.position.set(track3 + -70, 3, track3 + 5);
 track.add(elevacao32);
 trackElevationArray.push(elevacao32);
 
+var elevacao322 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao322.rotateX(degreesToRadians(-90));
+elevacao322.rotateY(degreesToRadians(25));
+elevacao322.position.set(track3 + -53, 3, track3 + 5);
+track.add(elevacao322);
+trackElevationArray.push(elevacao322);
+
+var elevacao32 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao32.rotateX(degreesToRadians(90));
+elevacao32.rotateY(degreesToRadians(25));
+elevacao32.position.set(track3 + 18, 3, track3 + 5);
+track.add(elevacao32);
+trackElevationArray.push(elevacao32);
+
+var elevacao322 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao322.rotateX(degreesToRadians(-90));
+elevacao322.rotateY(degreesToRadians(25));
+elevacao322.position.set(track3 + 35, 3, track3 + 5);
+track.add(elevacao322);
+trackElevationArray.push(elevacao322);
 /* Pista 3 - FIM */
+
+/* Pista 4 - INICIO */
+var elevacao41 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao41.rotateX(degreesToRadians(-65));
+elevacao41.rotateZ(degreesToRadians(90));
+elevacao41.position.set(track4 + 130, 3, track4 + -240.0);
+track.add(elevacao41);
+trackElevationArray.push(elevacao41);
+
+var elevacao42 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+elevacao42.rotateX(degreesToRadians(90));
+elevacao42.rotateY(degreesToRadians(25));
+elevacao42.position.set(track4 + -40, 3, track4 + -135.0);
+track.add(elevacao42);
+trackElevationArray.push(elevacao42);
+
+/* Pista 4 - FIM */
 
 /* ELEVAÇÕES - FIM */
 
