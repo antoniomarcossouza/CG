@@ -1,215 +1,106 @@
 import * as THREE from '../build/three.module.js';
 import Stats from '../build/jsm/libs/stats.module.js';
+import { GUI } from '../build/jsm/libs/dat.gui.module.js';
 import { TrackballControls } from '../build/jsm/controls/TrackballControls.js';
-import KeyboardState from '../libs/util/KeyboardState.js';
-import { TeapotGeometry } from '../build/jsm/geometries/TeapotGeometry.js';
 import {
   initRenderer,
-  createGroundPlane,
+  initCamera,
+  InfoBox,
   onWindowResize,
-  degreesToRadians
+  degreesToRadians,
+  initDefaultBasicLight
 } from "../libs/util/util.js";
 
-var scene = new THREE.Scene();    // Create main scene
-var stats = new Stats();          // To show FPS information
-
-var renderer = initRenderer();    // View function in util/utils
-renderer.setClearColor("rgb(30, 30, 42)");
-var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.lookAt(0, 0, 0);
-camera.position.set(2.18, 1.62, 3.31);
-camera.up.set(0, 1, 0);
-
-// To use the keyboard
-var keyboard = new KeyboardState();
+var stats = new Stats(); // To show FPS information
+var scene = new THREE.Scene(); // Create main scene
+var renderer = initRenderer(); // View function in util/utils
+var camera = initCamera(new THREE.Vector3(0, -50, 35)); // Init camera in this position
+initDefaultBasicLight(scene, 1, new THREE.Vector3(10, -10, 25));
 
 // Enable mouse rotation, pan, zoom etc.
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 
+// create the ground plane
+var planeGeometry = new THREE.PlaneGeometry(30, 30);
+planeGeometry.translate(0.0, 0.0, -0.02); // To avoid conflict with the axeshelper
+var planeMaterial = new THREE.MeshBasicMaterial({
+  color: "rgba(150, 150, 150)",
+  side: THREE.DoubleSide,
+});
+var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+// add the plane to the scene
+scene.add(plane);
+
+// Base
+var baseGeometry = new THREE.BoxGeometry(4, 1, 0.20);
+var baseMaterial = new THREE.MeshPhongMaterial({ color: "#f7f7f7" });
+var base2Geometry = new THREE.BoxGeometry(2.75, 2.75, 0.10);
+var base = [];
+base[0] = new THREE.Mesh(baseGeometry, baseMaterial);
+base[1] = new THREE.Mesh(baseGeometry, baseMaterial);
+base[3] = new THREE.Mesh(base2Geometry, baseMaterial);
+base[0].rotation.z = degreesToRadians(45);
+base[1].rotation.z = degreesToRadians(-45);
+
+// "Tronco"
+var troncoGeometry = new THREE.CylinderGeometry(0.3, 0.5, 15, 32);
+var troncoMaterial = new THREE.MeshPhongMaterial({ color: "#f7f7f7" });
+var tronco = new THREE.Mesh(troncoGeometry, troncoMaterial);
+
+// Motor
+var motorGeometry = new THREE.CylinderGeometry(0.75, 0.75, 1.5, 32);
+var motorMaterial = new THREE.MeshPhongMaterial({ color: "#3a47de" });
+var motor = new THREE.Mesh(motorGeometry, motorMaterial);
+
+// Motor2
+var geometryMotor2 = new THREE.SphereGeometry(0.75, 32, 32);
+var motor2Material = new THREE.MeshPhongMaterial({ color: "#3a47de" });
+var motor2 = new THREE.Mesh(geometryMotor2, motor2Material);
+
+// Helice
+var heliceGeometry = new THREE.BoxGeometry(3.5, 0.1, 0.75);
+var heliceMaterial = new THREE.MeshPhongMaterial({ color: "#f7f7f7" });
+var helice = []
+for (var i = 0; i < 3; i++) {
+  helice[i] = new THREE.Mesh(heliceGeometry, heliceMaterial);
+  motor2.add(helice[i]);
+}
+
+// Posicionando coisas
+base[0].position.set(0.0, 0.0, 0.25);
+base[1].position.set(0.0, 0.0, 0.25);
+base[3].position.set(0.0, 0.0, 0.20);
+tronco.position.set(0.0, 0.0, 7.5);
+tronco.rotation.x = degreesToRadians(90);
+
+motor.position.set(0.0, 8.0, 0.0);
+motor.rotation.z = degreesToRadians(90);
+motor2.position.set(0, 0.75, 0);
+
+helice[0].position.set(1.5, 0.0, 0.0);
+helice[0].rotation.y = degreesToRadians(0);
+
+helice[1].position.set(-0.9, 0.0, -1.5);
+helice[1].rotation.y = degreesToRadians(120);
+
+helice[2].position.set(-0.9, 0.0, 1.5);
+helice[2].rotation.y = degreesToRadians(240);
+
+// Adicionando itens na cena
+scene.add(base[0]);
+scene.add(base[1]);
+scene.add(base[3]);
+base[0].add(tronco);
+tronco.add(motor);
+motor.add(motor2);
+
 // Listen window size changes
 window.addEventListener('resize', function () { onWindowResize(camera, renderer) }, false);
-
-var groundPlane = createGroundPlane(4.0, 2.5, 50, 50); // width and height
-groundPlane.rotateX(degreesToRadians(-90));
-scene.add(groundPlane);
-
-// Show axes (parameter is size of each axis)
-var axesHelper = new THREE.AxesHelper(1.5);
-axesHelper.visible = false;
-scene.add(axesHelper);
-
-// Teapot
-var objColor = "rgb(255,255,255)";
-var geometry = new TeapotGeometry(0.5);
-var material = new THREE.MeshPhongMaterial({ color: objColor, shininess: "200" });
-material.side = THREE.DoubleSide;
-var obj = new THREE.Mesh(geometry, material);
-obj.castShadow = true;
-obj.position.set(0.0, 0.5, 0.0);
-scene.add(obj);
-
-// Torus
-var objColor = "rgb(152,152,152)";
-var torus = new THREE.TorusGeometry(1, 0.025, 30, 30, Math.PI * 2);
-var material = new THREE.MeshPhongMaterial({ color: objColor });
-material.side = THREE.DoubleSide;
-var obj = new THREE.Mesh(torus, material);
-obj.castShadow = true;
-obj.position.set(0.0, 1.2, 0.0);
-obj.rotateX(degreesToRadians(90));
-scene.add(obj);
-
-//Spheres
-
-var ObjSphere = [];
-
-var objColor = "rgb(255,0,0)";
-var sphere1 = new THREE.SphereGeometry(0.15);
-var material = new THREE.MeshPhongMaterial({ color: objColor });
-material.side = THREE.DoubleSide;
-ObjSphere[0] = new THREE.Mesh(sphere1, material);
-ObjSphere[0].castShadow = true;
-ObjSphere[0].position.set(1.0, 1.2, 0.0);
-ObjSphere[0].rotateX(degreesToRadians(90));
-scene.add(ObjSphere[0]);
-
-var objColor = "rgb(0,225,0)";
-var sphere2 = new THREE.SphereGeometry(0.15);
-var material = new THREE.MeshPhongMaterial({ color: objColor });
-material.side = THREE.DoubleSide;
-ObjSphere[1] = new THREE.Mesh(sphere2, material);
-ObjSphere[1].castShadow = true;
-ObjSphere[1].position.set(1.0, 1.2, 0.0);
-ObjSphere[1].rotateX(degreesToRadians(90));
-scene.add(ObjSphere[1]);
-
-var objColor = "rgb(0,0,255)";
-var sphere3 = new THREE.SphereGeometry(0.15);
-var material = new THREE.MeshPhongMaterial({ color: objColor });
-material.side = THREE.DoubleSide;
-ObjSphere[2] = new THREE.Mesh(sphere3, material);
-ObjSphere[2].castShadow = true;
-ObjSphere[2].position.set(1.0, 1.2, 0.0);
-ObjSphere[2].rotateX(degreesToRadians(90));
-scene.add(ObjSphere[2]);
-
-var lightArray = new Array();
-var visibleArray = [];
-var lightPosition = [];
-var lightColor = [];
-
-// Luz vermelha
-lightPosition[0] = new THREE.Vector3(ObjSphere[0].position.x, ObjSphere[0].position.y, ObjSphere[0].position.z);
-lightColor[0] = "rgb(255,0,0)";
-
-var spotLight = new THREE.SpotLight(lightColor[0]);
-setSpotLight(lightPosition[0]);
-
-// Luz verde
-
-lightPosition[1] = new THREE.Vector3(ObjSphere[1].position.x, ObjSphere[1].position.y, ObjSphere[1].position.z);
-lightColor[1] = "rgb(0,255,0)";
-
-var spotLight = new THREE.SpotLight(lightColor[1]);
-setSpotLight(lightPosition[1]);
-
-// Luz azul
-
-lightPosition[2] = new THREE.Vector3(ObjSphere[2].position.x, ObjSphere[2].position.y, ObjSphere[2].position.z);
-lightColor[2] = "rgb(0,0,255)";
-
-var spotLight = new THREE.SpotLight(lightColor[2]);
-setSpotLight(lightPosition[2]);
-
-
-var ambientColor = "rgb(80,80,80)";
-var ambientLight = new THREE.AmbientLight(ambientColor);
-scene.add(ambientLight);
-
 render();
 
-function setSpotLight(position) {
-  spotLight.position.copy(position);
-  spotLight.shadow.mapSize.width = 512;
-  spotLight.shadow.mapSize.height = 512;
-  spotLight.angle = degreesToRadians(40);
-  spotLight.castShadow = true;
-  spotLight.decay = 2;
-  spotLight.penumbra = 0.5;
-  spotLight.name = "Spot Light"
-
-  scene.add(spotLight);
-  lightArray.push(spotLight);
-}
-
-
-var radiusPorTick = 6;
-var bal_radius = [];
-var position = [];
-
-for (var i = 0; i < 3; i++) {
-  bal_radius[i] = 0;
-
-  position[(0 * 2) * i] = ObjSphere[0].position.x;
-  position[(0 * 2) * i + 1] = ObjSphere[0].position.z;
-
-  visibleArray[i] = true;
-}
-
-function moveLight(index) {
-  var radians = bal_radius[index] * (Math.PI / 180) * 1.5;
-  var x = Math.cos(radians);
-  var z = Math.sin(radians);
-
-  position[(0 * 2) * index] += x;
-  position[(0 * 2) * index + 1] += z;
-
-  ObjSphere[index].position.x = x;
-  ObjSphere[index].position.z = z;
-
-  position[(0 * 2) * index] -= x;
-  position[(0 * 2) * index + 1] -= z;
-
-  bal_radius[index] += radiusPorTick;
-
-  lightArray[index].position.x = x;
-  lightArray[index].position.z = z;
-
-}
-
-function keyboardUpdate() {
-  keyboard.update();
-
-  if (keyboard.pressed("Q")) {
-    moveLight(0);
-  }
-
-  if (keyboard.pressed("W")) {
-    moveLight(1);
-  }
-
-  if (keyboard.pressed("E")) {
-    moveLight(2);
-  }
-
-  if (keyboard.down("A")) {
-    lightArray[0].visible = !lightArray[0].visible;
-  }
-
-  if (keyboard.down("S")) {
-    lightArray[1].visible = !lightArray[1].visible;
-  }
-
-  if (keyboard.down("D")) {
-    lightArray[2].visible = !lightArray[2].visible;
-  }
-
-}
-
 function render() {
-  stats.update();
-  trackballControls.update();
-  keyboardUpdate();
+  stats.update(); // Update FPS
+  trackballControls.update(); // Enable mouse movements
   requestAnimationFrame(render);
-  renderer.render(scene, camera)
+  renderer.render(scene, camera) // Render scene
 }
