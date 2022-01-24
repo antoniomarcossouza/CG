@@ -33,6 +33,9 @@ var list = {
 			"Texturas":{
 				"Exercício 01": "works/aula07_ex01",
 				"Exercício 02": "works/aula07_ex02",
+			},
+			"Realismo":{
+				"Exercício 01": "works/aula08_ex01",
 			}
 		},
 		"Projects": {
