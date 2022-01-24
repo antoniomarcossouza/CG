@@ -35,28 +35,24 @@ container.appendChild(renderer.domElement);
 
 // materials
 var phongMaterialBox = new THREE.MeshLambertMaterial({
-    color: "rgb(255,255,255)",
+    color: "rgb(240, 240, 240)",
 });
 
 var phongMaterialBoxBottom = new THREE.MeshLambertMaterial({
-    color: "rgb(180,180,180)",
+    color: "rgb(120, 120, 120)",
 });
 
-var phongMaterialBoxLeft = new THREE.MeshLambertMaterial({
+var phongMaterialBoxSides = new THREE.MeshLambertMaterial({
     color: "rgb(35, 109, 173)",
 });
 
-var phongMaterialBoxRight = new THREE.MeshLambertMaterial({
-    color: "rgb(35, 109, 173)",
-});
-
-var phongMaterial = new THREE.MeshPhongMaterial({
-    color: "rgb(150,190,220)",
+var pedestalMaterial = new THREE.MeshPhongMaterial({
+    color: "rgb(134, 152, 166)",
     specular: "rgb(255,255,255)",
     shininess: 1000,
 });
 
-var phongMaterial2 = new THREE.MeshPhongMaterial({
+var cilindoVermelhoMaterial = new THREE.MeshPhongMaterial({
     color: "rgb(176, 40, 40)",
     specular: "rgb(255,255,255)",
     shininess: 1000,
@@ -70,14 +66,6 @@ var mirrorMaterial = new THREE.MeshPhongMaterial({
 mirrorMaterial.mirror = true;
 mirrorMaterial.reflectivity = 1;
 
-var mirrorMaterialDark = new THREE.MeshPhongMaterial({
-    color: "rgb(0,0,0)",
-    specular: "rgb(170,170,170)",
-    shininess: 10000,
-});
-mirrorMaterialDark.mirror = true;
-mirrorMaterialDark.reflectivity = 1;
-
 var mirrorMaterialSmooth = new THREE.MeshPhongMaterial({
     color: "rgb(255,170,0)",
     specular: "rgb(34,34,34)",
@@ -86,49 +74,50 @@ var mirrorMaterialSmooth = new THREE.MeshPhongMaterial({
 mirrorMaterialSmooth.mirror = true;
 mirrorMaterialSmooth.reflectivity = 0.1;
 
-var glassMaterialSmooth = new THREE.MeshPhongMaterial({
-    color: "rgb(0,0,0)",
-    specular: "rgb(255,255,255)",
-    shininess: 10000,
-});
-glassMaterialSmooth.glass = true;
-glassMaterialSmooth.reflectivity = 0.25;
-glassMaterialSmooth.refractionRatio = 1.5;
-
 // geometries
 var sphereGeometry = new THREE.SphereGeometry(0.6, 24, 24);
-var planeGeometry = new THREE.BoxGeometry(6.00, 0.05, 6.00);
+var planeGeometry = new THREE.BoxGeometry(12.00, 0.05, 6.00);
+var planeGeometrySides = new THREE.BoxGeometry(6.00, 0.05, 6.00);
 var pedestalGeometry = new THREE.CylinderGeometry(0.5, 0.5, 1.0, 80);
 var cilindroGeometry = new THREE.CylinderGeometry(0.35, 0.25, 1.0, 80);
 const torusKnotGeometry = new THREE.TorusKnotGeometry(0.35, 0.1, 64, 16);
 
-// Pedestal
-var pedestal1 = new THREE.Mesh(pedestalGeometry, phongMaterial);
-pedestal1.position.set(2, 0, -0.75);
-scene.add(pedestal1);
+// Pedestais
+var pedestalRight = new THREE.Mesh(pedestalGeometry, pedestalMaterial);
+pedestalRight.position.set(3, 0, -0.75);
+scene.add(pedestalRight);
 
-var pedestal2 = new THREE.Mesh(pedestalGeometry, phongMaterial);
-pedestal2.position.set(-2, 0, -0.75);
-scene.add(pedestal2);
+var pedestalLeft = new THREE.Mesh(pedestalGeometry, pedestalMaterial);
+pedestalLeft.position.set(-3, 0, -0.75);
+scene.add(pedestalLeft);
 
-var pedestal3 = new THREE.Mesh(pedestalGeometry, phongMaterial);
-pedestal3.position.set(0, 0, -2);
-scene.add(pedestal3);
+var pedestalMiddle = new THREE.Mesh(pedestalGeometry, pedestalMaterial);
+pedestalMiddle.position.set(0, 0, -2);
+scene.add(pedestalMiddle);
 
-// Mirror Sphere
+// Torus Knot
 var torusKnot = new THREE.Mesh(torusKnotGeometry, mirrorMaterialSmooth);
-torusKnot.position.set(0, 1.05, 0);
-pedestal2.add(torusKnot);
+torusKnot.position.set(0, 1.125, 0);
+pedestalLeft.add(torusKnot);
 
-// Sphere
+// Bola Esperlho
 var sphere = new THREE.Mesh(sphereGeometry, mirrorMaterial);
-sphere.position.set(0, 1, 0);
+sphere.position.set(0, 1.125, 0);
 sphere.rotation.y = degreesToRadians(37);
-pedestal3.add(sphere);
+pedestalMiddle.add(sphere);
 
-var cylinder = new THREE.Mesh(cilindroGeometry, phongMaterial2);
+// Funil Vermelho
+var cylinder = new THREE.Mesh(cilindroGeometry, cilindoVermelhoMaterial);
 cylinder.position.set(0, 1, 0);
-pedestal1.add(cylinder);
+pedestalRight.add(cylinder);
+
+// Top 10 Gambiarras
+pedestalRight.scale.multiplyScalar(1.125);
+pedestalLeft.scale.multiplyScalar(1.125);
+pedestalMiddle.scale.multiplyScalar(1.125);
+torusKnot.scale.multiplyScalar(1.125);
+sphere.scale.multiplyScalar(1.125);
+cylinder.scale.multiplyScalar(1.125);
 
 // bottom
 var plane = new THREE.Mesh(planeGeometry, phongMaterialBoxBottom);
@@ -147,15 +136,15 @@ plane.position.set(0, 2.50, -3.00);
 scene.add(plane);
 
 // left
-var plane = new THREE.Mesh(planeGeometry, phongMaterialBoxLeft);
+var plane = new THREE.Mesh(planeGeometrySides, phongMaterialBoxSides);
 plane.rotation.z = 1.57;
-plane.position.set(-3.00, 2.50, -3.00)
+plane.position.set(-6.00, 2.50, -3.00)
 scene.add(plane);
 
 // right
-var plane = new THREE.Mesh(planeGeometry, phongMaterialBoxRight);
+var plane = new THREE.Mesh(planeGeometrySides, phongMaterialBoxSides);
 plane.rotation.z = 1.57;
-plane.position.set(3.00, 2.50, -3.00)
+plane.position.set(6.00, 2.50, -3.00)
 scene.add(plane);
 
 render();
