@@ -30,12 +30,15 @@ var list = {
 			"T2": {
 				"Trabalho 02": "works/trabalho02",
 			},
-			"Texturas":{
+			"Texturas": {
 				"Exercício 01": "works/aula07_ex01",
 				"Exercício 02": "works/aula07_ex02",
 			},
-			"Realismo":{
+			"Realismo": {
 				"Exercício 01": "works/aula08_ex01",
+			},
+			"eXtended Reality": {
+				"Exercício 01": "works/aula09_ex01",
 			}
 		},
 		"Projects": {
