@@ -39,7 +39,10 @@ var list = {
 			},
 			"eXtended Reality": {
 				"Exercício 01": "works/aula09_ex01",
-			}
+			},
+			"T3": {
+				"Trabalho 03": "works/trabalho03",
+			},
 		},
 		"Projects": {
 			"Basics": {
