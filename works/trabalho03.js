@@ -8,6 +8,7 @@ import {
   createGroundPlane,
   onWindowResize,
   degreesToRadians,
+  initDefaultSpotlight,
 } from '../libs/util/util.js';
 
 /* TIMER - INICIO */
@@ -50,12 +51,23 @@ var camera = new THREE.PerspectiveCamera(
   1000
 );
 
+const AmbientLight = new THREE.AmbientLight( 0x404040 ); // soft white light
+scene.add( AmbientLight );
+
+/*const light = new THREE.DirectionalLight( 0xffffff, 1, 100 );
+light.position.set( 0, 1, 0 ); //default; light shining from top
+light.castShadow = true; // default false
+scene.add( light );
+
+//Set up shadow properties for the light
+light.shadow.mapSize.width = 512; // default
+light.shadow.mapSize.height = 512; // default
+light.shadow.camera.near = 0.5; // default
+light.shadow.camera.far = 500; // default*/
+
 // Utilizado para visualizar a camera 20px na frente do carro
 var camera_look = new THREE.Group();
 camera_look.rotateY(degreesToRadians(-90));
-
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.4);
-scene.add(directionalLight);
 
 var trackballControls = new TrackballControls(camera, renderer.domElement);
 
@@ -97,35 +109,6 @@ var finishLineArray = new Array();
 
 var track = new THREE.Group();
 
-var planeMaterial = new THREE.MeshBasicMaterial({
-  color: 'rgba(75, 122, 55)',
-  side: THREE.DoubleSide,
-});
-
-var planeGeometry1 = new THREE.PlaneGeometry(1000, 1000);
-planeGeometry1.translate(track1, track1 + 190, -0.5);
-var plane1 = new THREE.Mesh(planeGeometry1, planeMaterial);
-planeGeometry1.rotateX(degreesToRadians(-90));
-
-var planeGeometry2 = new THREE.PlaneGeometry(1000, 1000);
-planeGeometry2.translate(track2, -(track2 - 190), -0.5);
-var plane2 = new THREE.Mesh(planeGeometry2, planeMaterial);
-planeGeometry2.rotateX(degreesToRadians(-90));
-
-var planeGeometry3 = new THREE.PlaneGeometry(1000, 1000);
-planeGeometry3.translate(track3, -(track3 - 190), -0.5);
-var plane3 = new THREE.Mesh(planeGeometry3, planeMaterial);
-planeGeometry3.rotateX(degreesToRadians(-90));
-
-var planeGeometry2 = new THREE.PlaneGeometry(1000, 1000);
-planeGeometry2.translate(track4, -(track4 - 190), -0.5);
-var plane4 = new THREE.Mesh(planeGeometry2, planeMaterial);
-planeGeometry2.rotateX(degreesToRadians(-90));
-
-track.add(plane1);
-track.add(plane2);
-track.add(plane3);
-track.add(plane4);
 
 // Pista 1
 for (var i = 0; i < 6; i++) {
@@ -459,6 +442,50 @@ car.translateY(2.2);
 car.rotateY(degreesToRadians(-90));
 
 /* CARRO - FIM */
+
+/* CEU - INICIO */
+
+let materialArray = [];
+let texture_ft = new THREE.TextureLoader().load( '../assets/textures/arid2_ft.jpg');
+let texture_bk = new THREE.TextureLoader().load( '../assets/textures/arid2_bk.jpg');
+let texture_up = new THREE.TextureLoader().load( '../assets/textures/arid2_up.jpg');
+let texture_dn = new THREE.TextureLoader().load( '../assets/textures/arid2_dn.jpg');
+let texture_rt = new THREE.TextureLoader().load( '../assets/textures/arid2_rt.jpg');
+let texture_lf = new THREE.TextureLoader().load( '../assets/textures/arid2_lf.jpg');
+  
+materialArray.push(new THREE.MeshBasicMaterial( { map: texture_ft }));
+materialArray.push(new THREE.MeshBasicMaterial( { map: texture_bk }));
+materialArray.push(new THREE.MeshBasicMaterial( { map: texture_up }));
+materialArray.push(new THREE.MeshBasicMaterial( { map: texture_dn }));
+materialArray.push(new THREE.MeshBasicMaterial( { map: texture_rt }));
+materialArray.push(new THREE.MeshBasicMaterial( { map: texture_lf }));
+   
+for (let i = 0; i < 6; i++)
+  materialArray[i].side = THREE.BackSide;
+
+
+let skyboxGeo1 = new THREE.BoxGeometry( 1000, 1000, 1000);
+skyboxGeo1.translate(track1, 499, track1);
+let skybox1 = new THREE.Mesh( skyboxGeo1, materialArray );
+scene.add( skybox1 );
+
+let skyboxGeo2 = new THREE.BoxGeometry( 1000, 1000, 1000);
+skyboxGeo2.translate(track2, 499, track2);
+let skybox2 = new THREE.Mesh( skyboxGeo2, materialArray );
+scene.add( skybox2 );
+
+let skyboxGeo3 = new THREE.BoxGeometry( 1000, 1000, 1000);
+skyboxGeo3.translate(track3, 499, track3);
+let skybox3 = new THREE.Mesh( skyboxGeo3, materialArray );
+scene.add( skybox3 );
+
+let skyboxGeo4 = new THREE.BoxGeometry( 1000, 1000, 1000);
+skyboxGeo4.translate(track4, 499, track4);
+let skybox4 = new THREE.Mesh( skyboxGeo4, materialArray );
+scene.add( skybox4 );
+
+
+/* CEU - FIM */
 
 // Mudar o modo da camera
 document.addEventListener('keypress', function (e) {
@@ -1056,7 +1083,7 @@ function keyboardUpdate() {
 }
 
 function detectCollisionCubes(object1, object2) {
-  object1.geometry.computeBoundingBox(); //not needed if its already calculated
+  object1.geometry.computeBoundingBox();
   object2.geometry.computeBoundingBox();
   object1.updateMatrixWorld();
   object2.updateMatrixWorld();
