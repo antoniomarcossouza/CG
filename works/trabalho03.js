@@ -97,6 +97,103 @@ var finishLineArray = new Array();
 
 var track = new THREE.Group();
 
+const loader = new THREE.TextureLoader();
+let textura_pista1 = loader.load('../assets/textures/ladrilho.jpg');
+textura_pista1.wrapS = THREE.RepeatWrapping;
+textura_pista1.wrapT = THREE.RepeatWrapping;
+textura_pista1.repeat.set(1, 1);
+var material_pista1 = new THREE.MeshPhongMaterial({
+  map: textura_pista1,
+  color: 'rgb(255, 255, 255)'
+});
+
+let textura_pista2 = loader.load('../assets/textures/sand.jpg');
+textura_pista2.wrapS = THREE.RepeatWrapping;
+textura_pista2.wrapT = THREE.RepeatWrapping;
+textura_pista2.repeat.set(1, 1);
+var material_pista2 = new THREE.MeshPhongMaterial({
+  map: textura_pista2,
+  color: 'rgb(255, 255, 255)'
+});
+
+let textura_pista3 = loader.load('../assets/textures/asphalt.png');
+textura_pista3.wrapS = THREE.RepeatWrapping;
+textura_pista3.wrapT = THREE.RepeatWrapping;
+textura_pista3.repeat.set(1, 1);
+var material_pista3 = new THREE.MeshPhongMaterial({
+  map: textura_pista3,
+  color: 'rgb(255, 255, 255)'
+});
+
+let textura_pista4 = loader.load('../assets/textures/dirt.png');
+textura_pista4.wrapS = THREE.RepeatWrapping;
+textura_pista4.wrapT = THREE.RepeatWrapping;
+textura_pista4.repeat.set(1, 1);
+var material_pista4 = new THREE.MeshPhongMaterial({
+  map: textura_pista4,
+  color: 'rgb(255, 255, 255)'
+});
+
+let textura_plano1 = loader.load('../assets/textures/terracotta.jpg');
+textura_plano1.wrapS = THREE.RepeatWrapping;
+textura_plano1.wrapT = THREE.RepeatWrapping;
+textura_plano1.repeat.set(32, 32);
+var material_plano1 = new THREE.MeshPhongMaterial({
+  map: textura_plano1,
+  color: 'rgb(255, 255, 255)'
+});
+
+let textura_plano2 = loader.load('../assets/textures/water.jpg');
+textura_plano2.wrapS = THREE.RepeatWrapping;
+textura_plano2.wrapT = THREE.RepeatWrapping;
+textura_plano2.repeat.set(32, 32);
+var material_plano2 = new THREE.MeshPhongMaterial({
+  map: textura_plano2,
+  color: 'rgb(255, 255, 255)'
+});
+
+let textura_plano3 = loader.load('../assets/textures/cobble.png');
+textura_plano3.wrapS = THREE.RepeatWrapping;
+textura_plano3.wrapT = THREE.RepeatWrapping;
+textura_plano3.repeat.set(32, 32);
+var material_plano3 = new THREE.MeshPhongMaterial({
+  map: textura_plano3,
+  color: 'rgb(255, 255, 255)'
+});
+
+let textura_plano4 = loader.load('../assets/textures/grass1.png');
+textura_plano4.wrapS = THREE.RepeatWrapping;
+textura_plano4.wrapT = THREE.RepeatWrapping;
+textura_plano4.repeat.set(32, 32);
+var material_plano4 = new THREE.MeshPhongMaterial({
+  map: textura_plano4,
+  color: 'rgb(255, 255, 255)'
+});
+
+var planeGeometry1 = new THREE.PlaneGeometry(1000, 1000);
+planeGeometry1.translate(track1, track1 + 190, -0.5);
+var plane1 = new THREE.Mesh(planeGeometry1, material_plano1);
+planeGeometry1.rotateX(degreesToRadians(-90));
+
+var planeGeometry2 = new THREE.PlaneGeometry(1000, 1000);
+planeGeometry2.translate(track2, -(track2 - 190), -0.5);
+var plane2 = new THREE.Mesh(planeGeometry2, material_plano2);
+planeGeometry2.rotateX(degreesToRadians(-90));
+
+var planeGeometry3 = new THREE.PlaneGeometry(1000, 1000);
+planeGeometry3.translate(track3, -(track3 - 190), -0.5);
+var plane3 = new THREE.Mesh(planeGeometry3, material_plano3);
+planeGeometry3.rotateX(degreesToRadians(-90));
+
+var planeGeometry2 = new THREE.PlaneGeometry(1000, 1000);
+planeGeometry2.translate(track4, -(track4 - 190), -0.5);
+var plane4 = new THREE.Mesh(planeGeometry2, material_plano4);
+planeGeometry2.rotateX(degreesToRadians(-90));
+
+track.add(plane1);
+track.add(plane2);
+track.add(plane3);
+track.add(plane4);
 
 // Pista 1
 for (var i = 0; i < 6; i++) {
@@ -104,19 +201,19 @@ for (var i = 0; i < 6; i++) {
 }
 for (var i = 0; i < 40; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track1 + -200 + i * 10, track1 + -20 + j * 10);
+    createStreet(track1 + -200 + i * 10, track1 + -20 + j * 10, material_pista1);
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track1 + -200 + 10 * j, track1 + -i * 10);
+    createStreet(track1 + -200 + 10 * j, track1 + -i * 10, material_pista1);
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track1 + -200 + i * 10, track1 + -400 + 10 * j);
+    createStreet(track1 + -200 + i * 10, track1 + -400 + 10 * j, material_pista1);
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track1 + 190 - 10 * j, track1 + -i * 10);
+    createStreet(track1 + 190 - 10 * j, track1 + -i * 10, material_pista1);
   }
 }
 
@@ -127,28 +224,28 @@ for (var i = 0; i < 6; i++) {
 
 for (var i = 0; i < 40; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track2 + -200 + i * 10, track2 + -20 + j * 10);
+    createStreet(track2 + -200 + i * 10, track2 + -20 + j * 10, material_pista2);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track2 + -200 + 10 * j, track2 + -i * 10);
+    createStreet(track2 + -200 + 10 * j, track2 + -i * 10, material_pista2);
   }
 }
 
 for (var i = 0; i < 24; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track2 + -200 + i * 10, track2 + -400 + j * 10);
+    createStreet(track2 + -200 + i * 10, track2 + -400 + j * 10, material_pista2);
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track2 + -20 + 10 * j, track2 + -i * 10 - 160);
+    createStreet(track2 + -20 + 10 * j, track2 + -i * 10 - 160, material_pista2);
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track2 + -20 + i * 10, track2 + -200 + 10 * j);
+    createStreet(track2 + -20 + i * 10, track2 + -200 + 10 * j, material_pista2);
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track2 + 210 - 10 * j, track2 + 30 - i * 10);
+    createStreet(track2 + 210 - 10 * j, track2 + 30 - i * 10, material_pista2);
   }
 }
 
@@ -159,46 +256,46 @@ for (var i = 0; i < 6; i++) {
 
 for (var i = 0; i < 40; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -200 + i * 6, track3 + -20 + j * 10);
+    createStreet(track3 + -200 + i * 6, track3 + -20 + j * 10, material_pista3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -200 + 10 * j, track3 + -i * 10);
+    createStreet(track3 + -200 + 10 * j, track3 + -i * 10, material_pista3);
   }
 }
 
 for (var i = 0; i < 30; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + 100 + 10 * j, track3 + -i * 10 - 100);
+    createStreet(track3 + 100 + 10 * j, track3 + -i * 10 - 100, material_pista3);
   }
 }
 
 for (var i = 0; i < 15; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + i * 8 + 37, track3 + -20 + j * 10 - 80);
+    createStreet(track3 + i * 8 + 37, track3 + -20 + j * 10 - 80, material_pista3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -20 + j * 10 + 57, track3 + -i * 5 + 30);
+    createStreet(track3 + -20 + j * 10 + 57, track3 + -i * 5 + 30, material_pista3);
   }
 }
 
 for (var i = 0; i < 20; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -i * 10 - 10, track3 + -200 + j * 10);
+    createStreet(track3 + -i * 10 - 10, track3 + -200 + j * 10, material_pista3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -i * 10 - 10, track3 + -400 + j * 10);
+    createStreet(track3 + -i * 10 - 10, track3 + -400 + j * 10, material_pista3);
   }
 }
 
 for (var i = 0; i < 25; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -60 + j * 10, track3 + -i * 10 - 150);
+    createStreet(track3 + -60 + j * 10, track3 + -i * 10 - 150, material_pista3);
   }
 }
 
 for (var i = 0; i < 30; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -i * 10 + 150, track3 + -400 + j * 10);
+    createStreet(track3 + -i * 10 + 150, track3 + -400 + j * 10, material_pista3);
   }
 }
 
@@ -209,40 +306,40 @@ for (var i = 0; i < 6; i++) {
 
 for (var i = 0; i < 40; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + -200 + i * 6, track4 + -20 + j * 10);
+    createStreet(track4 + -200 + i * 6, track4 + -20 + j * 10, material_pista4);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + -200 + 10 * j, track4 + -i * 4);
+    createStreet(track4 + -200 + 10 * j, track4 + -i * 4, material_pista4);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + -200 + i * 4, track4 + j * 10 - 157);
+    createStreet(track4 + -200 + i * 4, track4 + j * 10 - 157, material_pista4);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + 10 * j - 16, track4 + -i * 4);
+    createStreet(track4 + 10 * j - 16, track4 + -i * 4, material_pista4);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + i * 4, track4 + j * 10 - 157);
+    createStreet(track4 + i * 4, track4 + j * 10 - 157, material_pista4);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 - 15 + 10 * j, track4 + -i * 4 - 150);
+    createStreet(track4 - 15 + 10 * j, track4 + -i * 4 - 150, material_pista4);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + i * 5 + 40, track4 + j * 10 - 306);
+    createStreet(track4 + i * 5 + 40, track4 + j * 10 - 306, material_pista4);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + i * 3 + 110, track4 + j * 10 - 422);
+    createStreet(track4 + i * 3 + 110, track4 + j * 10 - 422, material_pista4);
   }
 }
 
 for (var i = 0; i < 30; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 120);
+    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 120, material_pista4);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 306);
+    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 306, material_pista4);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 - 15 + 10 * j + 200, track4 + -i * 4 - 306);
+    createStreet(track4 - 15 + 10 * j + 200, track4 + -i * 4 - 306, material_pista4);
   }
 }
 
@@ -254,42 +351,42 @@ var trackElevationArray = new Array();
 
 /* Pista 1 - INICIO */
 
-var elevacao1 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao1 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista1);
 elevacao1.rotateX(degreesToRadians(-65));
 elevacao1.rotateZ(degreesToRadians(90));
 elevacao1.position.set(track1 + -175.0, 3, track1 + -180.0);
 track.add(elevacao1);
 trackElevationArray.push(elevacao1);
 
-var elevacao12 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao12 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista1);
 elevacao12.rotateX(degreesToRadians(65));
 elevacao12.rotateZ(degreesToRadians(90));
 elevacao12.position.set(track1 + -175.0, 3, track1 + -197.0);
 track.add(elevacao12);
 trackElevationArray.push(elevacao12);
 
-var elevacao2 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao2 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista1);
 elevacao2.rotateX(degreesToRadians(90));
 elevacao2.rotateY(degreesToRadians(25));
 elevacao2.position.set(track1 + 0.0, 3, track1 + -375.0);
 track.add(elevacao2);
 trackElevationArray.push(elevacao2);
 
-var elevacao22 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao22 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista1);
 elevacao22.rotateX(degreesToRadians(-90));
 elevacao22.rotateY(degreesToRadians(25));
 elevacao22.position.set(track1 + 17.0, 3, track1 + -375.0);
 track.add(elevacao22);
 trackElevationArray.push(elevacao22);
 
-var elevacao3 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao3 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista1);
 elevacao3.rotateX(degreesToRadians(-65));
 elevacao3.rotateZ(degreesToRadians(90));
 elevacao3.position.set(track1 + 165.0, 3, track1 + -180.0);
 track.add(elevacao3);
 trackElevationArray.push(elevacao3);
 
-var elevacao32 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao32 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista1);
 elevacao32.rotateX(degreesToRadians(65));
 elevacao32.rotateZ(degreesToRadians(90));
 elevacao32.position.set(track1 + 165.0, 3, track1 + -197.0);
@@ -299,42 +396,42 @@ trackElevationArray.push(elevacao32);
 
 /* Pista 2 - INICIO */
 
-var elevacao4 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao4 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista2);
 elevacao4.rotateX(degreesToRadians(-65));
 elevacao4.rotateZ(degreesToRadians(90));
 elevacao4.position.set(track2 + -175.0, 3, track2 + -180.0);
 track.add(elevacao4);
 trackElevationArray.push(elevacao4);
 
-var elevacao42 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao42 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista2);
 elevacao42.rotateX(degreesToRadians(65));
 elevacao42.rotateZ(degreesToRadians(90));
 elevacao42.position.set(track2 + -175.0, 3, track2 + -197.0);
 track.add(elevacao42);
 trackElevationArray.push(elevacao42);
 
-var elevacao5 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao5 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista2);
 elevacao5.rotateX(degreesToRadians(90));
 elevacao5.rotateY(degreesToRadians(25));
 elevacao5.position.set(track2 - 104.5, 3, track2 + -375.0);
 track.add(elevacao5);
 trackElevationArray.push(elevacao5);
 
-var elevacao52 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao52 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista2);
 elevacao52.rotateX(degreesToRadians(-90));
 elevacao52.rotateY(degreesToRadians(25));
 elevacao52.position.set(track2 - 87.5, 3, track2 + -375.0);
 track.add(elevacao52);
 trackElevationArray.push(elevacao52);
 
-var elevacao6 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao6 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista2);
 elevacao6.rotateX(degreesToRadians(-65));
 elevacao6.rotateZ(degreesToRadians(90));
 elevacao6.position.set(track2 + 185.0, 3, track2 + -90.0);
 track.add(elevacao6);
 trackElevationArray.push(elevacao6);
 
-var elevacao62 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao62 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista2);
 elevacao62.rotateX(degreesToRadians(65));
 elevacao62.rotateZ(degreesToRadians(90));
 elevacao62.position.set(track2 + 185.0, 3, track2 + -107.0);
@@ -343,54 +440,54 @@ trackElevationArray.push(elevacao62);
 /* Pista 2 - FIM */
 
 /* Pista 3 - INICIO */
-var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista3);
 elevacao31.rotateX(degreesToRadians(-65));
 elevacao31.rotateZ(degreesToRadians(90));
 elevacao31.position.set(track3 + -175, 3, track3 + -100.0);
 track.add(elevacao31);
 trackElevationArray.push(elevacao31);
-var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista3);
 elevacao31.rotateX(degreesToRadians(65));
 elevacao31.rotateZ(degreesToRadians(90));
 elevacao31.position.set(track3 + -175, 3, track3 + -117.0);
 track.add(elevacao31);
 trackElevationArray.push(elevacao31);
 
-var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista3);
 elevacao31.rotateX(degreesToRadians(-65));
 elevacao31.rotateZ(degreesToRadians(90));
 elevacao31.position.set(track3 + 124, 3, track3 + -130.0);
 track.add(elevacao31);
 trackElevationArray.push(elevacao31);
-var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao31 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista3);
 elevacao31.rotateX(degreesToRadians(65));
 elevacao31.rotateZ(degreesToRadians(90));
 elevacao31.position.set(track3 + 124, 3, track3 + -147.0);
 track.add(elevacao31);
 trackElevationArray.push(elevacao31);
 
-var elevacao32 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao32 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista3);
 elevacao32.rotateX(degreesToRadians(90));
 elevacao32.rotateY(degreesToRadians(25));
 elevacao32.position.set(track3 + -70, 3, track3 + 5);
 track.add(elevacao32);
 trackElevationArray.push(elevacao32);
 
-var elevacao322 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao322 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista3);
 elevacao322.rotateX(degreesToRadians(-90));
 elevacao322.rotateY(degreesToRadians(25));
 elevacao322.position.set(track3 + -53, 3, track3 + 5);
 track.add(elevacao322);
 trackElevationArray.push(elevacao322);
 
-var elevacao32 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao32 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista3);
 elevacao32.rotateX(degreesToRadians(90));
 elevacao32.rotateY(degreesToRadians(25));
 elevacao32.position.set(track3 + 18, 3, track3 + 5);
 track.add(elevacao32);
 trackElevationArray.push(elevacao32);
 
-var elevacao322 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao322 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista3);
 elevacao322.rotateX(degreesToRadians(-90));
 elevacao322.rotateY(degreesToRadians(25));
 elevacao322.position.set(track3 + 35, 3, track3 + 5);
@@ -399,14 +496,14 @@ trackElevationArray.push(elevacao322);
 /* Pista 3 - FIM */
 
 /* Pista 4 - INICIO */
-var elevacao41 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao41 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista4);
 elevacao41.rotateX(degreesToRadians(-65));
 elevacao41.rotateZ(degreesToRadians(90));
 elevacao41.position.set(track4 + 130, 3, track4 + -240.0);
 track.add(elevacao41);
 trackElevationArray.push(elevacao41);
 
-var elevacao42 = createBox(20, 60, 3, 'rgb(150, 150, 150)');
+var elevacao42 = createBox(20, 60, 3, 'rgb(150, 150, 150)', material_pista4);
 elevacao42.rotateX(degreesToRadians(90));
 elevacao42.rotateY(degreesToRadians(25));
 elevacao42.position.set(track4 + -40, 3, track4 + -135.0);
@@ -434,43 +531,44 @@ car.rotateY(degreesToRadians(-90));
 /* CEU - INICIO */
 
 let materialArray = [];
-let texture_ft = new THREE.TextureLoader().load( '../assets/textures/arid2_ft.jpg');
-let texture_bk = new THREE.TextureLoader().load( '../assets/textures/arid2_bk.jpg');
-let texture_up = new THREE.TextureLoader().load( '../assets/textures/arid2_up.jpg');
-let texture_dn = new THREE.TextureLoader().load( '../assets/textures/arid2_dn.jpg');
-let texture_rt = new THREE.TextureLoader().load( '../assets/textures/arid2_rt.jpg');
-let texture_lf = new THREE.TextureLoader().load( '../assets/textures/arid2_lf.jpg');
-  
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_ft }));
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_bk }));
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_up }));
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_dn }));
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_rt }));
-materialArray.push(new THREE.MeshBasicMaterial( { map: texture_lf }));
-   
+let texture_ft = new THREE.TextureLoader().load('../assets/textures/arid2_ft.jpg');
+let texture_bk = new THREE.TextureLoader().load('../assets/textures/arid2_bk.jpg');
+let texture_up = new THREE.TextureLoader().load('../assets/textures/arid2_up.jpg');
+let texture_dn = new THREE.TextureLoader().load('../assets/textures/grass1.png');
+let texture_rt = new THREE.TextureLoader().load('../assets/textures/arid2_rt.jpg');
+let texture_lf = new THREE.TextureLoader().load('../assets/textures/arid2_lf.jpg');
+
+materialArray.push(new THREE.MeshBasicMaterial({ map: texture_ft }));
+materialArray.push(new THREE.MeshBasicMaterial({ map: texture_bk }));
+materialArray.push(new THREE.MeshBasicMaterial({ map: texture_up }));
+materialArray.push(new THREE.MeshBasicMaterial({ map: texture_dn }));
+materialArray.push(new THREE.MeshBasicMaterial({ map: texture_rt }));
+materialArray.push(new THREE.MeshBasicMaterial({ map: texture_lf }));
+
+
 for (let i = 0; i < 6; i++)
   materialArray[i].side = THREE.BackSide;
 
 
-let skyboxGeo1 = new THREE.BoxGeometry( 1000, 1000, 1000);
+let skyboxGeo1 = new THREE.BoxGeometry(1000, 1000, 1000);
 skyboxGeo1.translate(track1, 499, track1);
-let skybox1 = new THREE.Mesh( skyboxGeo1, materialArray );
-scene.add( skybox1 );
+let skybox1 = new THREE.Mesh(skyboxGeo1, materialArray);
+scene.add(skybox1);
 
-let skyboxGeo2 = new THREE.BoxGeometry( 1000, 1000, 1000);
+let skyboxGeo2 = new THREE.BoxGeometry(1000, 1000, 1000);
 skyboxGeo2.translate(track2, 499, track2);
-let skybox2 = new THREE.Mesh( skyboxGeo2, materialArray );
-scene.add( skybox2 );
+let skybox2 = new THREE.Mesh(skyboxGeo2, materialArray);
+scene.add(skybox2);
 
-let skyboxGeo3 = new THREE.BoxGeometry( 1000, 1000, 1000);
+let skyboxGeo3 = new THREE.BoxGeometry(1000, 1000, 1000);
 skyboxGeo3.translate(track3, 499, track3);
-let skybox3 = new THREE.Mesh( skyboxGeo3, materialArray );
-scene.add( skybox3 );
+let skybox3 = new THREE.Mesh(skyboxGeo3, materialArray);
+scene.add(skybox3);
 
-let skyboxGeo4 = new THREE.BoxGeometry( 1000, 1000, 1000);
+let skyboxGeo4 = new THREE.BoxGeometry(1000, 1000, 1000);
 skyboxGeo4.translate(track4, 499, track4);
-let skybox4 = new THREE.Mesh( skyboxGeo4, materialArray );
-scene.add( skybox4 );
+let skybox4 = new THREE.Mesh(skyboxGeo4, materialArray);
+scene.add(skybox4);
 
 
 /* CEU - FIM */
@@ -913,9 +1011,13 @@ function createCar() {
   return car;
 }
 
-function createBox(width, height, depth, color) {
+function createBox(width, height, depth, color, material) {
   var geometry = new THREE.BoxGeometry(width, height, depth);
-  var material = new THREE.MeshPhongMaterial({ color: color });
+  if (material == null) {
+    var material = new THREE.MeshPhongMaterial({ color: color });
+  } else {
+    var material = material
+  }
   var object = new THREE.Mesh(geometry, material);
   object.castShadow = true;
   return object;
@@ -967,8 +1069,8 @@ function createTorus(
   return object;
 }
 
-function createStreet(x, z) {
-  var pista = createBox(10, 10, 0.1, 'rgb(150, 150, 150)');
+function createStreet(x, z, material) {
+  var pista = createBox(10, 10, 0.1, 'rgb(150, 150, 150)', material);
   pista.rotateX(degreesToRadians(-90));
   pista.position.set(x, 0, z);
   track.add(pista);
@@ -1344,6 +1446,7 @@ function render() {
   moveCamera();
 
   requestAnimationFrame(render);
+
 
   controlledRender();
 }
