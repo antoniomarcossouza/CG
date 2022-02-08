@@ -8,7 +8,6 @@ import {
   createGroundPlane,
   onWindowResize,
   degreesToRadians,
-  initDefaultSpotlight,
 } from '../libs/util/util.js';
 
 /* TIMER - INICIO */
@@ -51,19 +50,8 @@ var camera = new THREE.PerspectiveCamera(
   1000
 );
 
-const AmbientLight = new THREE.AmbientLight( 0x404040 ); // soft white light
-scene.add( AmbientLight );
-
-/*const light = new THREE.DirectionalLight( 0xffffff, 1, 100 );
-light.position.set( 0, 1, 0 ); //default; light shining from top
-light.castShadow = true; // default false
+var light = new THREE.PointLight( 0xffffff, 1, 300 );
 scene.add( light );
-
-//Set up shadow properties for the light
-light.shadow.mapSize.width = 512; // default
-light.shadow.mapSize.height = 512; // default
-light.shadow.camera.near = 0.5; // default
-light.shadow.camera.far = 500; // default*/
 
 // Utilizado para visualizar a camera 20px na frente do carro
 var camera_look = new THREE.Group();
@@ -1314,7 +1302,7 @@ function moveCamera() {
       camera_look.position.z
     );
 
-    //pointLight.position.set(camera.position.x, 20, camera.position.z)
+    light.position.set(camera.position.x, 50, camera.position.z)
   }
 }
 
