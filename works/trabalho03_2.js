@@ -1,14 +1,14 @@
 import * as THREE from '../build/three.module.js';
 import { ARjs } from '../libs/AR/ar.js';
 import {
-  degreesToRadians
+    degreesToRadians,
+    initDefaultSpotlight
 } from "../libs/util/util.js";
-
-var clock = new THREE.Clock();
 
 var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(640, 480);
-renderer.shadowMap.type = THREE.VSMShadowMap;
+//renderer.shadowMap.type = THREE.VSMShadowMap;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.shadowMap.enabled = true;
 
 document.body.appendChild(renderer.domElement);
@@ -17,43 +17,42 @@ var scene = new THREE.Scene();
 var camera = new THREE.Camera();
 scene.add(camera);
 
+var clock = new THREE.Clock();
+
 // array of functions for the rendering loop
 var onRenderFcts = [];
 
 //----------------------------------------------------------------------------
-// Handle arToolkitSource
-// More info: https://ar-js-org.github.io/AR.js-Docs/marker-based/
-//var arToolkitSource = new THREEx.ArToolkitSource({
 var arToolkitSource = new ARjs.Source({
-  // to read from the webcam
-  // sourceType: 'webcam',
+    // to read from the webcam
+    //sourceType : 'webcam',
 
-  // to read from an image
-  sourceType : 'image',
-  sourceUrl : '../assets/AR/kanjiScene.jpg',
+    // to read from an image
+    sourceType: 'image',
+    sourceUrl: '../assets/AR/kanjiScene.jpg',
 
-  // to read from a video
-  // sourceType : 'video',
-  // sourceUrl : '../assets/AR/kanjiScene.mp4'
+    // to read from a video
+    // sourceType : 'video',
+    // sourceUrl : '../assets/AR/kanjiScene.mp4'
 })
 
 arToolkitSource.init(function onReady() {
-  setTimeout(() => {
-    onResize()
-  }, 2000);
+    setTimeout(() => {
+        onResize()
+    }, 2000);
 })
 
 // handle resize
-window.addEventListener('resize', function () {
-  onResize()
+window.addEventListener('resize', function() {
+    onResize()
 })
 
 function onResize() {
-  arToolkitSource.onResizeElement()
-  arToolkitSource.copyElementSizeTo(renderer.domElement)
-  if (arToolkitContext.arController !== null) {
-    arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
-  }
+    arToolkitSource.onResizeElement()
+    arToolkitSource.copyElementSizeTo(renderer.domElement)
+    if (arToolkitContext.arController !== null) {
+        arToolkitSource.copyElementSizeTo(arToolkitContext.arController.canvas)
+    }
 }
 
 //----------------------------------------------------------------------------
@@ -62,22 +61,22 @@ function onResize() {
 // create atToolkitContext
 //var arToolkitContext = new THREEx.ArToolkitContext({
 var arToolkitContext = new ARjs.Context({
-  cameraParametersUrl: '../libs/AR/data/camera_para.dat',
-  detectionMode: 'mono',
+    cameraParametersUrl: '../libs/AR/data/camera_para.dat',
+    detectionMode: 'mono',
 })
 
 // initialize it
 arToolkitContext.init(function onCompleted() {
-  // copy projection matrix to camera
-  camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+    // copy projection matrix to camera
+    camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
 })
 
 // update artoolkit on every frame
-onRenderFcts.push(function () {
-  if (arToolkitSource.ready === false) return
-  arToolkitContext.update(arToolkitSource.domElement)
-  // update scene.visible if the marker is seen
-  scene.visible = camera.visible
+onRenderFcts.push(function() {
+    if (arToolkitSource.ready === false) return
+    arToolkitContext.update(arToolkitSource.domElement)
+        // update scene.visible if the marker is seen
+    scene.visible = camera.visible
 })
 
 //----------------------------------------------------------------------------
@@ -85,16 +84,29 @@ onRenderFcts.push(function () {
 //
 // init controls for camera
 //var markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
-new ARjs.MarkerControls(arToolkitContext, camera, {
-  type: 'pattern',
-  patternUrl: '../libs/AR/data/patt.kanji',
-  changeMatrixMode: 'cameraTransformMatrix' // as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
-})
-// as we do changeMatrixMode: 'cameraTransformMatrix', start with invisible scene
+var markerControls = new ARjs.MarkerControls(arToolkitContext, camera, {
+        type: 'pattern',
+        patternUrl: '../libs/AR/data/patt.kanji',
+        changeMatrixMode: 'cameraTransformMatrix' // as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
+    })
+    // as we do changeMatrixMode: 'cameraTransformMatrix', start with invisible scene
 scene.visible = false
 
 //----------------------------------------------------------------------------
 // Adding object to the scene
+var light = initDefaultSpotlight(scene, new THREE.Vector3(-5, 5, 5));
+light.castShadow = true;
+
+var geometry = new THREE.PlaneGeometry(2, 2);
+var material = new THREE.MeshLambertMaterial({
+    transparent: true,
+    opacity: 0.3,
+    side: THREE.DoubleSide
+});
+var plano = new THREE.Mesh(geometry, material);
+plano.rotateX(degreesToRadians(-90));
+plano.receiveShadow = true;
+scene.add(plano);
 
 /* CARRO - INICIO */
 
@@ -109,49 +121,29 @@ scene.add(car);
 
 /* CARRO - FIM */
 
-
-var planeMaterial = new THREE.MeshBasicMaterial({
-  opacity: 0.3,
-  transparent: true,
-  shininess: 1000,
-});
-
-var planeGeometry = new THREE.BoxGeometry(1.5, 0, 1.5);
-
-var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-plane.position.set(0.00, -0.025, 0.00);
-plane.castShadow = true;
-plane.receiveShadow = true;
-scene.add(plane);
-
-const light = new THREE.PointLight( 0xffffff, 1, 100 );
-light.position.set( 1, 1, 1 );
-scene.add( light );
-
 //----------------------------------------------------------------------------
 // Render the whole thing on the page
 
 // render the scene
-onRenderFcts.push(function () {
-  renderer.render(scene, camera);
+onRenderFcts.push(function() {
+    renderer.render(scene, camera);
 })
-
 
 // run the rendering loop
 requestAnimationFrame(function animate(nowMsec) {
-  var lastTimeMsec = null;
-  // keep looping
-  requestAnimationFrame(animate);
-  // measure time
-  lastTimeMsec = lastTimeMsec || nowMsec - 1000 / 60
-  var deltaMsec = Math.min(200, nowMsec - lastTimeMsec)
-  lastTimeMsec = nowMsec
-  // call each update function
-  onRenderFcts.forEach(function (onRenderFct) {
-    onRenderFct(deltaMsec / 1000, nowMsec / 1000)
-  })
-
+    var lastTimeMsec = null;
+    // keep looping
+    requestAnimationFrame(animate);
+    // measure time
+    lastTimeMsec = lastTimeMsec || nowMsec - 1000 / 60
+    var deltaMsec = Math.min(200, nowMsec - lastTimeMsec)
+    lastTimeMsec = nowMsec
+        // call each update function
+    onRenderFcts.forEach(function(onRenderFct) {
+        onRenderFct(deltaMsec / 1000, nowMsec / 1000)
+    })
 })
+
 
 
 function createCar() {
@@ -479,9 +471,13 @@ function createCar() {
   return car;
 }
 
-function createBox(width, height, depth, color) {
+function createBox(width, height, depth, color, material) {
   var geometry = new THREE.BoxGeometry(width, height, depth);
-  var material = new THREE.MeshPhongMaterial({ color: color });
+  if (material == null) {
+    var material = new THREE.MeshPhongMaterial({ color: color });
+  } else {
+    var material = material
+  }
   var object = new THREE.Mesh(geometry, material);
   object.castShadow = true;
   return object;
