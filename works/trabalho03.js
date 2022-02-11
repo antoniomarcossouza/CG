@@ -47,7 +47,7 @@ var camera = new THREE.PerspectiveCamera(
   45,
   window.innerWidth / window.innerHeight,
   0.1,
-  1000
+  1500
 );
 
 var light = new THREE.PointLight(0xffffff, 1, 300);
@@ -588,22 +588,22 @@ car.rotateY(degreesToRadians(-90));
 
 let materialArray = [];
 let texture_ft = new THREE.TextureLoader().load(
-  "../assets/textures/arid2_ft.jpg"
+  "../assets/textures/trough_ft.jpg"
 );
 let texture_bk = new THREE.TextureLoader().load(
-  "../assets/textures/arid2_bk.jpg"
+  "../assets/textures/trough_bk.jpg"
 );
 let texture_up = new THREE.TextureLoader().load(
-  "../assets/textures/arid2_up.jpg"
+  "../assets/textures/trough_up.jpg"
 );
 let texture_dn = new THREE.TextureLoader().load(
-  "../assets/textures/grass1.png"
+  "../assets/textures/trough_dn.jpg"
 );
 let texture_rt = new THREE.TextureLoader().load(
-  "../assets/textures/arid2_rt.jpg"
+  "../assets/textures/trough_rt.jpg"
 );
 let texture_lf = new THREE.TextureLoader().load(
-  "../assets/textures/arid2_lf.jpg"
+  "../assets/textures/trough_lf.jpg"
 );
 
 materialArray.push(new THREE.MeshBasicMaterial({ map: texture_ft }));
