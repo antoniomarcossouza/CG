@@ -114,7 +114,7 @@ var roda1, roda2, roda3, roda4;
 var calota1, calota2, calota3, calota4;
 var car = createCar();
 car.scale.set(0.1,0.1,0.1);
-car.translateY(0.18);
+car.translateY(0.2);
 car.castShadow = true;
 car.receiveShadow = true;
 scene.add(car);
@@ -142,6 +142,8 @@ requestAnimationFrame(function animate(nowMsec) {
     onRenderFcts.forEach(function(onRenderFct) {
         onRenderFct(deltaMsec / 1000, nowMsec / 1000)
     })
+
+    light.position.copy(camera.position);
 })
 
 

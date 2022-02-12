@@ -8,22 +8,24 @@ import {
   createGroundPlane,
   onWindowResize,
   degreesToRadians,
+  initDefaultSpotlight
 } from "../libs/util/util.js";
 
 /* TIMER - INICIO */
 var lap = 0;
 var timerVoltas = [];
+var bestLap = 1;
 var canFinish = 2;
 var totalLap = 4;
 /* TIMER - FIM */
 
 /* CONFIGURAÇÕES - INICIO */
 
-var inspecionar = false;
+var modoCamera = 0;
 var finalizou = false;
 
 var speed = 0;
-const maxSpeed = 3.4;
+const maxSpeed = 5.4;
 const incrementSpeed = 0.08;
 
 const distance = 50;
@@ -47,17 +49,26 @@ var camera = new THREE.PerspectiveCamera(
   45,
   window.innerWidth / window.innerHeight,
   0.1,
-  1500
+  2000
 );
 
-var light = new THREE.PointLight(0xffffff, 1, 300);
+const ambientLight = new THREE.AmbientLight( 0x404040 ); // soft white light
+ambientLight.intensity = 0.3;
+scene.add( ambientLight )
+
+var light = new THREE.PointLight(0xffffff, 1, 500);
+light.castShadow = true;
 scene.add(light);
 
 // Utilizado para visualizar a camera 20px na frente do carro
 var camera_look = new THREE.Group();
 camera_look.rotateY(degreesToRadians(-90));
 
+var camera_position = new THREE.Group();
+camera_position.rotateY(degreesToRadians(-90));
+
 var trackballControls = new TrackballControls(camera, renderer.domElement);
+trackballControls.maxDistance = 700;
 
 /* CAMERA - FIM */
 
@@ -96,6 +107,10 @@ var trackArray = new Array();
 var finishLineArray = new Array();
 
 var track = new THREE.Group();
+
+var lightExp = initDefaultSpotlight(scene, new THREE.Vector3(-5, 5, 5));
+lightExp.castShadow = true;
+lightExp.visible = false;
 
 const loader = new THREE.TextureLoader();
 let textura_pista1 = loader.load("../assets/textures/ladrilho.jpg");
@@ -581,6 +596,8 @@ car = createCar();
 scene.add(car);
 car.translateY(2.2);
 car.rotateY(degreesToRadians(-90));
+car.receiveShadow = true;
+car.castShadow = true;
 
 /* CARRO - FIM */
 
@@ -616,22 +633,22 @@ materialArray.push(new THREE.MeshBasicMaterial({ map: texture_lf }));
 for (let i = 0; i < 6; i++) materialArray[i].side = THREE.BackSide;
 
 let skyboxGeo1 = new THREE.BoxGeometry(1000, 1000, 1000);
-skyboxGeo1.translate(track1, 499, track1);
+skyboxGeo1.translate(track1, 200, track1);
 let skybox1 = new THREE.Mesh(skyboxGeo1, materialArray);
 scene.add(skybox1);
 
 let skyboxGeo2 = new THREE.BoxGeometry(1000, 1000, 1000);
-skyboxGeo2.translate(track2, 499, track2);
+skyboxGeo2.translate(track2, 200, track2);
 let skybox2 = new THREE.Mesh(skyboxGeo2, materialArray);
 scene.add(skybox2);
 
 let skyboxGeo3 = new THREE.BoxGeometry(1000, 1000, 1000);
-skyboxGeo3.translate(track3, 499, track3);
+skyboxGeo3.translate(track3, 200, track3);
 let skybox3 = new THREE.Mesh(skyboxGeo3, materialArray);
 scene.add(skybox3);
 
 let skyboxGeo4 = new THREE.BoxGeometry(1000, 1000, 1000);
-skyboxGeo4.translate(track4, 499, track4);
+skyboxGeo4.translate(track4, 200, track4);
 let skybox4 = new THREE.Mesh(skyboxGeo4, materialArray);
 scene.add(skybox4);
 
@@ -640,9 +657,13 @@ scene.add(skybox4);
 // Mudar o modo da camera
 document.addEventListener("keypress", function (e) {
   if (e.keyCode === 32) {
-    track.visible = inspecionar;
-    inspecionar == true ? (inspecionar = false) : (inspecionar = true);
+    modoCamera == 2 ? (modoCamera = 0) : (modoCamera++);
 
+    if (modoCamera == 2) {
+      track.visible = false;
+    } else {
+      track.visible = true;
+    }
     resetCar(track1, track1);
   }
 
@@ -675,6 +696,7 @@ function resetCar(x, y) {
 
   car.rotation.y = -Math.PI / 2;
   camera_look.rotation.y = -Math.PI / 2;
+  camera_position.rotation.y = -Math.PI / 2;
 
   camera.up.set(0, 1, 0);
 
@@ -701,7 +723,7 @@ function timerUpdate() {
 
     if (lap > 0) {
       information.style.width = "180px";
-      information.style.height = "110px";
+      information.style.height = "130px";
       information.style.display = "block";
 
       var seconds = timerVoltas[lap] % 60;
@@ -709,6 +731,13 @@ function timerUpdate() {
 
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      var secondsMelhor = timerVoltas[bestLap] % 60;
+      var minutesMelhor = (timerVoltas[bestLap] - secondsMelhor) / 60;
+
+      minutesMelhor = minutesMelhor < 10 ? "0" + minutesMelhor : minutesMelhor;
+      secondsMelhor = secondsMelhor < 10 ? "0" + secondsMelhor : secondsMelhor;
+
 
       var total = 0;
       for (var i = 1; i <= lap; i++) {
@@ -730,6 +759,10 @@ function timerUpdate() {
         minutes +
         ":" +
         seconds +
+        "<br>Melhor tempo: " +
+        minutesMelhor +
+        ":" +
+        secondsMelhor +
         "<br>Tempo total: " +
         minutesTotal +
         ":" +
@@ -1294,6 +1327,7 @@ function createStreet(x, z, material) {
   var pista = createBox(10, 10, 0.1, "rgb(150, 150, 150)", material);
   pista.rotateX(degreesToRadians(-90));
   pista.position.set(x, 0, z);
+  pista  .castShadow = true;
   track.add(pista);
 
   trackArray.push({ x: x, z: z });
@@ -1331,13 +1365,15 @@ function keyboardUpdate() {
   }
 
   // Faz o carro virar
-  if (speed != 0 || inspecionar == true) {
+  if (speed != 0 || modoCamera == 2) {
     if (keyboard.pressed("left")) {
       car.rotateY(rotateAngle);
       camera_look.rotateY(rotateAngle);
+      camera_position.rotateY(rotateAngle);
     } else if (keyboard.pressed("right")) {
       car.rotateY(-rotateAngle);
       camera_look.rotateY(-rotateAngle);
+      camera_position.rotateY(-rotateAngle);
     }
   }
 
@@ -1409,7 +1445,7 @@ function detectCollisionCubes(object1, object2) {
 }
 
 function movimentCar() {
-  if (inspecionar == true || finalizou == true) {
+  if (modoCamera == 2 || finalizou == true) {
     speed = 0;
   }
 
@@ -1501,7 +1537,12 @@ function movimentCar() {
         finalizou = true;
       }
 
+      if (timerVoltas[bestLap] > timerVoltas[lap]) {
+        bestLap = lap;
+      }
+
       lap++;
+
       timerVoltas[lap] = 0;
       canFinish = 0;
     }
@@ -1608,10 +1649,10 @@ function movimentCar() {
 }
 
 function moveCamera() {
-  if (inspecionar == false) {
-    camera_look.position.x = car.position.x;
-    camera_look.position.y = car.position.y;
-    camera_look.position.z = car.position.z;
+
+  // Camera inicial
+  if (modoCamera == 0) {
+    camera_look.position.copy(car.position);
 
     camera_look.translateZ(20);
 
@@ -1624,9 +1665,39 @@ function moveCamera() {
       camera_look.position.y,
       camera_look.position.z
     );
-
-    light.position.set(camera.position.x, 50, camera.position.z);
   }
+
+  // Camera 3ª pessoa
+
+  if (modoCamera == 1) {
+    camera_look.position.copy(car.position);
+    camera_position.position.copy(car.position);
+
+    camera_look.translateZ(20);
+    camera_position.translateZ(-40);
+
+    camera.position.x = camera_position.position.x;
+    camera.position.y = 20;
+    camera.position.z = camera_position.position.z;
+
+
+    camera.lookAt(
+      camera_look.position.x,
+      camera_look.position.y,
+      camera_look.position.z
+    );
+  }
+
+  light.position.copy(camera.position);
+
+  // Modo de inspeção
+  if (modoCamera == 2) {
+    trackballControls.update();
+    lightExp.position.copy(camera.position);
+  }
+
+  lightExp.visible = modoCamera == 2;
+
 }
 
 function controlledRender() {
@@ -1651,11 +1722,6 @@ function controlledRender() {
 
 function render() {
   stats.update();
-
-  // Modo de inspeção
-  if (inspecionar == true) {
-    trackballControls.update();
-  }
 
   // Faz a verificação do botões que estão sendo apertados
   keyboardUpdate();
