@@ -104,6 +104,10 @@ window.addEventListener(
 /* PISTA - INICIO */
 
 var trackArray = new Array();
+var trackArray0 = new Array();
+var trackArray1 = new Array();
+var trackArray2 = new Array();
+var trackArray3 = new Array();
 var finishLineArray = new Array();
 
 var track = new THREE.Group();
@@ -219,24 +223,24 @@ for (var i = 0; i < 40; i++) {
     createStreet(
       track1 + -200 + i * 10,
       track1 + -20 + j * 10,
-      material_pista1
+      material_pista1,0
     );
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track1 + -200 + 10 * j, track1 + -i * 10, material_pista1);
+    createStreet(track1 + -200 + 10 * j, track1 + -i * 10, material_pista1,0);
   }
 
   for (var j = 0; j < 6; j++) {
     createStreet(
       track1 + -200 + i * 10,
       track1 + -400 + 10 * j,
-      material_pista1
+      material_pista1,0
     );
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track1 + 190 - 10 * j, track1 + -i * 10, material_pista1);
+    createStreet(track1 + 190 - 10 * j, track1 + -i * 10, material_pista1,0);
   }
 }
 
@@ -250,11 +254,11 @@ for (var i = 0; i < 40; i++) {
     createStreet(
       track2 + -200 + i * 10,
       track2 + -20 + j * 10,
-      material_pista2
+      material_pista2,1
     );
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track2 + -200 + 10 * j, track2 + -i * 10, material_pista2);
+    createStreet(track2 + -200 + 10 * j, track2 + -i * 10, material_pista2,1);
   }
 }
 
@@ -263,7 +267,7 @@ for (var i = 0; i < 24; i++) {
     createStreet(
       track2 + -200 + i * 10,
       track2 + -400 + j * 10,
-      material_pista2
+      material_pista2,1
     );
   }
 
@@ -271,7 +275,7 @@ for (var i = 0; i < 24; i++) {
     createStreet(
       track2 + -20 + 10 * j,
       track2 + -i * 10 - 160,
-      material_pista2
+      material_pista2,1
     );
   }
 
@@ -279,12 +283,12 @@ for (var i = 0; i < 24; i++) {
     createStreet(
       track2 + -20 + i * 10,
       track2 + -200 + 10 * j,
-      material_pista2
+      material_pista2,1
     );
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track2 + 210 - 10 * j, track2 + 30 - i * 10, material_pista2);
+    createStreet(track2 + 210 - 10 * j, track2 + 30 - i * 10, material_pista2,1);
   }
 }
 
@@ -295,10 +299,10 @@ for (var i = 0; i < 6; i++) {
 
 for (var i = 0; i < 40; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -200 + i * 6, track3 + -20 + j * 10, material_pista3);
+    createStreet(track3 + -200 + i * 6, track3 + -20 + j * 10, material_pista3,2);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -200 + 10 * j, track3 + -i * 10, material_pista3);
+    createStreet(track3 + -200 + 10 * j, track3 + -i * 10, material_pista3,2);
   }
 }
 
@@ -307,7 +311,7 @@ for (var i = 0; i < 30; i++) {
     createStreet(
       track3 + 100 + 10 * j,
       track3 + -i * 10 - 100,
-      material_pista3
+      material_pista3,2
     );
   }
 }
@@ -317,14 +321,14 @@ for (var i = 0; i < 15; i++) {
     createStreet(
       track3 + i * 8 + 37,
       track3 + -20 + j * 10 - 80,
-      material_pista3
+      material_pista3,2
     );
   }
   for (var j = 0; j < 6; j++) {
     createStreet(
       track3 + -20 + j * 10 + 57,
       track3 + -i * 5 + 30,
-      material_pista3
+      material_pista3,2
     );
   }
 }
@@ -334,14 +338,14 @@ for (var i = 0; i < 20; i++) {
     createStreet(
       track3 + -i * 10 - 10,
       track3 + -200 + j * 10,
-      material_pista3
+      material_pista3,2
     );
   }
   for (var j = 0; j < 6; j++) {
     createStreet(
       track3 + -i * 10 - 10,
       track3 + -400 + j * 10,
-      material_pista3
+      material_pista3,2
     );
   }
 }
@@ -351,7 +355,7 @@ for (var i = 0; i < 25; i++) {
     createStreet(
       track3 + -60 + j * 10,
       track3 + -i * 10 - 150,
-      material_pista3
+      material_pista3,2
     );
   }
 }
@@ -361,7 +365,7 @@ for (var i = 0; i < 30; i++) {
     createStreet(
       track3 + -i * 10 + 150,
       track3 + -400 + j * 10,
-      material_pista3
+      material_pista3,2
     );
   }
 }
@@ -373,43 +377,43 @@ for (var i = 0; i < 6; i++) {
 
 for (var i = 0; i < 40; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + -200 + i * 6, track4 + -20 + j * 10, material_pista4);
+    createStreet(track4 + -200 + i * 6, track4 + -20 + j * 10, material_pista4,3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + -200 + 10 * j, track4 + -i * 4, material_pista4);
+    createStreet(track4 + -200 + 10 * j, track4 + -i * 4, material_pista4,3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + -200 + i * 4, track4 + j * 10 - 157, material_pista4);
+    createStreet(track4 + -200 + i * 4, track4 + j * 10 - 157, material_pista4,3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + 10 * j - 16, track4 + -i * 4, material_pista4);
+    createStreet(track4 + 10 * j - 16, track4 + -i * 4, material_pista4,3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + i * 4, track4 + j * 10 - 157, material_pista4);
+    createStreet(track4 + i * 4, track4 + j * 10 - 157, material_pista4,3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 - 15 + 10 * j, track4 + -i * 4 - 150, material_pista4);
+    createStreet(track4 - 15 + 10 * j, track4 + -i * 4 - 150, material_pista4,3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + i * 5 + 40, track4 + j * 10 - 306, material_pista4);
+    createStreet(track4 + i * 5 + 40, track4 + j * 10 - 306, material_pista4,3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + i * 3 + 110, track4 + j * 10 - 422, material_pista4);
+    createStreet(track4 + i * 3 + 110, track4 + j * 10 - 422, material_pista4,3);
   }
 }
 
 for (var i = 0; i < 30; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 120, material_pista4);
+    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 120, material_pista4,3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 306, material_pista4);
+    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 306, material_pista4,3);
   }
   for (var j = 0; j < 6; j++) {
     createStreet(
       track4 - 15 + 10 * j + 200,
       track4 + -i * 4 - 306,
-      material_pista4
+      material_pista4, 3
     );
   }
 }
@@ -1323,7 +1327,7 @@ function createTorus(
   return object;
 }
 
-function createStreet(x, z, material) {
+function createStreet(x, z, material, pistaID) {
   var pista = createBox(10, 10, 0.1, "rgb(150, 150, 150)", material);
   pista.rotateX(degreesToRadians(-90));
   pista.position.set(x, 0, z);
@@ -1331,6 +1335,21 @@ function createStreet(x, z, material) {
   track.add(pista);
 
   trackArray.push({ x: x, z: z });
+
+  switch (pistaID) {
+    case 0:
+      trackArray0.push({ x: x, z: z });
+      break;
+    case 1:
+      trackArray1.push({ x: x, z: z });
+      break;
+    case 2:
+      trackArray2.push({ x: x, z: z });
+      break;
+    default:
+      trackArray3.push({ x: x, z: z });
+      break;
+  }
 }
 
 function createFinishLine(x, z, i) {
@@ -1427,6 +1446,33 @@ function keyboardUpdate() {
       new THREE.Euler(calota2.rotation._x, 1.57, calota2.rotation._z, "XYZ")
     );
   }
+}
+
+function createObj1(pistaID) {
+
+  switch (pistaID) {
+    case 0:
+      var posicao = trackArray0[Math.floor(Math.random() * trackArray0.length)];
+      break;
+    case 1:
+      var posicao = trackArray1[Math.floor(Math.random() * trackArray0.length)];
+      break;
+    case 2:
+      var posicao = trackArray2[Math.floor(Math.random() * trackArray0.length)];
+      break;
+    default:
+      var posicao = trackArray3[Math.floor(Math.random() * trackArray0.length)];
+      break;
+  }
+
+  var obj = createBox(5.5, 12.57, 3, "rgb(168, 173, 173)", material_pista1);
+  obj.rotateX(degreesToRadians(90));
+  obj.position.set(posicao['x'], 1, posicao['z']);
+  track.add(obj);
+}
+
+for (var i = 0; i<20;i++) {
+  createObj1(0);
 }
 
 function detectCollisionCubes(object1, object2) {
