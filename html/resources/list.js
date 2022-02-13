@@ -42,6 +42,7 @@ var list = {
 			},
 			"T3": {
 				"Trabalho 03": "works/trabalho03",
+				"Trabalho 03 - XR": "works/trabalho03_2",
 			},
 		},
 		"Projects": {
