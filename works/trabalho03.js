@@ -1617,7 +1617,7 @@ function createObj2(pistaID) {
   track.add(obj);
 }
 
-for (var i = 0; i < 20; i++) {
+for (var i = 0; i < 10; i++) {
   createObj1(0);
   createObj1(1);
   createObj1(2);
