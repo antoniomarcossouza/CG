@@ -112,10 +112,14 @@ var list = {
 				"Group Geometry": "html/exampleGroupInfo",
 				"First Person": "html/exampleFirstPersonInfo",
 				"Drag Control": "html/exampleDragControlInfo",
-				"Fly Controls": "html/exampleFlyControlInfo",
-				"Joystick Elements": "html/exampleJoystickInfo",
-				"Audio": "html/exampleAudioInfo",
+				"Fly Controls":"html/exampleFlyControlInfo",		
+				"Joystick Elements":"html/exampleJoystickInfo",						
 			},
+			"Auxiliary":  {
+				"Loading Screen": "html/exampleLoadingScreenInfo",
+				"Audio": "html/exampleAudioInfo",				
+			},
+
 		},
 	},
 };
