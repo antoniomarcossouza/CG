@@ -8,7 +8,7 @@ import {
   createGroundPlane,
   onWindowResize,
   degreesToRadians,
-  initDefaultSpotlight
+  initDefaultSpotlight,
 } from "../libs/util/util.js";
 
 /* TIMER - INICIO */
@@ -52,9 +52,9 @@ var camera = new THREE.PerspectiveCamera(
   2000
 );
 
-const ambientLight = new THREE.AmbientLight( 0x404040 ); // soft white light
+const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
 ambientLight.intensity = 0.3;
-scene.add( ambientLight )
+scene.add(ambientLight);
 
 var light = new THREE.PointLight(0xffffff, 1, 500);
 light.castShadow = true;
@@ -223,24 +223,26 @@ for (var i = 0; i < 40; i++) {
     createStreet(
       track1 + -200 + i * 10,
       track1 + -20 + j * 10,
-      material_pista1,0
+      material_pista1,
+      0
     );
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track1 + -200 + 10 * j, track1 + -i * 10, material_pista1,0);
+    createStreet(track1 + -200 + 10 * j, track1 + -i * 10, material_pista1, 0);
   }
 
   for (var j = 0; j < 6; j++) {
     createStreet(
       track1 + -200 + i * 10,
       track1 + -400 + 10 * j,
-      material_pista1,0
+      material_pista1,
+      0
     );
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track1 + 190 - 10 * j, track1 + -i * 10, material_pista1,0);
+    createStreet(track1 + 190 - 10 * j, track1 + -i * 10, material_pista1, 0);
   }
 }
 
@@ -254,11 +256,12 @@ for (var i = 0; i < 40; i++) {
     createStreet(
       track2 + -200 + i * 10,
       track2 + -20 + j * 10,
-      material_pista2,1
+      material_pista2,
+      1
     );
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track2 + -200 + 10 * j, track2 + -i * 10, material_pista2,1);
+    createStreet(track2 + -200 + 10 * j, track2 + -i * 10, material_pista2, 1);
   }
 }
 
@@ -267,7 +270,8 @@ for (var i = 0; i < 24; i++) {
     createStreet(
       track2 + -200 + i * 10,
       track2 + -400 + j * 10,
-      material_pista2,1
+      material_pista2,
+      1
     );
   }
 
@@ -275,7 +279,8 @@ for (var i = 0; i < 24; i++) {
     createStreet(
       track2 + -20 + 10 * j,
       track2 + -i * 10 - 160,
-      material_pista2,1
+      material_pista2,
+      1
     );
   }
 
@@ -283,12 +288,18 @@ for (var i = 0; i < 24; i++) {
     createStreet(
       track2 + -20 + i * 10,
       track2 + -200 + 10 * j,
-      material_pista2,1
+      material_pista2,
+      1
     );
   }
 
   for (var j = 0; j < 6; j++) {
-    createStreet(track2 + 210 - 10 * j, track2 + 30 - i * 10, material_pista2,1);
+    createStreet(
+      track2 + 210 - 10 * j,
+      track2 + 30 - i * 10,
+      material_pista2,
+      1
+    );
   }
 }
 
@@ -299,10 +310,15 @@ for (var i = 0; i < 6; i++) {
 
 for (var i = 0; i < 40; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -200 + i * 6, track3 + -20 + j * 10, material_pista3,2);
+    createStreet(
+      track3 + -200 + i * 6,
+      track3 + -20 + j * 10,
+      material_pista3,
+      2
+    );
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track3 + -200 + 10 * j, track3 + -i * 10, material_pista3,2);
+    createStreet(track3 + -200 + 10 * j, track3 + -i * 10, material_pista3, 2);
   }
 }
 
@@ -311,7 +327,8 @@ for (var i = 0; i < 30; i++) {
     createStreet(
       track3 + 100 + 10 * j,
       track3 + -i * 10 - 100,
-      material_pista3,2
+      material_pista3,
+      2
     );
   }
 }
@@ -321,14 +338,16 @@ for (var i = 0; i < 15; i++) {
     createStreet(
       track3 + i * 8 + 37,
       track3 + -20 + j * 10 - 80,
-      material_pista3,2
+      material_pista3,
+      2
     );
   }
   for (var j = 0; j < 6; j++) {
     createStreet(
       track3 + -20 + j * 10 + 57,
       track3 + -i * 5 + 30,
-      material_pista3,2
+      material_pista3,
+      2
     );
   }
 }
@@ -338,14 +357,16 @@ for (var i = 0; i < 20; i++) {
     createStreet(
       track3 + -i * 10 - 10,
       track3 + -200 + j * 10,
-      material_pista3,2
+      material_pista3,
+      2
     );
   }
   for (var j = 0; j < 6; j++) {
     createStreet(
       track3 + -i * 10 - 10,
       track3 + -400 + j * 10,
-      material_pista3,2
+      material_pista3,
+      2
     );
   }
 }
@@ -355,7 +376,8 @@ for (var i = 0; i < 25; i++) {
     createStreet(
       track3 + -60 + j * 10,
       track3 + -i * 10 - 150,
-      material_pista3,2
+      material_pista3,
+      2
     );
   }
 }
@@ -365,7 +387,8 @@ for (var i = 0; i < 30; i++) {
     createStreet(
       track3 + -i * 10 + 150,
       track3 + -400 + j * 10,
-      material_pista3,2
+      material_pista3,
+      2
     );
   }
 }
@@ -377,43 +400,79 @@ for (var i = 0; i < 6; i++) {
 
 for (var i = 0; i < 40; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + -200 + i * 6, track4 + -20 + j * 10, material_pista4,3);
+    createStreet(
+      track4 + -200 + i * 6,
+      track4 + -20 + j * 10,
+      material_pista4,
+      3
+    );
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + -200 + 10 * j, track4 + -i * 4, material_pista4,3);
+    createStreet(track4 + -200 + 10 * j, track4 + -i * 4, material_pista4, 3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + -200 + i * 4, track4 + j * 10 - 157, material_pista4,3);
+    createStreet(
+      track4 + -200 + i * 4,
+      track4 + j * 10 - 157,
+      material_pista4,
+      3
+    );
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + 10 * j - 16, track4 + -i * 4, material_pista4,3);
+    createStreet(track4 + 10 * j - 16, track4 + -i * 4, material_pista4, 3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + i * 4, track4 + j * 10 - 157, material_pista4,3);
+    createStreet(track4 + i * 4, track4 + j * 10 - 157, material_pista4, 3);
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 - 15 + 10 * j, track4 + -i * 4 - 150, material_pista4,3);
+    createStreet(
+      track4 - 15 + 10 * j,
+      track4 + -i * 4 - 150,
+      material_pista4,
+      3
+    );
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + i * 5 + 40, track4 + j * 10 - 306, material_pista4,3);
+    createStreet(
+      track4 + i * 5 + 40,
+      track4 + j * 10 - 306,
+      material_pista4,
+      3
+    );
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + i * 3 + 110, track4 + j * 10 - 422, material_pista4,3);
+    createStreet(
+      track4 + i * 3 + 110,
+      track4 + j * 10 - 422,
+      material_pista4,
+      3
+    );
   }
 }
 
 for (var i = 0; i < 30; i++) {
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 120, material_pista4,3);
+    createStreet(
+      track4 + 106 + 10 * j,
+      track4 + -i * 4 - 120,
+      material_pista4,
+      3
+    );
   }
   for (var j = 0; j < 6; j++) {
-    createStreet(track4 + 106 + 10 * j, track4 + -i * 4 - 306, material_pista4,3);
+    createStreet(
+      track4 + 106 + 10 * j,
+      track4 + -i * 4 - 306,
+      material_pista4,
+      3
+    );
   }
   for (var j = 0; j < 6; j++) {
     createStreet(
       track4 - 15 + 10 * j + 200,
       track4 + -i * 4 - 306,
-      material_pista4, 3
+      material_pista4,
+      3
     );
   }
 }
@@ -661,7 +720,7 @@ scene.add(skybox4);
 // Mudar o modo da camera
 document.addEventListener("keypress", function (e) {
   if (e.keyCode === 32) {
-    modoCamera == 2 ? (modoCamera = 0) : (modoCamera++);
+    modoCamera == 2 ? (modoCamera = 0) : modoCamera++;
 
     if (modoCamera == 2) {
       track.visible = false;
@@ -741,7 +800,6 @@ function timerUpdate() {
 
       minutesMelhor = minutesMelhor < 10 ? "0" + minutesMelhor : minutesMelhor;
       secondsMelhor = secondsMelhor < 10 ? "0" + secondsMelhor : secondsMelhor;
-
 
       var total = 0;
       for (var i = 1; i <= lap; i++) {
@@ -827,17 +885,35 @@ function createCar() {
   var car = new THREE.Group();
 
   /* Corpo do Carro */
-  var corpo = createBox(5.5, 12.57, 3, "rgb(168, 173, 173)", material_metal_claro);
+  var corpo = createBox(
+    5.5,
+    12.57,
+    3,
+    "rgb(168, 173, 173)",
+    material_metal_claro
+  );
   corpo.rotateX(degreesToRadians(90));
   corpo.position.set(0.0, 1, 0.0);
   car.add(corpo);
 
-  var corpo2 = createBox(5.5, 6.5, 2, "rgb(168, 173, 173)", material_metal_claro);
+  var corpo2 = createBox(
+    5.5,
+    6.5,
+    2,
+    "rgb(168, 173, 173)",
+    material_metal_claro
+  );
   corpo2.rotateX(degreesToRadians(-75));
   corpo2.position.set(0.0, 2.35, 2.9);
   car.add(corpo2);
 
-  var corpo3 = createBox(5.5, 6.5, 2, "rgb(168, 173, 173)", material_metal_claro);
+  var corpo3 = createBox(
+    5.5,
+    6.5,
+    2,
+    "rgb(168, 173, 173)",
+    material_metal_claro
+  );
   corpo3.rotateX(degreesToRadians(75));
   corpo3.position.set(0.0, 2.35, -2.9);
   car.add(corpo3);
@@ -867,12 +943,24 @@ function createCar() {
 
   /* Maçanetas */
 
-  var macaneta_esquerda = createBox(0.6, 0.3, 0.5, "rgb(64, 68, 74)", material_metal_escuro);
+  var macaneta_esquerda = createBox(
+    0.6,
+    0.3,
+    0.5,
+    "rgb(64, 68, 74)",
+    material_metal_escuro
+  );
   macaneta_esquerda.rotateY(degreesToRadians(90));
   macaneta_esquerda.position.set(2.6, 1.9, 0.5);
   car.add(macaneta_esquerda);
 
-  var macaneta_direita = createBox(0.6, 0.3, 0.5, "rgb(64, 68, 74)", material_metal_escuro);
+  var macaneta_direita = createBox(
+    0.6,
+    0.3,
+    0.5,
+    "rgb(64, 68, 74)",
+    material_metal_escuro
+  );
   macaneta_direita.rotateY(degreesToRadians(90));
   macaneta_direita.position.set(-2.6, 1.9, 0.5);
   car.add(macaneta_direita);
@@ -1331,7 +1419,7 @@ function createStreet(x, z, material, pistaID) {
   var pista = createBox(10, 10, 0.1, "rgb(150, 150, 150)", material);
   pista.rotateX(degreesToRadians(-90));
   pista.position.set(x, 0, z);
-  pista  .castShadow = true;
+  pista.castShadow = true;
   track.add(pista);
 
   trackArray.push({ x: x, z: z });
@@ -1449,7 +1537,6 @@ function keyboardUpdate() {
 }
 
 function createObj1(pistaID) {
-
   switch (pistaID) {
     case 0:
       var posicao = trackArray0[Math.floor(Math.random() * trackArray0.length)];
@@ -1465,14 +1552,81 @@ function createObj1(pistaID) {
       break;
   }
 
-  var obj = createBox(5.5, 12.57, 3, "rgb(168, 173, 173)", material_pista1);
+  let textura_obj1 = loader.load("../assets/textures/crate2.jpg");
+  textura_obj1.wrapS = THREE.RepeatWrapping;
+  textura_obj1.wrapT = THREE.RepeatWrapping;
+  textura_obj1.repeat.set(1, 1);
+  var material_obj1 = new THREE.MeshPhongMaterial({
+    map: textura_obj1,
+    color: "rgb(255, 255, 255)",
+  });
+
+  var obj = createBox(6, 6, 6, "rgb(168, 173, 173)", material_obj1);
   obj.rotateX(degreesToRadians(90));
-  obj.position.set(posicao['x'], 1, posicao['z']);
+  obj.position.set(posicao["x"], 3, posicao["z"]);
   track.add(obj);
 }
 
-for (var i = 0; i<20;i++) {
+function createObj2(pistaID) {
+  switch (pistaID) {
+    case 0:
+      var posicao = trackArray0[Math.floor(Math.random() * trackArray0.length)];
+      break;
+    case 1:
+      var posicao = trackArray1[Math.floor(Math.random() * trackArray0.length)];
+      break;
+    case 2:
+      var posicao = trackArray2[Math.floor(Math.random() * trackArray0.length)];
+      break;
+    default:
+      var posicao = trackArray3[Math.floor(Math.random() * trackArray0.length)];
+      break;
+  }
+
+  let textura_obj2 = loader.load("../assets/textures/cone.jpg");
+  textura_obj2.wrapS = THREE.RepeatWrapping;
+  textura_obj2.wrapT = THREE.RepeatWrapping;
+  textura_obj2.repeat.set(1, 1);
+  var material_obj2 = new THREE.MeshPhongMaterial({
+    map: textura_obj2,
+    color: "rgb(255, 255, 255)",
+    side: THREE.DoubleSide,
+  });
+
+  var cone_planeGeometry = new THREE.PlaneGeometry(4, 4);
+  var cone_planeMaterial = new THREE.MeshBasicMaterial({
+    color: "rgba(195, 82, 29)",
+    side: THREE.DoubleSide,
+  });
+  var cone_plane = new THREE.Mesh(cone_planeGeometry, cone_planeMaterial);
+  cone_plane.rotateX(degreesToRadians(90));
+  cone_plane.translateZ(2.25);
+
+  var obj = createCylinder(
+    0.25,
+    1.75,
+    5,
+    10,
+    10,
+    true,
+    "rgb(168, 173, 173)",
+    material_obj2
+  );
+  obj.position.set(posicao["x"], 2.5, posicao["z"]);
+  obj.add(cone_plane);
+  track.add(obj);
+}
+
+for (var i = 0; i < 20; i++) {
   createObj1(0);
+  createObj1(1);
+  createObj1(2);
+  createObj1(3);
+
+  createObj2(0);
+  createObj2(1);
+  createObj2(2);
+  createObj2(3);
 }
 
 function detectCollisionCubes(object1, object2) {
@@ -1695,7 +1849,6 @@ function movimentCar() {
 }
 
 function moveCamera() {
-
   // Camera inicial
   if (modoCamera == 0) {
     camera_look.position.copy(car.position);
@@ -1726,7 +1879,6 @@ function moveCamera() {
     camera.position.y = 20;
     camera.position.z = camera_position.position.z;
 
-
     camera.lookAt(
       camera_look.position.x,
       camera_look.position.y,
@@ -1743,7 +1895,6 @@ function moveCamera() {
   }
 
   lightExp.visible = modoCamera == 2;
-
 }
 
 function controlledRender() {
