@@ -21,6 +21,7 @@ var totalLap = 4;
 
 /* CONFIGURAÇÕES - INICIO */
 
+var bateu = false;
 var modoCamera = 0;
 var finalizou = false;
 
@@ -53,7 +54,7 @@ var camera = new THREE.PerspectiveCamera(
 );
 
 const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
-ambientLight.intensity = 0.3;
+ambientLight.intensity = 0.5;
 scene.add(ambientLight);
 
 var light = new THREE.PointLight(0xffffff, 1, 500);
@@ -482,6 +483,7 @@ scene.add(track);
 /* ELEVAÇÕES - INICIO */
 
 var trackElevationArray = new Array();
+var itensArray = new Array();
 
 /* Pista 1 - INICIO */
 
@@ -654,6 +656,7 @@ trackElevationArray.push(elevacao42);
 
 var roda1, roda2, roda3, roda4;
 var calota1, calota2, calota3, calota4;
+var corpo;
 var car = new THREE.Group();
 car = createCar();
 scene.add(car);
@@ -885,7 +888,7 @@ function createCar() {
   var car = new THREE.Group();
 
   /* Corpo do Carro */
-  var corpo = createBox(
+  corpo = createBox(
     5.5,
     12.57,
     3,
@@ -1565,6 +1568,8 @@ function createObj1(pistaID) {
   obj.rotateX(degreesToRadians(90));
   obj.position.set(posicao["x"], 3, posicao["z"]);
   track.add(obj);
+
+  itensArray.push(obj);
 }
 
 function createObj2(pistaID) {
@@ -1612,9 +1617,11 @@ function createObj2(pistaID) {
     "rgb(168, 173, 173)",
     material_obj2
   );
-  obj.position.set(posicao["x"], 2.5, posicao["z"]);
+  obj.position.set(posicao['x'], 2.5, posicao['z']);
   obj.add(cone_plane);
   track.add(obj);
+
+  itensArray.push(obj);
 }
 
 for (var i = 0; i < 10; i++) {
@@ -1629,7 +1636,7 @@ for (var i = 0; i < 10; i++) {
   createObj2(3);
 }
 
-function detectCollisionCubes(object1, object2) {
+function detectCollision(object1, object2) {
   object1.geometry.computeBoundingBox();
   object2.geometry.computeBoundingBox();
   object1.updateMatrixWorld();
@@ -1809,17 +1816,28 @@ function movimentCar() {
 
   car.translateZ(speed);
 
+  itensArray.forEach(function (obj) {
+    if (detectCollision(corpo, obj)) {
+      if (bateu == false) {
+        speed -= 20 / 100 * speed;
+      }
+      bateu = true;
+    } else {
+      bateu = false;
+    }
+  });
+
   var rampa = false;
   var rotateAngle = (Math.PI / 2) * (0.022 * speed);
 
   trackElevationArray.forEach(function (te) {
     if (speed > 0) {
-      if (detectCollisionCubes(roda1, te) || detectCollisionCubes(roda2, te)) {
+      if (detectCollision(roda1, te) || detectCollision(roda2, te)) {
         rampa = true;
       }
     }
     if (speed < 0) {
-      if (detectCollisionCubes(roda3, te) || detectCollisionCubes(roda4, te)) {
+      if (detectCollision(roda3, te) || detectCollision(roda4, te)) {
         rampa = true;
       }
     }
